@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>LONGBOX — Track every issue</title>
+<title>COMICBOX — Track every issue</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Permanent+Marker&family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
@@ -94,15 +94,18 @@ main{padding:0 0 60px;}
 .wrap{max-width:1280px;margin:0 auto;padding:0 32px;}
 
 /* ---------- hero ---------- */
-#hero{
-  position:relative;min-height:52vh;display:flex;align-items:flex-end;
-  background-size:cover;background-position:center 20%;margin-bottom:18px;
-}
-#hero .scrim{position:absolute;inset:0;background:linear-gradient(180deg, rgba(10,10,12,.15) 0%, rgba(10,10,12,.55) 55%, var(--bg) 100%), linear-gradient(90deg, rgba(10,10,12,.85) 0%, rgba(10,10,12,.15) 60%);}
-#hero .hero-body{position:relative;padding:0 32px 40px;max-width:620px;}
-#hero .eyebrow{font-family:'JetBrains Mono',monospace;color:var(--yellow);font-size:12px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px;}
-#hero h1{font-size:52px;line-height:1;margin:0 0 10px;color:#fff;text-shadow:0 2px 18px rgba(0,0,0,.5);}
-#hero p{color:#ddd8cc;font-size:15px;line-height:1.5;margin-bottom:18px;}
+#hero{position:relative;min-height:44vh;overflow:hidden;margin-bottom:18px;display:flex;align-items:center;}
+#hero-bg{position:absolute;inset:-40px;background-size:cover;background-position:center;filter:blur(42px) brightness(.5) saturate(1.35);transform:scale(1.15);}
+#hero .scrim{position:absolute;inset:0;background:linear-gradient(180deg, rgba(10,10,12,.05) 0%, rgba(10,10,12,.72) 68%, var(--bg) 100%), linear-gradient(90deg, rgba(10,10,12,.55) 0%, rgba(10,10,12,.05) 55%);}
+.hero-content{position:relative;z-index:2;display:flex;align-items:flex-end;gap:32px;padding:44px 32px;max-width:1280px;margin:0 auto;width:100%;box-sizing:border-box;}
+.hero-cover{width:190px;height:281px;flex:0 0 auto;border-radius:8px;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,.65);border:1px solid rgba(255,255,255,.08);background:#000;display:flex;align-items:center;justify-content:center;}
+.hero-cover img{width:100%;height:100%;object-fit:contain;display:block;}
+.hero-cover .cover-fallback{width:100%;height:100%;display:flex;align-items:center;justify-content:center;
+  font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:.5px;text-align:center;padding:14px;color:#fff;}
+.hero-body{position:relative;max-width:560px;}
+.hero-body .eyebrow{font-family:'JetBrains Mono',monospace;color:var(--yellow);font-size:12px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px;}
+.hero-body h1{font-size:48px;line-height:1;margin:0 0 10px;color:#fff;text-shadow:0 2px 18px rgba(0,0,0,.5);}
+.hero-body p{color:#ddd8cc;font-size:15px;line-height:1.5;margin-bottom:18px;}
 .genre-pills{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;}
 .pill{font-size:11px;font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.05em;border:1px solid #555145;color:var(--dim);padding:3px 10px;border-radius:20px;}
 .hero-actions{display:flex;gap:10px;}
@@ -135,16 +138,28 @@ main{padding:0 0 60px;}
 }
 .add-tile:hover{color:var(--text);border-color:#6a655a;}
 
-/* ---------- profile select ---------- */
-#view-profiles{max-width:820px;margin:70px auto;text-align:center;}
-#view-profiles h1{font-size:56px;color:var(--red);margin-bottom:4px;}
-#view-profiles p{color:var(--dim);margin-top:0;margin-bottom:34px;}
+/* ---------- users directory ---------- */
+#view-users{max-width:820px;margin:50px auto;text-align:center;}
+#view-users h1{font-size:40px;color:var(--red);margin-bottom:4px;}
+#view-users p{color:var(--dim);margin-top:0;margin-bottom:34px;}
 .profile-grid{display:flex;flex-wrap:wrap;gap:26px;justify-content:center;}
 #view-auth{max-width:420px;margin:70px auto;text-align:center;}
 #view-auth h1{font-size:56px;color:var(--red);margin-bottom:4px;}
 #view-auth p{color:var(--dim);margin-top:0;margin-bottom:28px;}
 body.read-only .owner-only{display:none !important;}
 .you-badge{font-size:10px;background:var(--green);color:#fff;padding:2px 6px;border-radius:3px;margin-top:4px;display:inline-block;}
+
+/* ---------- single profile page ---------- */
+#view-profile{padding-top:26px;}
+.profile-header{display:flex;align-items:flex-start;gap:22px;padding:0 32px;margin:16px 0 30px;flex-wrap:wrap;}
+.profile-avatar{width:96px;height:96px;border-radius:16px;font-size:32px;font-weight:800;color:#fff;background-size:cover !important;background-position:center;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
+.profile-meta{flex:1;min-width:220px;}
+.profile-meta h1{margin:0 0 4px;font-size:34px;}
+.profile-bio{color:var(--dim);font-size:14px;margin:0 0 14px;max-width:520px;}
+.profile-stats{display:flex;gap:26px;}
+.profile-stats div{display:flex;flex-direction:column;}
+.profile-stats b{font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:.5px;}
+.profile-stats span{font-size:10.5px;color:var(--dim2);text-transform:uppercase;letter-spacing:.06em;}
 .profile-card{width:140px;cursor:pointer;position:relative;text-align:center;}
 .profile-card .big-avatar{
   width:100px;height:100px;border-radius:10px;margin:0 auto 10px;
@@ -237,14 +252,12 @@ footer.indicia{max-width:1280px;margin:0 auto;padding:10px 32px 40px;font-family
 <body>
 
 <div id="topbar" class="hidden">
-  <div class="logo">LONGBOX</div>
+  <div class="logo">COMICBOX</div>
   <input id="search-input" class="mono" placeholder="Search series…" oninput="handleSearchInput(this.value)"
     style="max-width:220px;background:rgba(255,255,255,.08);border-color:#4a4740;" />
   <div class="who">
-    <span id="readonly-banner" class="mono hidden" style="font-size:11px;color:var(--yellow);"></span>
-    <span id="who-name" class="mono" style="font-size:12px;color:var(--dim);"></span>
-    <div id="who-avatar" class="avatar"></div>
-    <button class="small ghost" onclick="goProfiles()">Community</button>
+    <span id="who-name" class="mono" style="font-size:12px;color:var(--dim);cursor:pointer;" onclick="goMyProfile()"></span>
+    <div id="who-avatar" class="avatar" style="cursor:pointer;" onclick="goMyProfile()"></div>
     <button class="small ghost" onclick="doSignOut()">Sign out</button>
   </div>
 </div>
@@ -253,14 +266,14 @@ footer.indicia{max-width:1280px;margin:0 auto;padding:10px 32px 40px;font-family
   <button data-tab="home" onclick="setTab('home')">Home</button>
   <button data-tab="mylist" onclick="setTab('mylist')">My List</button>
   <button data-tab="collection" onclick="setTab('collection')">Physical Collection</button>
-  <button data-tab="reviews" onclick="setTab('reviews')">My Reviews</button>
+  <button data-tab="users" onclick="setTab('users')">Users</button>
 </div>
 
 <main>
 
 <!-- AUTH GATE -->
 <div id="view-auth">
-  <h1>LONGBOX</h1>
+  <h1>COMICBOX</h1>
   <p id="auth-tagline">Sign in to track comics with friends anywhere in the world.</p>
   <div style="max-width:340px;margin:0 auto;text-align:left;" id="auth-form">
     <div class="field" id="auth-name-field">
@@ -290,14 +303,19 @@ footer.indicia{max-width:1280px;margin:0 auto;padding:10px 32px 40px;font-family
   </div>
 </div>
 
-<!-- PROFILE SELECT / COMMUNITY -->
-<div id="view-profiles" class="hidden">
-  <h1>LONGBOX</h1>
-  <p>Browse the community — click your card to open your library, or a friend's to see their reviews.</p>
+<!-- USERS DIRECTORY -->
+<div id="view-users" class="hidden">
+  <h1>Users</h1>
+  <p>Everyone tracking comics on this ComicBox. Click a card to see their profile.</p>
   <div class="profile-grid" id="profile-grid"></div>
 </div>
 
-<!-- HOME (netflix-style rows / my list / collection / reviews all render into home-body) -->
+<!-- SINGLE-PAGE PROFILE (yours or a friend's — reviews, lists, stats, all in one place) -->
+<div id="view-profile" class="hidden">
+  <div id="profile-body"></div>
+</div>
+
+<!-- HOME (netflix-style rows / my list / collection all render into home-body) -->
 <div id="view-home" class="hidden">
   <div id="home-body"></div>
 </div>
@@ -380,13 +398,12 @@ import {
 // ⚠️ Replace with YOUR Firebase project's config (Project settings → General → Your apps → SDK setup).
 // These values are safe to expose publicly — real security comes from Firestore Rules + Auth, not secrecy.
 const firebaseConfig = {
-  apiKey: "AIzaSyA2J4cY15Z5tBLcWjyz6SGEOb1Qj0vT6YE",
-  authDomain: "comicbox-258df.firebaseapp.com",
-  projectId: "comicbox-258df",
-  storageBucket: "comicbox-258df.firebasestorage.app",
-  messagingSenderId: "141470682566",
-  appId: "1:141470682566:web:0877e9f787ea73ffe4b6c7",
-  measurementId: "G-5MC2BYFKS5"
+  apiKey: "REPLACE_ME",
+  authDomain: "REPLACE_ME.firebaseapp.com",
+  projectId: "REPLACE_ME",
+  storageBucket: "REPLACE_ME.appspot.com",
+  messagingSenderId: "REPLACE_ME",
+  appId: "REPLACE_ME"
 };
 const fbApp = initializeApp(firebaseConfig);
 const auth = getAuth(fbApp);
@@ -555,7 +572,7 @@ onAuthStateChanged(auth, async (user)=>{
   if(user){
     document.getElementById('auth-error').textContent = '';
     await seedIfEmpty();
-    await goProfiles();
+    await enterApp();
   } else {
     state.currentProfileId = null;
     document.getElementById('topbar').classList.add('hidden');
@@ -566,7 +583,24 @@ onAuthStateChanged(auth, async (user)=>{
 renderAuthSwatches();
 toggleAuthMode(); toggleAuthMode(); // ensure signup UI state on first paint
 
-function renderProfileGrid(){
+async function enterApp(){
+  state.currentProfileId = currentUser.uid; // you always act as yourself while browsing
+  await getProfileData(currentUser.uid);
+  state.profiles = await fetchAllUsers();
+  const me = state.profiles.find(x=>x.id===currentUser.uid);
+  document.getElementById('who-name').textContent = me ? me.name : (currentUser.displayName || 'You');
+  const av = document.getElementById('who-avatar');
+  if(me){ av.style.background = me.color; av.textContent = initials(me.name); }
+  document.getElementById('topbar').classList.remove('hidden');
+  document.getElementById('tabs').classList.remove('hidden');
+  document.getElementById('footer').textContent = 'COMICBOX — READ. COLLECT. REVIEW.';
+  setTab('home');
+}
+
+function goMyProfile(){ if(currentUser) openProfile(currentUser.uid); }
+
+/* ===================== users directory ===================== */
+function renderUsersGrid(){
   const grid = document.getElementById('profile-grid');
   grid.innerHTML = '';
   state.profiles.forEach(p=>{
@@ -574,49 +608,148 @@ function renderProfileGrid(){
     const card = document.createElement('div');
     card.className='profile-card';
     card.innerHTML = `
-      <div class="big-avatar" style="background:${p.color}">${initials(p.name)}</div>
+      <div class="big-avatar" style="background:${p.color};${p.avatarUrl?`background-image:url('${escapeAttr(p.avatarUrl)}');background-size:cover;background-position:center;`:''}">${p.avatarUrl?'':initials(p.name)}</div>
       <div class="pname">${escapeHtml(p.name)}</div>
       ${isMe? '<div class="you-badge">YOU</div>' : ''}`;
-    card.onclick = ()=>selectProfile(p.id);
+    card.onclick = ()=>openProfile(p.id);
     grid.appendChild(card);
   });
 }
 
-function goProfiles(){
-  return (async ()=>{
-    state.currentProfileId = null;
-    state.searchTerm = '';
-    const si = document.getElementById('search-input'); if(si) si.value='';
-    document.getElementById('topbar').classList.add('hidden');
-    document.getElementById('tabs').classList.add('hidden');
-    state.profiles = await fetchAllUsers(); // refresh so new members show up
-    renderProfileGrid();
-    showView('profiles');
-    document.getElementById('footer').textContent='';
-  })();
+async function goUsers(){
+  state.searchTerm = '';
+  const si = document.getElementById('search-input'); if(si) si.value='';
+  state.profiles = await fetchAllUsers(); // refresh so new members show up
+  renderUsersGrid();
+  showView('users');
 }
 
-async function selectProfile(id){
-  state.currentProfileId = id;
-  await getProfileData(id);
-  const p = state.profiles.find(x=>x.id===id);
-  document.getElementById('who-name').textContent = p.name;
+/* ===================== single profile page (yours or a friend's) ===================== */
+async function openProfile(uid){
+  showView('profile');
+  document.getElementById('profile-body').innerHTML = '<div class="empty" style="padding:60px 0;text-align:center;">Loading…</div>';
+  await renderProfilePage(uid);
+}
+
+async function renderProfilePage(uid){
+  let p = state.profiles.find(x=>x.id===uid);
+  if(!p){ state.profiles = await fetchAllUsers(); p = state.profiles.find(x=>x.id===uid); }
+  const body = document.getElementById('profile-body');
+  if(!p){ body.innerHTML = '<div class="wrap"><div class="empty">User not found.</div></div>'; return; }
+
+  const pd = await getProfileData(uid);
+  const isOwner = currentUser && uid===currentUser.uid;
+  const reviewEntries = Object.entries(pd.reviews||{});
+  const avg = reviewEntries.length ? reviewEntries.reduce((a,[,r])=>a+r.rating,0)/reviewEntries.length : 0;
+
+  body.innerHTML = `
+    <div class="wrap">
+      <button class="backbtn ghost small" onclick="setTab('home')">&larr; Back</button>
+      <div class="profile-header">
+        <div class="big-avatar profile-avatar" style="background:${p.color};${p.avatarUrl?`background-image:url('${escapeAttr(p.avatarUrl)}')`:''}">${p.avatarUrl?'':initials(p.name)}</div>
+        <div class="profile-meta">
+          <h1>${escapeHtml(p.name)}</h1>
+          ${p.bio? `<p class="profile-bio">${escapeHtml(p.bio)}</p>` : ''}
+          <div class="profile-stats">
+            <div><b>${pd.read.length}</b><span>Read</span></div>
+            <div><b>${pd.collection.length}</b><span>Owned</span></div>
+            <div><b>${reviewEntries.length}</b><span>Reviews</span></div>
+            <div><b>${avg? avg.toFixed(1) : '–'}</b><span>Avg Rating</span></div>
+          </div>
+        </div>
+        ${isOwner? `<button class="ghost small" onclick="openEditProfile()">Edit profile</button>` : ''}
+      </div>
+      <div class="section-title">Reviews</div>
+      <div class="panel" id="profile-reviews-panel"></div>
+      <div id="profile-shelves"></div>
+    </div>
+  `;
+
+  const revPanel = document.getElementById('profile-reviews-panel');
+  if(!reviewEntries.length){
+    revPanel.innerHTML = '<div class="empty">No reviews yet.</div>';
+  } else {
+    revPanel.innerHTML = '';
+    for(const [issueId, rev] of reviewEntries.sort((a,b)=>(b[1].updatedAt||0)-(a[1].updatedAt||0))){
+      const series = findSeries(rev.seriesId);
+      if(!series) continue;
+      const issues = await getIssues(rev.seriesId);
+      const iss = issues.find(x=>x.id===issueId);
+      if(!iss) continue;
+      const card = document.createElement('div');
+      card.className='review-card';
+      card.style.cursor='pointer';
+      card.innerHTML = `
+        <div class="rhead">
+          <div class="tt" style="font-weight:700;">${escapeHtml(series.title)} #${iss.number}${iss.title? ' — '+escapeHtml(iss.title):''}</div>
+          <div class="stars">${'★'.repeat(rev.rating)}${'☆'.repeat(5-rev.rating)}</div>
+        </div>
+        <div style="color:var(--dim);">${escapeHtml(rev.text)||'<span class="empty">No written review, just a rating.</span>'}</div>
+      `;
+      card.onclick = ()=>jumpToIssue(rev.seriesId, issueId);
+      revPanel.appendChild(card);
+    }
+  }
+
+  const shelves = document.getElementById('profile-shelves');
+  shelves.innerHTML = '';
+  if(pd.read.length) shelves.appendChild(await buildIssueRow('Read', pd.read, pd));
+  if(pd.toRead.length) shelves.appendChild(await buildIssueRow('To Read', pd.toRead, pd));
+  if(pd.collection.length) shelves.appendChild(await buildIssueRow('Physical Collection', pd.collection, pd));
+  if(!pd.read.length && !pd.toRead.length && !pd.collection.length){
+    shelves.innerHTML = '<div class="empty" style="padding:0 32px;">No lists yet.</div>';
+  }
+}
+
+function openEditProfile(){
+  const p = state.profiles.find(x=>x.id===currentUser.uid) || {};
+  showModal(`
+    <h3>Edit profile</h3>
+    <div class="field"><label>Display name</label><input id="ep-name" maxlength="24" value="${escapeAttr(p.name||'')}"/></div>
+    <div class="field"><label>Bio</label><textarea id="ep-bio" maxlength="160" placeholder="A sentence about your taste in comics…">${escapeHtml(p.bio||'')}</textarea></div>
+    <div class="field"><label>Avatar image URL (optional)</label><input id="ep-avatar" placeholder="https://..." value="${escapeAttr(p.avatarUrl||'')}"/></div>
+    <div class="field"><label>Color</label><div class="color-swatches" id="ep-swatches"></div></div>
+    <div class="import-note">Leave the avatar blank to keep your color + initials avatar.</div>
+    <div class="modal-actions">
+      <button class="ghost" onclick="closeModal()">Cancel</button>
+      <button class="primary" onclick="saveEditProfile()">Save</button>
+    </div>
+  `);
+  let chosen = p.color || PALETTE[0];
+  const sw = document.getElementById('ep-swatches');
+  PALETTE.forEach(c=>{
+    const d = document.createElement('div');
+    d.className = 'swatch'+(c===chosen?' sel':'');
+    d.style.background = c;
+    d.onclick = ()=>{ chosen=c; [...sw.children].forEach(x=>x.classList.remove('sel')); d.classList.add('sel'); };
+    sw.appendChild(d);
+  });
+  window._chosenColor = ()=>chosen;
+}
+async function saveEditProfile(){
+  const name = document.getElementById('ep-name').value.trim();
+  if(!name){ alert('Give yourself a name.'); return; }
+  const bio = document.getElementById('ep-bio').value.trim();
+  const avatarUrl = document.getElementById('ep-avatar').value.trim();
+  const color = window._chosenColor ? window._chosenColor() : colorFor(name);
+  const existing = state.profiles.find(x=>x.id===currentUser.uid) || {};
+  await setDoc(doc(db,'users',currentUser.uid), {
+    name, bio, avatarUrl, color,
+    email: currentUser.email,
+    createdAt: existing.createdAt || Date.now()
+  }, {merge:true});
+  try{ await updateProfile(currentUser, {displayName:name}); }catch(e){}
+  state.profiles = await fetchAllUsers();
+  document.getElementById('who-name').textContent = name;
   const av = document.getElementById('who-avatar');
-  av.style.background = p.color; av.textContent = initials(p.name);
-  const isOwner = currentUser && id===currentUser.uid;
-  document.body.classList.toggle('read-only', !isOwner);
-  const banner = document.getElementById('readonly-banner');
-  banner.textContent = isOwner ? '' : `Viewing ${p.name}'s library — read-only`;
-  banner.classList.toggle('hidden', isOwner);
-  document.getElementById('topbar').classList.remove('hidden');
-  document.getElementById('tabs').classList.remove('hidden');
-  document.getElementById('footer').textContent = 'LONGBOX — READ. COLLECT. REVIEW.';
-  setTab('home');
+  av.style.background = color; av.textContent = initials(name);
+  closeModal();
+  await renderProfilePage(currentUser.uid);
 }
 
 /* ===================== view switching ===================== */
 function showView(name){
-  ['auth','profiles','home','series','issue'].forEach(v=>{
+  ['auth','users','profile','home','series','issue'].forEach(v=>{
     document.getElementById('view-'+v).classList.toggle('hidden', v!==name);
   });
   document.getElementById('topbar').classList.toggle('solid', name!=='home');
@@ -624,11 +757,11 @@ function showView(name){
 function setTab(tab){
   state.tab = tab;
   [...document.querySelectorAll('#tabs button')].forEach(b=>b.classList.toggle('active', b.dataset.tab===tab));
+  if(tab==='users'){ goUsers(); return; }
   showView('home');
   if(tab==='home') renderHomeTab();
   else if(tab==='mylist') renderSimpleList('toRead','My List','Nothing on your list yet. Open any issue and hit "Add to My List."');
   else if(tab==='collection') renderSimpleList('collection','Physical Collection','No issues marked as owned yet. Open an issue and hit "Add to Physical Collection."');
-  else if(tab==='reviews') renderMyReviews();
 }
 
 /* ===================== cover helpers ===================== */
@@ -683,19 +816,29 @@ async function renderHomeTab(){
 
   // hero: most recently added series
   const featured = state.seriesIndex.slice().sort((a,b)=>(b.addedAt||0)-(a.addedAt||0))[0];
-  const heroBg = featured.coverUrl ? `url('${featured.coverUrl}')` : `linear-gradient(135deg, ${colorFor(featured.id)}, #0a0a0c)`;
+  const hasCover = !!featured.coverUrl;
+  const bgStyle = hasCover
+    ? `background-image:url('${escapeAttr(featured.coverUrl)}')`
+    : `background:linear-gradient(135deg, ${colorFor(featured.id)}, #0a0a0c)`;
+  const coverInner = hasCover
+    ? `<img src="${escapeAttr(featured.coverUrl)}" onerror="this.outerHTML=fallbackHtml('${escapeAttr(featured.title)}','${escapeAttr(featured.id)}')"/>`
+    : fallbackHtml(featured.title, featured.id);
 
   let html = `
-    <div id="hero" style="background-image:${heroBg}">
+    <div id="hero">
+      <div id="hero-bg" style="${bgStyle}"></div>
       <div class="scrim"></div>
-      <div class="hero-body">
-        <div class="eyebrow">Recently Added</div>
-        <h1>${escapeHtml(featured.title)}</h1>
-        <div class="genre-pills">${(featured.genres||[]).map(g=>`<span class="pill">${escapeHtml(g)}</span>`).join('')}</div>
-        <p>${escapeHtml(featured.description||'')}</p>
-        <div class="hero-actions">
-          <button class="primary" onclick="openSeries('${featured.id}')">View Series</button>
-          <button class="ghost" onclick="openAddSeries()">+ Add Series</button>
+      <div class="hero-content">
+        <div class="hero-cover">${coverInner}</div>
+        <div class="hero-body">
+          <div class="eyebrow">Recently Added</div>
+          <h1>${escapeHtml(featured.title)}</h1>
+          <div class="genre-pills">${(featured.genres||[]).map(g=>`<span class="pill">${escapeHtml(g)}</span>`).join('')}</div>
+          <p>${escapeHtml(featured.description||'')}</p>
+          <div class="hero-actions">
+            <button class="primary" onclick="openSeries('${featured.id}')">View Series</button>
+            <button class="ghost" onclick="openAddSeries()">+ Add Series</button>
+          </div>
         </div>
       </div>
     </div>
@@ -703,6 +846,10 @@ async function renderHomeTab(){
   `;
   body.innerHTML = html;
   const rowsWrap = document.getElementById('rows-wrap');
+
+  // Community Activity row (recent reviews from everyone on this ComicBox)
+  const activityRow = await buildActivityRow();
+  if(activityRow) rowsWrap.appendChild(activityRow);
 
   // Continue Reading row (on list, not yet read)
   const continueItems = pd.toRead.filter(x=>!pd.read.some(r=>r.issueId===x.issueId));
@@ -730,6 +877,48 @@ async function renderHomeTab(){
   if(pd.collection.length){
     rowsWrap.appendChild(await buildIssueRow('From Your Physical Collection', pd.collection, pd));
   }
+}
+
+/* Recent reviews across every member — a shared activity feed, like a group chat about comics. */
+async function buildActivityRow(){
+  const activity = [];
+  for(const p of state.profiles){
+    const d = await getProfileData(p.id);
+    for(const [issueId, rev] of Object.entries(d.reviews||{})){
+      activity.push({p, issueId, rev});
+    }
+  }
+  if(!activity.length) return null;
+  activity.sort((a,b)=>(b.rev.updatedAt||0)-(a.rev.updatedAt||0));
+  const top = activity.slice(0,14);
+
+  const row = document.createElement('div');
+  row.className='row';
+  const cardEls = [];
+  for(const {p,issueId,rev} of top){
+    const series = findSeries(rev.seriesId);
+    if(!series) continue;
+    const issues = await getIssues(rev.seriesId);
+    const iss = issues.find(x=>x.id===issueId);
+    if(!iss) continue;
+    const card = document.createElement('div');
+    card.className='poster-card';
+    card.innerHTML = `
+      <div class="art">
+        ${coverOrFallback(iss.coverUrl || series.coverUrl, series.title+' #'+iss.number, iss.id)}
+        <span class="badge" style="background:${p.color};">${initials(p.name)}</span>
+      </div>
+      <div class="t">${escapeHtml(series.title)} #${iss.number}</div>
+      <div class="s">${escapeHtml(p.name)} · ${'★'.repeat(rev.rating)}${'☆'.repeat(5-rev.rating)}</div>
+    `;
+    card.onclick = ()=>jumpToIssue(series.id, iss.id);
+    cardEls.push(card);
+  }
+  if(!cardEls.length) return null;
+  row.innerHTML = `<div class="row-head"><h2>Community Activity</h2></div><div class="row-track" id="activity-track"></div>`;
+  const track = row.querySelector('#activity-track');
+  cardEls.forEach(c=>track.appendChild(c));
+  return row;
 }
 
 function buildSeriesRow(title, seriesList){
@@ -805,33 +994,7 @@ async function renderSimpleList(key, title, emptyMsg){
   }
 }
 
-async function renderMyReviews(){
-  const body = document.getElementById('home-body');
-  const pd = await getProfileData(state.currentProfileId);
-  const entries = Object.entries(pd.reviews);
-  body.innerHTML = `<div class="wrap" style="padding-top:30px;"><div class="section-title">My Reviews</div><div id="list-body"></div></div>`;
-  const listBody = document.getElementById('list-body');
-  if(!entries.length){ listBody.innerHTML = '<div class="empty">You haven\'t reviewed anything yet. Open an issue and hit "Write a Review."</div>'; return; }
-  for(const [issueId, rev] of entries.sort((a,b)=>(b[1].updatedAt||0)-(a[1].updatedAt||0))){
-    const series = findSeries(rev.seriesId);
-    if(!series) continue;
-    const issues = await getIssues(rev.seriesId);
-    const iss = issues.find(x=>x.id===issueId);
-    if(!iss) continue;
-    const card = document.createElement('div');
-    card.className='review-card';
-    card.style.cursor='pointer';
-    card.innerHTML = `
-      <div class="rhead">
-        <div class="tt" style="font-weight:700;">${escapeHtml(series.title)} #${iss.number}${iss.title? ' — '+escapeHtml(iss.title):''}</div>
-        <div class="stars">${'★'.repeat(rev.rating)}${'☆'.repeat(5-rev.rating)}</div>
-      </div>
-      <div style="color:var(--dim);">${escapeHtml(rev.text)||'<span class="empty">No written review, just a rating.</span>'}</div>
-    `;
-    card.onclick = ()=>jumpToIssue(rev.seriesId, issueId);
-    listBody.appendChild(card);
-  }
-}
+/* "My Reviews" now lives on the profile page (see renderProfilePage) instead of its own tab. */
 
 /* ===================== Add series ===================== */
 function openAddSeries(){
@@ -842,7 +1005,7 @@ function openAddSeries(){
     <div class="field"><label>Genres (comma separated)</label><input id="as-genres" placeholder="e.g. Fantasy, Adventure"/></div>
     <div class="field"><label>Description</label><textarea id="as-desc" placeholder="What's it about?"></textarea></div>
     <div class="field"><label>Cover image URL (optional)</label><input id="as-cover" placeholder="https://..."/></div>
-    <div class="import-note">Leave the cover blank and LONGBOX will generate a placeholder cover automatically.</div>
+    <div class="import-note">Leave the cover blank and COMICBOX will generate a placeholder cover automatically.</div>
     <div class="modal-actions">
       <button class="ghost" onclick="closeModal()">Cancel</button>
       <button class="primary" onclick="createSeries()">Add series</button>
@@ -880,7 +1043,7 @@ function openEditSeries(){
     <div class="field"><label>Genres (comma separated)</label><input id="es-genres" value="${escapeAttr((s.genres||[]).join(', '))}"/></div>
     <div class="field"><label>Description</label><textarea id="es-desc">${escapeHtml(s.description||'')}</textarea></div>
     <div class="field"><label>Cover image URL</label><input id="es-cover" placeholder="https://..." value="${escapeAttr(s.coverUrl||'')}"/></div>
-    <div class="import-note">Paste a link to an image (e.g. from a cover archive site or Imgur) — LONGBOX doesn't accept direct uploads, just links.</div>
+    <div class="import-note">Paste a link to an image (e.g. from a cover archive site or Imgur) — COMICBOX doesn't accept direct uploads, just links.</div>
     <div class="modal-actions">
       <button class="ghost" onclick="closeModal()">Cancel</button>
       <button class="primary" onclick="saveEditSeries()">Save changes</button>
@@ -1097,7 +1260,9 @@ async function refreshIssueActionsAndSocial(){
       anyRead = true;
       const chip = document.createElement('div');
       chip.className='who-chip';
+      chip.style.cursor='pointer';
       chip.innerHTML = `<span class="dot" style="background:${p.color}">${initials(p.name)}</span>${escapeHtml(p.name)}`;
+      chip.onclick = ()=>openProfile(p.id);
       whoWrap.appendChild(chip);
     }
     const rev = d.reviews[state.currentIssueId];
@@ -1108,11 +1273,12 @@ async function refreshIssueActionsAndSocial(){
       card.className='review-card';
       card.innerHTML = `
         <div class="rhead">
-          <div class="who-chip"><span class="dot" style="background:${p.color}">${initials(p.name)}</span>${escapeHtml(p.name)}</div>
+          <div class="who-chip" style="cursor:pointer;"><span class="dot" style="background:${p.color}">${initials(p.name)}</span>${escapeHtml(p.name)}</div>
           <div class="stars">${'★'.repeat(rev.rating)}${'☆'.repeat(5-rev.rating)}</div>
         </div>
         <div style="color:var(--dim);">${escapeHtml(rev.text)||'<span class="empty">No written review, just a rating.</span>'}</div>
       `;
+      card.querySelector('.who-chip').onclick = (e)=>{ e.stopPropagation(); openProfile(p.id); };
       revWrap.appendChild(card);
     }
   }
@@ -1236,7 +1402,7 @@ function formatDate(d){
 }
 
 /* expose globals used by inline handlers */
-window.goProfiles=goProfiles; window.selectProfile=selectProfile;
+window.goMyProfile=goMyProfile; window.openProfile=openProfile; window.openEditProfile=openEditProfile; window.saveEditProfile=saveEditProfile;
 window.toggleAuthMode=toggleAuthMode; window.submitAuthForm=submitAuthForm; window.doSignOut=doSignOut;
 window.setTab=setTab; window.openSeries=openSeries; window.openAddSeries=openAddSeries; window.createSeries=createSeries;
 window.openAddIssue=openAddIssue; window.createIssue=createIssue; window.backToSeries=backToSeries;
