@@ -249,7 +249,7 @@ body.read-only .owner-only{display:none !important;}
 .new-profile-card:hover .big-avatar{border-color:#8a8578;}
 
 /* ---------- panel / detail pages ---------- */
-.panel{background:var(--card);border:var(--line);border-radius:8px;padding:24px;margin:0 0 22px;}
+.panel{background:var(--card);border:var(--line);border-radius:8px;padding:24px;margin:0 0 22px;position:relative;}
 .backbtn{margin:18px 0 14px;}
 .cover-tall{width:180px;border-radius:6px;display:block;}
 .cover-fallback-tall{width:180px;aspect-ratio:2/3;border-radius:6px;display:flex;align-items:center;justify-content:center;
@@ -497,11 +497,6 @@ body.read-only .owner-only{display:none !important;}
 .gauntlet-mini{cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:11.5px;display:flex;align-items:center;gap:4px;padding:5px 10px;border-radius:20px;background:rgba(255,255,255,.06);border:1px solid #4a4740;}
 .gauntlet-mini:hover{background:rgba(255,255,255,.14);}
 .gauntlet-mini .gm-dot{width:9px;height:9px;border-radius:50%;display:inline-block;background:#3a372f;}
-.gauntlet-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:6px;}
-.gauntlet-slot{border:1.5px dashed #4a4740;border-radius:8px;padding:16px 8px;text-align:center;color:var(--dim2);}
-.gauntlet-slot.filled{border-style:solid;border-color:var(--stone-color);background:rgba(255,255,255,.05);color:var(--text);box-shadow:0 0 16px var(--stone-color);}
-.gauntlet-slot .gs-icon{font-size:28px;}
-.gauntlet-slot .gs-name{font-size:10.5px;margin-top:6px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;}
 
 .stone-overlay{position:fixed;inset:0;z-index:400;pointer-events:none;display:flex;align-items:center;justify-content:center;overflow:hidden;}
 .stone-ring{position:absolute;width:40px;height:40px;border-radius:50%;border:3px solid var(--stone-color,#fff);opacity:0;animation:stoneRingExpand 1.7s ease-out forwards;}
@@ -518,6 +513,34 @@ body.read-only .owner-only{display:none !important;}
 @keyframes stoneIconSpin{0%{transform:rotate(-25deg) scale(.4);}60%{transform:rotate(8deg) scale(1.2);}100%{transform:rotate(0) scale(1);}}
 .stone-spark{position:fixed;z-index:399;pointer-events:none;border-radius:50%;animation:stoneSparkFly 1.3s ease-out forwards;}
 @keyframes stoneSparkFly{0%{transform:translate(0,0) scale(1);opacity:1;}100%{transform:translate(var(--dx),var(--dy)) scale(0);opacity:0;}}
+
+/* physical stones hidden on pages — small, low-key glow, disappear on click */
+.page-stone{position:absolute;width:15px;height:15px;cursor:pointer;z-index:6;}
+.page-stone .ps-glow{display:block;width:100%;height:100%;border-radius:50%;background:radial-gradient(circle, var(--stone-color) 0%, transparent 72%);opacity:.32;animation:pageStonePulse 2.6s ease-in-out infinite;}
+.page-stone:hover .ps-glow{opacity:.95;transform:scale(1.35);}
+@keyframes pageStonePulse{0%,100%{opacity:.22;transform:scale(.85);}50%{opacity:.5;transform:scale(1.05);}}
+.page-stone.ps-clicked{animation:pageStoneClicked .25s ease forwards;pointer-events:none;}
+@keyframes pageStoneClicked{to{transform:scale(2.4);opacity:0;}}
+
+/* faint riddle/lore text hiding puzzle clues in plain sight */
+.stone-hint{margin-top:26px;font-family:'JetBrains Mono',monospace;font-size:10px;line-height:1.6;color:var(--dim2);opacity:.32;letter-spacing:.02em;max-width:480px;transition:opacity .3s ease;}
+.stone-hint:hover{opacity:.7;}
+
+/* hidden footer glyph opening the reality-stone code challenge */
+.reality-glyph{margin-left:9px;cursor:pointer;opacity:.14;font-size:11px;transition:opacity .3s ease, text-shadow .3s ease;}
+.reality-glyph:hover{opacity:.7;text-shadow:0 0 8px var(--red);}
+
+/* ---------- gauntlet glove visual ---------- */
+.gauntlet-svg-wrap{display:flex;justify-content:center;margin:6px 0 14px;}
+.gauntlet-svg{width:200px;height:auto;overflow:visible;}
+.gauntlet-svg .glove-shape{fill:#37342c;stroke:#17150f;stroke-width:3;}
+.gauntlet-svg .gem{stroke:#17150f;stroke-width:2;transition:fill .3s ease, filter .3s ease;}
+.gauntlet-svg .gem.filled{filter:drop-shadow(0 0 7px var(--gem-color));}
+.gauntlet-legend{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 14px;margin-bottom:8px;}
+.gauntlet-legend .gl-item{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--dim2);font-family:'JetBrains Mono',monospace;}
+.gauntlet-legend .gl-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;background:#3a372f;}
+.gauntlet-legend .gl-item.found .gl-dot{box-shadow:0 0 6px var(--gem-color);}
+.gauntlet-legend .gl-item.found{color:var(--text);}
 
 /* ---------- cover lightbox ---------- */
 .lightbox-overlay{
@@ -633,7 +656,7 @@ footer.indicia{max-width:1280px;margin:0 auto;padding:10px 32px 40px;font-family
   <button data-tab="collection" onclick="setTab('collection')">Physical Collection</button>
   <button data-tab="heroes" onclick="setTab('heroes')">Heroes</button>
   <button data-tab="events" onclick="setTab('events')">Events</button>
-  <button data-tab="achievements" onclick="setTab('achievements')">Achievements</button>
+  <button data-tab="achievements" onclick="handleAchievementsTabClick()">Achievements</button>
   <button data-tab="news" onclick="setTab('news')">News</button>
   <button data-tab="users" onclick="setTab('users')">Users</button>
 </div>
@@ -677,6 +700,7 @@ footer.indicia{max-width:1280px;margin:0 auto;padding:10px 32px 40px;font-family
   <h1>Users</h1>
   <p>Everyone tracking comics on this ComicBox. Click a card to see their profile.</p>
   <div class="profile-grid" id="profile-grid"></div>
+  <div class="stone-hint" style="margin:26px auto 0;text-align:center;">🔴 A single word undid half of everything — some called it mercy. It still lingers, down where the site signs its name.</div>
 </div>
 
 <!-- SINGLE-PAGE PROFILE (yours or a friend's — reviews, lists, stats, all in one place) -->
@@ -832,7 +856,7 @@ footer.indicia{max-width:1280px;margin:0 auto;padding:10px 32px 40px;font-family
 
 </main>
 
-<footer class="indicia" id="footer"></footer>
+<footer class="indicia" id="footer">COMICBOX — READ. COLLECT. REVIEW.<span class="reality-glyph" onclick="openRealityCodeChallenge()" title="">✦</span></footer>
 <div id="modal-root"></div>
 
 <script type="module">
@@ -1006,15 +1030,19 @@ function updateCurrencyBadge(){
 
 /* ===================== achievements catalog ===================== */
 /* ===================== Infinity Stones (site-wide scavenger hunt) =====================
-   Six stones, each unlocked by typing its name anywhere on the site (same mechanism as
-   the existing "shazam"/"flame on" typed eggs). Collected stones live in pd.infinityStones. */
+   Six stones, six different ways to find them:
+   - space/mind/time: physical stones hidden on specific pages — click to collect, gone for good after.
+   - power: a riddle (hidden in the News feed) whose answer is an action elsewhere on the site.
+   - reality: a hidden code (hinted on the Users page) entered into a hidden challenge (footer glyph).
+   - soul: the classic typed-word egg, same mechanism as "shazam"/"flame on".
+   Collected stones live in pd.infinityStones. */
 const STONES = [
-  {id:'space',   name:'Space Stone',   color:'#3fa9f5', icon:'🔷', trigger:'space stone'},
-  {id:'mind',    name:'Mind Stone',    color:'#f2d43f', icon:'🟡', trigger:'mind stone'},
-  {id:'reality', name:'Reality Stone', color:'#e0392c', icon:'🔴', trigger:'reality stone'},
-  {id:'power',   name:'Power Stone',   color:'#9463d9', icon:'🟣', trigger:'power stone'},
-  {id:'time',    name:'Time Stone',    color:'#3c9169', icon:'🟢', trigger:'time stone'},
-  {id:'soul',    name:'Soul Stone',    color:'#f2a007', icon:'🟠', trigger:'soul stone'}
+  {id:'space',   name:'Space Stone',   color:'#3fa9f5', icon:'🔷', mechanism:'click'},
+  {id:'mind',    name:'Mind Stone',    color:'#f2d43f', icon:'🟡', mechanism:'click'},
+  {id:'time',    name:'Time Stone',    color:'#3c9169', icon:'🟢', mechanism:'click'},
+  {id:'power',   name:'Power Stone',   color:'#9463d9', icon:'🟣', mechanism:'riddle'},
+  {id:'reality', name:'Reality Stone', color:'#e0392c', icon:'🔴', mechanism:'code'},
+  {id:'soul',    name:'Soul Stone',    color:'#f2a007', icon:'🟠', mechanism:'typed', trigger:'soul stone'}
 ];
 
 const ACHIEVEMENTS = [
@@ -1351,7 +1379,7 @@ document.addEventListener('keydown', (e)=>{
   typedBuffer = typedBuffer.slice(-20);
   if(typedBuffer.endsWith('shazam')) triggerShazam();
   if(typedBuffer.endsWith('flame on')) triggerFlameOn();
-  STONES.forEach(s=>{ if(typedBuffer.endsWith(s.trigger)) triggerStoneCollect(s.id); });
+  STONES.forEach(s=>{ if(s.trigger && typedBuffer.endsWith(s.trigger)) triggerStoneCollect(s.id); });
 });
 async function triggerKonami(){
   if(!currentUser) return;
@@ -1477,19 +1505,36 @@ function renderGauntletMini(pd){
     ` <span>${owned.size}/6</span>`;
 }
 window.renderGauntletMini = renderGauntletMini;
+const GAUNTLET_SOCKETS = {
+  power:   {cx:37,  cy:150, r:13}, // thumb
+  space:   {cx:78,  cy:55,  r:13}, // index
+  mind:    {cx:110, cy:42,  r:13}, // middle
+  reality: {cx:142, cy:48,  r:13}, // ring
+  time:    {cx:174, cy:62,  r:13}, // pinky
+  soul:    {cx:120, cy:172, r:17}  // back of hand
+};
 function openGauntletModal(){
   const pd = state.profileData[state.currentProfileId];
   const owned = new Set((pd && pd.infinityStones) || []);
+  const gems = STONES.map(s=>{
+    const pos = GAUNTLET_SOCKETS[s.id];
+    const has = owned.has(s.id);
+    return `<circle class="gem${has?' filled':''}" cx="${pos.cx}" cy="${pos.cy}" r="${pos.r}" fill="${has?s.color:'#232019'}" style="${has?`--gem-color:${s.color}`:''}"/>`;
+  }).join('');
   showModal(`
     <h3>🧤 Infinity Gauntlet</h3>
-    <div class="mono" style="color:var(--dim2);font-size:12px;margin-bottom:14px;">${owned.size} / 6 stones collected</div>
-    <div class="gauntlet-grid">
+    <div class="mono" style="color:var(--dim2);font-size:12px;margin-bottom:10px;text-align:center;">${owned.size} / 6 stones collected</div>
+    <div class="gauntlet-svg-wrap">
+      <svg class="gauntlet-svg" viewBox="0 0 240 260" xmlns="http://www.w3.org/2000/svg">
+        <path class="glove-shape" d="M58,120 C40,175 42,260 120,260 C198,260 200,175 182,120 L182,80 C182,68 165,68 165,80 L165,110 L158,110 L158,60 C158,48 141,48 141,60 L141,110 L134,110 L134,50 C134,38 117,38 117,50 L117,110 L110,110 L110,58 C110,46 93,46 93,58 L93,110 L86,110 L86,75 C86,63 69,63 69,75 L69,120 Z"/>
+        <rect class="glove-shape" x="18" y="130" width="42" height="88" rx="19"/>
+        ${gems}
+      </svg>
+    </div>
+    <div class="gauntlet-legend">
       ${STONES.map(s=>{
         const has = owned.has(s.id);
-        return `<div class="gauntlet-slot ${has?'filled':''}" ${has?`style="--stone-color:${s.color}"`:''}>
-          <div class="gs-icon">${has? s.icon : '❔'}</div>
-          <div class="gs-name">${has? escapeHtml(s.name) : '???'}</div>
-        </div>`;
+        return `<div class="gl-item${has?' found':''}" style="${has?`--gem-color:${s.color}`:''}"><span class="gl-dot" style="${has?`background:${s.color};`:''}"></span>${has? escapeHtml(s.name) : '???'}</div>`;
       }).join('')}
     </div>
     ${owned.size>=6
@@ -1499,6 +1544,81 @@ function openGauntletModal(){
   `);
 }
 window.openGauntletModal = openGauntletModal;
+
+/* ---------- physical stones: hidden on a page, click to collect, gone once found ---------- */
+function injectPageStone(container, stoneId, styleStr){
+  if(!currentUser || !container) return;
+  const pd = state.profileData[currentUser.uid];
+  if(pd && pd.infinityStones && pd.infinityStones.includes(stoneId)) return; // already found — don't show again
+  if(container.querySelector(`.page-stone[data-stone="${stoneId}"]`)) return; // already injected this render
+  const stone = STONES.find(s=>s.id===stoneId);
+  if(!stone) return;
+  const el = document.createElement('div');
+  el.className = 'page-stone';
+  el.dataset.stone = stoneId;
+  el.style.cssText = styleStr;
+  el.style.setProperty('--stone-color', stone.color);
+  el.innerHTML = '<span class="ps-glow"></span>';
+  el.onclick = (e)=>{ e.stopPropagation(); e.preventDefault(); collectPageStone(stoneId, el); };
+  container.appendChild(el);
+}
+async function collectPageStone(stoneId, el){
+  if(el.dataset.collecting) return;
+  el.dataset.collecting = '1';
+  el.classList.add('ps-clicked');
+  setTimeout(()=> el.remove(), 240);
+  await triggerStoneCollect(stoneId);
+}
+
+/* ---------- riddle: the News feed hints that 3 quick clicks on the Achievements tab holds power ---------- */
+let achTabClickTimes = [];
+function handleAchievementsTabClick(){
+  const now = Date.now();
+  achTabClickTimes.push(now);
+  achTabClickTimes = achTabClickTimes.filter(t=> now-t < 1500);
+  if(achTabClickTimes.length>=3){
+    achTabClickTimes = [];
+    triggerStoneCollect('power');
+  }
+  setTab('achievements');
+}
+window.handleAchievementsTabClick = handleAchievementsTabClick;
+
+/* ---------- hidden code challenge: a faint glyph in the footer, code hinted on the Users page ---------- */
+function openRealityCodeChallenge(){
+  if(currentUser){
+    const pd = state.profileData[currentUser.uid];
+    if(pd && pd.infinityStones && pd.infinityStones.includes('reality')){
+      showModal(`<h3>🔴 Reality Stone</h3><div class="empty">Reality has already been reshaped — this stone is yours.</div><div class="modal-actions"><button class="ghost" onclick="closeModal()">Close</button></div>`);
+      return;
+    }
+  }
+  showModal(`
+    <h3>A flicker in reality…</h3>
+    <div class="field"><label>Enter the code</label><input id="reality-code-input" placeholder="???" autocomplete="off"/></div>
+    <div id="reality-code-msg" class="mono" style="font-size:12px;color:var(--dim2);min-height:16px;"></div>
+    <div class="modal-actions">
+      <button class="ghost" onclick="closeModal()">Cancel</button>
+      <button class="primary" onclick="submitRealityCode()">Submit</button>
+    </div>
+  `);
+  document.getElementById('reality-code-input').focus();
+}
+window.openRealityCodeChallenge = openRealityCodeChallenge;
+async function submitRealityCode(){
+  const input = document.getElementById('reality-code-input');
+  const val = (input.value||'').trim().toLowerCase();
+  if(val === 'snap'){
+    closeModal();
+    await triggerStoneCollect('reality');
+  } else {
+    const msg = document.getElementById('reality-code-msg');
+    if(msg) msg.textContent = 'Reality remains unchanged…';
+    input.value = '';
+    input.focus();
+  }
+}
+window.submitRealityCode = submitRealityCode;
 
 function emptyProfileData(){
   return {
@@ -1745,7 +1865,6 @@ async function enterApp(){
   updateCurrencyBadge();
   document.getElementById('topbar').classList.remove('hidden');
   document.getElementById('tabs').classList.remove('hidden');
-  document.getElementById('footer').textContent = 'COMICBOX — READ. COLLECT. REVIEW.';
   await checkAchievements(currentUser.uid);
   setTab('home');
 }
@@ -2031,6 +2150,7 @@ async function renderHomeTab(){
     <div class="wrap" id="rows-wrap"></div>
   `;
   body.innerHTML = html;
+  injectPageStone(document.getElementById('hero'), 'space', 'top:18px; right:24px;');
   const rowsWrap = document.getElementById('rows-wrap');
 
   // Community Activity row (recent reviews from everyone on this ComicBox)
@@ -2295,6 +2415,7 @@ async function renderNewsTab(){
   body.innerHTML = `<div class="wrap" style="padding-top:30px;max-width:720px;">
     <div class="section-title">News &amp; Updates <button class="small" onclick="openPostNews()">+ Post Update</button></div>
     <div id="news-list"></div>
+    <div class="stone-hint">🟣 Power isn't taken — it's believed. The place where victories get counted holds more than trophies. Knock three times, quickly, and see.</div>
   </div>`;
   const listEl = document.getElementById('news-list');
   if(!posts.length){ listEl.innerHTML = '<div class="empty">Nothing posted yet.</div>'; return; }
@@ -2507,6 +2628,7 @@ async function openHero(id){
   `).join('');
 
   showView('hero-detail');
+  injectPageStone(document.querySelector('#view-hero-detail .panel'), 'time', 'top:14px; right:16px;');
 
   // animate stat bars in after paint
   requestAnimationFrame(()=>requestAnimationFrame(()=>{
@@ -3190,6 +3312,7 @@ async function openSeries(id){
     s.coverUrl ? `<img class="cover-tall" src="${escapeAttr(s.coverUrl)}" onerror="this.outerHTML=fallbackTall('${escapeAttr(s.title)}','${escapeAttr(s.id)}')"/>` : fallbackTall(s.title, s.id)
   }</div>`;
   showView('series');
+  injectPageStone(document.querySelector('#view-series .panel'), 'mind', 'top:14px; right:16px;');
   await renderIssueList();
 }
 function fallbackTall(title, seed){
