@@ -1,0 +1,3164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>COMICBOX — Track every issue</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230a0a0c'/%3E%3Crect x='5' y='5' width='54' height='54' rx='10' fill='%23e0392c'/%3E%3Ccircle cx='47' cy='16' r='5' fill='%23f2b705'/%3E%3Ctext x='32' y='45' font-family='Arial Black, Arial, sans-serif' font-weight='900' font-size='34' fill='%23f3f1e9' text-anchor='middle'%3EC%3C/text%3E%3C/svg%3E">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Permanent+Marker&family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0a0c;
+  --bg2:#161513;
+  --bg3:#211f1c;
+  --card:#1b1a17;
+  --text:#f3f1e9;
+  --dim:#a9a49a;
+  --dim2:#716c62;
+  --red:#e0392c;
+  --yellow:#f2b705;
+  --green:#3c9169;
+  --cyan:#33a1c9;
+  --line:1px solid #34322d;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Inter',sans-serif;
+  min-height:100vh;
+}
+.hidden{display:none !important;}
+h1,h2,h3,.display{font-family:'Bebas Neue',sans-serif;letter-spacing:0.8px;font-weight:400;}
+.mono{font-family:'JetBrains Mono',monospace;}
+a{color:inherit;}
+::-webkit-scrollbar{height:8px;width:8px;}
+::-webkit-scrollbar-thumb{background:#3a382f;border-radius:4px;}
+button{
+  font-family:'Inter',sans-serif;
+  font-weight:700;
+  cursor:pointer;
+  border:none;
+  background:#2c2a26;
+  color:var(--text);
+  padding:10px 18px;
+  border-radius:4px;
+  font-size:13px;
+  transition:background .12s ease, transform .08s ease;
+}
+button:hover{background:#3a372f;}
+button:active{transform:scale(.97);}
+button.primary{background:var(--red);color:#fff;}
+button.primary:hover{background:#f04a3b;}
+button.ghost{background:transparent;border:1.5px solid #4a4740;}
+button.ghost:hover{background:#211f1c;}
+button.small{padding:6px 12px;font-size:11.5px;}
+button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible{
+  outline:2.5px solid var(--cyan); outline-offset:2px;
+}
+input,textarea,select{
+  font-family:'Inter',sans-serif;
+  border:1.5px solid #45423a;
+  border-radius:4px;
+  padding:9px 11px;
+  background:#0f0e0c;
+  color:var(--text);
+  font-size:14px;
+  width:100%;
+}
+input::placeholder,textarea::placeholder{color:#5f5b52;}
+textarea{resize:vertical;min-height:70px;}
+label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--dim);display:block;margin-bottom:5px;}
+.field{margin-bottom:14px;}
+
+/* ---------- shell ---------- */
+#topbar{
+  background:linear-gradient(180deg, rgba(0,0,0,.75), rgba(0,0,0,0));
+  padding:16px 32px 30px;
+  display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;z-index:50;
+}
+#topbar.solid{background:var(--bg2);border-bottom:var(--line);padding-bottom:16px;}
+#topbar .logo{font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--red);letter-spacing:2px;}
+#topbar .who{display:flex;align-items:center;gap:12px;}
+.avatar{
+  width:32px;height:32px;border-radius:6px;
+  display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:#fff;
+}
+#tabs{display:flex;gap:22px;padding:0 32px;margin-top:-10px;position:relative;z-index:40;}
+#tabs button{background:none;color:var(--dim);padding:8px 2px;border-radius:0;font-size:13.5px;border-bottom:2px solid transparent;}
+#tabs button:hover{color:var(--text);background:none;}
+#tabs button.active{color:var(--text);border-bottom-color:var(--red);}
+main{padding:0 0 60px;}
+.wrap{max-width:1280px;margin:0 auto;padding:0 32px;}
+
+/* ---------- hero ---------- */
+#hero{position:relative;min-height:44vh;overflow:hidden;margin-bottom:18px;display:flex;align-items:center;}
+#hero-bg{position:absolute;inset:-40px;background-size:cover;background-position:center;filter:blur(42px) brightness(.5) saturate(1.35);transform:scale(1.15);}
+#hero .scrim{position:absolute;inset:0;background:linear-gradient(180deg, rgba(10,10,12,.05) 0%, rgba(10,10,12,.72) 68%, var(--bg) 100%), linear-gradient(90deg, rgba(10,10,12,.55) 0%, rgba(10,10,12,.05) 55%);}
+.hero-content{position:relative;z-index:2;display:flex;align-items:flex-end;gap:32px;padding:44px 32px;max-width:1280px;margin:0 auto;width:100%;box-sizing:border-box;}
+.hero-cover{width:190px;height:281px;flex:0 0 auto;border-radius:8px;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,.65);border:1px solid rgba(255,255,255,.08);background:#000;display:flex;align-items:center;justify-content:center;}
+.hero-cover img{width:100%;height:100%;object-fit:contain;display:block;}
+.hero-cover .cover-fallback{width:100%;height:100%;display:flex;align-items:center;justify-content:center;
+  font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:.5px;text-align:center;padding:14px;color:#fff;}
+.hero-body{position:relative;max-width:560px;}
+.hero-body .eyebrow{font-family:'JetBrains Mono',monospace;color:var(--yellow);font-size:12px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px;}
+.hero-body h1{font-size:48px;line-height:1;margin:0 0 10px;color:#fff;text-shadow:0 2px 18px rgba(0,0,0,.5);}
+.hero-body p{color:#ddd8cc;font-size:15px;line-height:1.5;margin-bottom:18px;}
+.genre-pills{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;}
+.pill{font-size:11px;font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.05em;border:1px solid #555145;color:var(--dim);padding:3px 10px;border-radius:20px;}
+.hero-actions{display:flex;gap:10px;}
+
+/* ---------- rows ---------- */
+.row{margin-bottom:34px;}
+.row-head{display:flex;align-items:baseline;justify-content:space-between;padding:0 32px;margin-bottom:10px;}
+.row-head h2{font-size:19px;margin:0;color:var(--text);font-family:'Inter',sans-serif;font-weight:800;}
+.row-track{display:flex;gap:14px;overflow-x:auto;padding:6px 32px 14px;scroll-behavior:smooth;}
+.poster-card{
+  flex:0 0 auto;width:160px;cursor:pointer;
+}
+.poster-card .art{
+  width:160px;height:224px;border-radius:6px;overflow:hidden;background:var(--card);
+  border:1px solid #2c2a26;position:relative;transition:transform .15s ease, box-shadow .15s ease;
+}
+.poster-card:hover .art{transform:scale(1.045) translateY(-3px);box-shadow:0 14px 30px rgba(0,0,0,.55);}
+.poster-card img{width:100%;height:100%;object-fit:cover;display:block;}
+.poster-card .cover-fallback{width:100%;height:100%;display:flex;align-items:center;justify-content:center;
+  font-family:'Bebas Neue',sans-serif;font-size:19px;letter-spacing:.5px;text-align:center;padding:10px;color:#fff;}
+.poster-card .badge{position:absolute;top:6px;right:6px;background:rgba(0,0,0,.65);color:#fff;font-size:10.5px;
+  font-family:'JetBrains Mono',monospace;padding:2px 6px;border-radius:3px;}
+.poster-card .badge.read{background:var(--green);}
+.poster-card .badge.owned{background:var(--cyan);}
+.poster-card .t{font-size:12.5px;font-weight:700;margin-top:7px;line-height:1.3;}
+.poster-card .s{font-size:11px;color:var(--dim2);margin-top:1px;}
+.add-tile{
+  flex:0 0 auto;width:160px;height:224px;border:1.5px dashed #4a4740;border-radius:6px;
+  display:flex;align-items:center;justify-content:center;flex-direction:column;color:var(--dim);cursor:pointer;
+}
+.add-tile:hover{color:var(--text);border-color:#6a655a;}
+
+/* ---------- users directory ---------- */
+#view-users{max-width:820px;margin:50px auto;text-align:center;}
+#view-users h1{font-size:40px;color:var(--red);margin-bottom:4px;}
+#view-users p{color:var(--dim);margin-top:0;margin-bottom:34px;}
+.profile-grid{display:flex;flex-wrap:wrap;gap:26px;justify-content:center;}
+#view-auth{max-width:420px;margin:70px auto;text-align:center;}
+#view-auth h1{font-size:56px;color:var(--red);margin-bottom:4px;}
+#view-auth p{color:var(--dim);margin-top:0;margin-bottom:28px;}
+body.read-only .owner-only{display:none !important;}
+.you-badge{font-size:10px;background:var(--green);color:#fff;padding:2px 6px;border-radius:3px;margin-top:4px;display:inline-block;}
+
+/* ---------- single profile page ---------- */
+#view-profile{padding-top:26px;}
+.profile-header{display:flex;align-items:flex-start;gap:22px;padding:0 32px;margin:16px 0 30px;flex-wrap:wrap;}
+.profile-avatar{width:96px;height:96px;border-radius:16px;font-size:32px;font-weight:800;color:#fff;background-size:cover !important;background-position:center;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
+.profile-meta{flex:1;min-width:220px;}
+.profile-meta h1{margin:0 0 4px;font-size:34px;}
+.profile-bio{color:var(--dim);font-size:14px;margin:0 0 14px;max-width:520px;}
+.profile-stats{display:flex;gap:26px;}
+.profile-stats div{display:flex;flex-direction:column;}
+.profile-stats b{font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:.5px;}
+.profile-stats span{font-size:10.5px;color:var(--dim2);text-transform:uppercase;letter-spacing:.06em;}
+.profile-card{width:140px;cursor:pointer;position:relative;text-align:center;}
+.profile-card .big-avatar{
+  width:100px;height:100px;border-radius:10px;margin:0 auto 10px;
+  display:flex;align-items:center;justify-content:center;color:#fff;font-size:30px;font-weight:800;
+  border:2px solid transparent;transition:border-color .12s ease, transform .12s ease;
+}
+.profile-card:hover .big-avatar{border-color:#fff;transform:scale(1.04);}
+.profile-card .pname{font-weight:600;color:var(--dim);}
+.profile-card:hover .pname{color:var(--text);}
+.profile-card .del{
+  position:absolute;top:-6px;right:14px;background:none;border:none;color:#c05a4d;font-size:18px;padding:2px 6px;
+}
+.new-profile-card{width:140px;display:flex;flex-direction:column;align-items:center;color:var(--dim);cursor:pointer;}
+.new-profile-card .big-avatar{width:100px;height:100px;border-radius:10px;border:2px dashed #4a4740;display:flex;align-items:center;justify-content:center;font-size:30px;margin-bottom:10px;}
+.new-profile-card:hover{color:var(--text);}
+.new-profile-card:hover .big-avatar{border-color:#8a8578;}
+
+/* ---------- panel / detail pages ---------- */
+.panel{background:var(--card);border:var(--line);border-radius:8px;padding:24px;margin:0 0 22px;}
+.backbtn{margin:18px 0 14px;}
+.cover-tall{width:180px;border-radius:6px;display:block;}
+.cover-fallback-tall{width:180px;aspect-ratio:2/3;border-radius:6px;display:flex;align-items:center;justify-content:center;
+  font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:.5px;text-align:center;padding:10px;color:#fff;}
+
+.issue-row{
+  display:flex;align-items:center;gap:14px;border:var(--line);border-radius:6px;
+  padding:12px 16px;margin-bottom:10px;background:var(--card);cursor:pointer;
+}
+.issue-row:hover{background:var(--bg3);}
+.issue-row .it{flex:1;}
+.issue-row .it .tt{font-weight:700;}
+.issue-row .it .dd{font-size:11.5px;color:var(--dim2);}
+.burst{
+  width:44px;height:44px;background:var(--yellow);color:#181614;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font-family:'Permanent Marker',cursive;
+  font-size:14px;flex-shrink:0;transform:rotate(-4deg);
+}
+.tag{font-family:'JetBrains Mono',monospace;font-size:10.5px;padding:2px 8px;border-radius:10px;}
+.tag.read{background:var(--green);color:#fff;}
+.tag.owned{background:var(--cyan);color:#fff;}
+
+.issue-hero{display:flex;gap:32px;flex-wrap:wrap;align-items:flex-start;}
+.issue-hero .cover-col{width:340px;flex-shrink:0;}
+.issue-cover-frame{
+  position:relative;width:100%;aspect-ratio:2/3;border-radius:12px;overflow:hidden;
+  background:#000;box-shadow:0 22px 46px rgba(0,0,0,.55);border:1px solid #34322d;
+  cursor:zoom-in;transition:transform .18s ease, box-shadow .18s ease;
+}
+.issue-cover-frame:hover{transform:translateY(-3px);box-shadow:0 28px 56px rgba(0,0,0,.65);}
+.issue-cover-frame img{width:100%;height:100%;object-fit:cover;display:block;}
+.issue-cover-frame .cover-fallback{width:100%;height:100%;display:flex;align-items:center;justify-content:center;
+  font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:.5px;text-align:center;padding:16px;color:#fff;}
+.variant-flag{
+  position:absolute;top:10px;left:10px;background:rgba(10,10,12,.82);color:var(--yellow);
+  font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:700;letter-spacing:.04em;
+  padding:5px 10px;border-radius:20px;border:1px solid rgba(242,183,5,.4);
+  display:flex;align-items:center;gap:6px;cursor:pointer;
+}
+.variant-flag:hover{background:rgba(10,10,12,.95);}
+.variant-strip{display:flex;gap:9px;margin-top:12px;flex-wrap:wrap;}
+.variant-strip img{
+  width:56px;height:84px;object-fit:cover;border-radius:4px;cursor:pointer;
+  border:2px solid #3a372f;transition:transform .12s ease, border-color .12s ease, box-shadow .12s ease;
+}
+.variant-strip img:hover{transform:translateY(-3px);border-color:#6b675b;}
+.variant-strip img.active{border-color:var(--yellow);box-shadow:0 4px 14px rgba(0,0,0,.5);}
+.info-col{flex:1;min-width:280px;}
+.info-col h2{font-size:30px;margin:0 0 2px;color:#fff;}
+.info-col .subtitle{color:var(--dim2);margin-bottom:14px;}
+.kv{display:grid;grid-template-columns:120px 1fr;gap:7px 10px;font-size:13.5px;margin-bottom:14px;}
+.kv div:nth-child(odd){font-weight:700;color:var(--dim);font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;align-self:center;}
+.actions-row{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0 4px;}
+.actions-row button.active{background:var(--green);color:#fff;}
+.actions-row button.active.owned-btn{background:var(--cyan);}
+
+/* ---------- heroes: detail page ---------- */
+.hero-hero{display:flex;gap:32px;flex-wrap:wrap;align-items:flex-start;}
+.hero-portrait-col{width:220px;flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:12px;}
+.hero-portrait-frame{
+  position:relative;width:200px;height:200px;border-radius:50%;overflow:hidden;
+  background:#000;box-shadow:0 18px 40px rgba(0,0,0,.5);flex-shrink:0;
+}
+.hero-portrait-frame img{width:100%;height:100%;object-fit:cover;display:block;}
+.hero-portrait-frame .cover-fallback{width:100%;height:100%;display:flex;align-items:center;justify-content:center;
+  font-family:'Bebas Neue',sans-serif;font-size:34px;color:#fff;}
+.hero-portrait-frame.aff-hero{box-shadow:0 0 0 4px var(--cyan), 0 18px 40px rgba(0,0,0,.5);}
+.hero-portrait-frame.aff-villain{box-shadow:0 0 0 4px var(--red), 0 18px 40px rgba(0,0,0,.5);}
+.hero-portrait-frame.aff-anti{box-shadow:0 0 0 4px #9463d9, 0 18px 40px rgba(0,0,0,.5);}
+.hero-affiliation-pill{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:.05em;
+  text-transform:uppercase;padding:5px 14px;border-radius:20px;}
+.hero-affiliation-pill.aff-hero{background:rgba(51,161,201,.18);color:var(--cyan);border:1px solid rgba(51,161,201,.4);}
+.hero-affiliation-pill.aff-villain{background:rgba(224,57,44,.18);color:var(--red);border:1px solid rgba(224,57,44,.4);}
+.hero-affiliation-pill.aff-anti{background:rgba(148,99,217,.18);color:#b79bec;border:1px solid rgba(148,99,217,.4);}
+.power-tags{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 16px;}
+.power-tags .tag2{font-size:11px;font-weight:700;padding:4px 10px;border-radius:20px;background:#2c2a26;color:var(--dim);border:1px solid #3a372f;}
+
+/* ---------- hero signature quote ---------- */
+.hero-quote{
+  margin:14px 0 18px;padding:10px 0 10px 16px;border-left:3px solid var(--dim2);
+  font-size:19px;line-height:1.5;
+}
+.hero-quote .hq-mark{font-family:'Bebas Neue',sans-serif;font-size:26px;opacity:.7;}
+.hero-quote .hq-text{}
+#hero-fav-btn.fav-active{background:var(--yellow);color:#1c1a17;}
+
+/* ---------- issue prev/next navigation ---------- */
+.issue-nav-row{display:flex;justify-content:space-between;gap:10px;margin:6px 0 16px;}
+.issue-nav-row button[disabled]{opacity:.35;cursor:not-allowed;}
+
+/* ---------- hero gallery ---------- */
+.hero-gallery{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0;}
+.hero-gallery img{width:96px;height:96px;object-fit:cover;border-radius:8px;cursor:pointer;transition:transform .12s ease;}
+.hero-gallery img:hover{transform:scale(1.05);}
+
+/* ---------- review comments ---------- */
+.comment-thread{margin-top:10px;padding-top:8px;border-top:1px solid var(--line, #333);display:flex;flex-direction:column;gap:6px;}
+.comment-row{display:flex;align-items:flex-start;gap:8px;font-size:13px;}
+.comment-row .dot{width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff;flex-shrink:0;}
+.comment-row .c-name{font-weight:700;color:var(--text);margin-right:4px;}
+.comment-row .c-text{color:var(--dim);}
+.comment-add-row{display:flex;gap:8px;margin-top:4px;}
+.comment-add-row input{flex:1;background:rgba(255,255,255,.06);border:1px solid #3a372f;border-radius:6px;padding:6px 10px;color:var(--text);font-size:13px;}
+
+/* ---------- news / updates ---------- */
+.news-post{margin-bottom:14px;}
+
+/* ---------- favorite character card (profile page) ---------- */
+.fav-hero-card{
+  display:flex;gap:16px;align-items:center;margin:18px 0;padding:16px;
+  background:var(--card);border:1px solid var(--dim2);border-left-width:4px;border-radius:10px;
+  transition:transform .12s ease;
+}
+.fav-hero-card:hover{transform:translateY(-2px);}
+.fh-portrait{width:64px;height:64px;border-radius:50%;overflow:hidden;flex-shrink:0;background:#000;}
+.fh-portrait img{width:100%;height:100%;object-fit:cover;display:block;}
+.fh-portrait .cover-fallback{width:100%;height:100%;display:flex;align-items:center;justify-content:center;
+  font-family:'Bebas Neue',sans-serif;font-size:22px;color:#fff;}
+.fh-label{font-size:10.5px;font-weight:700;letter-spacing:.08em;margin-bottom:2px;}
+.fh-name{font-size:17px;font-weight:800;}
+.fh-alias{font-weight:500;color:var(--dim);font-size:14px;}
+.fh-quote{font-size:15px;margin-top:4px;line-height:1.4;}
+
+.stat-grid{display:grid;gap:8px;max-width:420px;}
+.stat-row{display:grid;grid-template-columns:82px 1fr 26px;align-items:center;gap:10px;}
+.stat-row .stat-label{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--dim);text-transform:uppercase;letter-spacing:.04em;}
+.stat-row .stat-num{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--dim2);text-align:right;}
+.stat-track{height:9px;border-radius:5px;background:#232019;overflow:hidden;}
+.stat-fill{height:100%;border-radius:5px;background:linear-gradient(90deg,var(--red),var(--yellow));width:0;transition:width 1s cubic-bezier(.22,1,.36,1);}
+
+.hero-chip-row{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 6px;}
+.hero-chip{
+  display:flex;align-items:center;gap:7px;background:#211f1c;border:1px solid #3a372f;border-radius:20px;
+  padding:4px 12px 4px 4px;cursor:pointer;transition:border-color .12s ease, transform .12s ease;font-size:12.5px;font-weight:600;
+}
+.hero-chip:hover{border-color:#6b675b;transform:translateY(-2px);}
+.hero-chip .hc-dot{width:22px;height:22px;border-radius:50%;color:#fff;font-size:9.5px;display:flex;align-items:center;justify-content:center;font-weight:800;flex-shrink:0;overflow:hidden;}
+.hero-chip .hc-dot img{width:100%;height:100%;object-fit:cover;}
+
+/* ---------- heroes: grid / list ---------- */
+.heroes-toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:16px;}
+.heroes-toolbar input{max-width:240px;}
+.aff-filter{display:flex;gap:6px;}
+.aff-filter button{background:#211f1c;border:1px solid #3a372f;padding:7px 13px;font-size:11.5px;}
+.aff-filter button.active{background:var(--red);border-color:var(--red);color:#fff;}
+.heroes-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:16px;}
+.hero-card{background:var(--card);border:var(--line);border-radius:10px;padding:16px 12px;text-align:center;cursor:pointer;
+  transition:transform .14s ease, box-shadow .14s ease, border-color .14s ease;position:relative;}
+.hero-card:hover{transform:translateY(-4px);box-shadow:0 14px 30px rgba(0,0,0,.45);border-color:#4a4740;}
+.hero-card .hc-portrait{width:84px;height:84px;border-radius:50%;margin:0 auto 10px;overflow:hidden;background:#000;}
+.hero-card .hc-portrait img{width:100%;height:100%;object-fit:cover;display:block;}
+.hero-card .hc-portrait .cover-fallback{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:22px;color:#fff;}
+.hero-card .hc-name{font-weight:700;font-size:13.5px;}
+.hero-card .hc-alias{font-size:11px;color:var(--dim2);margin-top:1px;}
+.hero-card .hc-count{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--dim2);margin-top:6px;}
+.hero-card .hc-crown{position:absolute;top:8px;right:10px;font-size:16px;filter:drop-shadow(0 2px 3px rgba(0,0,0,.6));}
+
+/* ---------- heroes: appearance rows + team-ups ---------- */
+.appearance-row{display:flex;align-items:center;gap:14px;border:var(--line);border-radius:6px;padding:10px 14px;margin-bottom:8px;background:var(--card);cursor:pointer;}
+.appearance-row:hover{background:var(--bg3);}
+.appearance-row .ar-cover{width:40px;height:60px;border-radius:4px;overflow:hidden;flex-shrink:0;background:#000;}
+.appearance-row .ar-cover img{width:100%;height:100%;object-fit:cover;display:block;}
+.appearance-row .ar-cover .cover-fallback{width:100%;height:100%;font-size:8px;display:flex;align-items:center;justify-content:center;color:#fff;text-align:center;}
+.first-appearance-badge{font-family:'Permanent Marker',cursive;font-size:11px;color:var(--yellow);transform:rotate(-3deg);margin-left:auto;flex-shrink:0;}
+.teamup-chip{display:inline-flex;align-items:center;gap:8px;background:#211f1c;border:1px solid #3a372f;border-radius:20px;padding:5px 14px 5px 5px;margin:0 8px 8px 0;cursor:pointer;transition:transform .12s ease,border-color .12s ease;}
+.teamup-chip:hover{transform:translateY(-2px);border-color:#6b675b;}
+.teamup-chip .tc-dot{width:26px;height:26px;border-radius:50%;overflow:hidden;background:#000;flex-shrink:0;}
+.teamup-chip .tc-dot img{width:100%;height:100%;object-fit:cover;}
+.teamup-chip .tc-dot .cover-fallback{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;color:#fff;}
+.teamup-chip .tc-n{font-size:12px;font-weight:700;}
+.teamup-chip .tc-c{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--dim2);}
+
+/* ---------- hero picker (used in issue add/edit forms) ---------- */
+.hero-picker{display:flex;flex-wrap:wrap;gap:7px;max-height:150px;overflow:auto;border:1.5px solid #45423a;border-radius:6px;padding:9px;background:#0f0e0c;}
+.hero-check{display:flex;align-items:center;gap:6px;background:#211f1c;border:1px solid #3a372f;border-radius:20px;padding:5px 11px 5px 8px;font-size:12px;cursor:pointer;user-select:none;}
+.hero-check input{width:auto;padding:0;margin:0;accent-color:var(--red);}
+.hero-check.checked{border-color:var(--yellow);}
+
+.section-title{font-size:19px;font-weight:800;border-bottom:var(--line);padding-bottom:8px;margin:26px 0 14px;display:flex;justify-content:space-between;align-items:center;}
+.review-card{border:var(--line);border-radius:6px;padding:14px 16px;margin-bottom:10px;background:var(--card);}
+.review-card .rhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;}
+.stars{color:var(--yellow);letter-spacing:2px;font-size:14px;}
+.who-list{display:flex;flex-wrap:wrap;gap:8px;}
+.who-chip{display:flex;align-items:center;gap:6px;border:var(--line);border-radius:20px;padding:4px 12px 4px 4px;font-size:12.5px;font-weight:600;}
+.who-chip .dot{width:20px;height:20px;border-radius:5px;color:#fff;font-size:10px;display:flex;align-items:center;justify-content:center;font-weight:800;}
+
+.empty{color:var(--dim2);font-style:italic;padding:16px 0;}
+
+/* ---------- reading progress ring ---------- */
+.progress-ring-wrap{position:relative;width:72px;height:72px;flex-shrink:0;}
+.progress-ring{width:100%;height:100%;transform:rotate(-90deg);display:block;}
+.ring-track{fill:none;stroke:#2a2822;stroke-width:9;}
+.ring-fill{fill:none;stroke:var(--red);stroke-width:9;stroke-linecap:round;
+  transition:stroke-dashoffset .8s cubic-bezier(.22,1,.36,1), stroke .3s ease;}
+.ring-fill.complete{stroke:var(--green);}
+.progress-ring-label{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+.progress-ring-pct{font-family:'Bebas Neue',sans-serif;font-size:17px;color:#fff;line-height:1;}
+.progress-ring-sub{font-size:8.5px;color:var(--dim2);font-family:'JetBrains Mono',monospace;margin-top:1px;}
+.progress-ring-wrap.pulse{animation:ringPulse .6s ease;}
+@keyframes ringPulse{0%{transform:scale(1);}40%{transform:scale(1.14);}100%{transform:scale(1);}}
+
+/* ---------- star rating hover preview ---------- */
+.star-picker span{display:inline-block;transition:color .12s ease, transform .12s ease;}
+.star-picker span:hover{transform:scale(1.2) rotate(-4deg);}
+.star-picker span.pop{animation:starPop .35s ease;}
+@keyframes starPop{0%{transform:scale(1);}35%{transform:scale(1.5) rotate(-8deg);}100%{transform:scale(1);}}
+.star-picker-label{font-family:'Permanent Marker',cursive;font-size:15px;color:var(--yellow);margin-top:4px;min-height:18px;transform:rotate(-2deg);}
+
+/* ---------- comic bursts + confetti ---------- */
+.comic-burst{
+  position:fixed;z-index:300;pointer-events:none;font-family:'Permanent Marker',cursive;
+  font-size:26px;text-shadow:2px 2px 0 rgba(0,0,0,.55);white-space:nowrap;
+  animation:burstFloat 1s ease forwards;
+  --rot:-8deg;
+}
+@keyframes burstFloat{
+  0%{transform:translate(-50%,-50%) scale(.4) rotate(var(--rot));opacity:0;}
+  15%{transform:translate(-50%,-70%) scale(1.15) rotate(var(--rot));opacity:1;}
+  30%{transform:translate(-50%,-78%) scale(1) rotate(var(--rot));opacity:1;}
+  100%{transform:translate(-50%,-140%) scale(1) rotate(var(--rot));opacity:0;}
+}
+.confetti-piece{position:fixed;top:-20px;z-index:299;pointer-events:none;border-radius:2px;
+  animation:confettiFall linear forwards;}
+@keyframes confettiFall{
+  0%{transform:translateY(0) rotate(0deg);opacity:1;}
+  100%{transform:translateY(110vh) rotate(600deg);opacity:.9;}
+}
+.complete-banner{
+  position:fixed;top:26px;left:50%;transform:translateX(-50%) translateY(-20px);z-index:301;
+  background:linear-gradient(135deg,var(--red),#b8291d);color:#fff;padding:16px 28px;border-radius:10px;
+  box-shadow:0 20px 50px rgba(0,0,0,.55);border:2px solid rgba(255,255,255,.15);
+  display:flex;flex-direction:column;align-items:center;text-align:center;opacity:0;
+  animation:bannerIn .5s cubic-bezier(.2,1.4,.4,1) forwards, bannerOut .5s ease forwards 2.6s;
+}
+.complete-banner .cb-title{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:1px;}
+.complete-banner .cb-sub{font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(255,255,255,.85);margin-top:2px;}
+@keyframes bannerIn{0%{opacity:0;transform:translateX(-50%) translateY(-30px) scale(.85);}60%{opacity:1;transform:translateX(-50%) translateY(4px) scale(1.03);}100%{opacity:1;transform:translateX(-50%) translateY(0) scale(1);}}
+@keyframes bannerOut{to{opacity:0;transform:translateX(-50%) translateY(-16px) scale(.95);}}
+
+/* micro pop feedback on action buttons */
+.actions-row button.active{animation:btnPop .35s ease;}
+@keyframes btnPop{0%{transform:scale(1);}40%{transform:scale(1.08);}100%{transform:scale(1);}}
+
+/* ---------- cover lightbox ---------- */
+.lightbox-overlay{
+  position:fixed;inset:0;background:rgba(6,6,7,.9);z-index:200;
+  display:flex;align-items:center;justify-content:center;padding:40px;cursor:zoom-out;
+}
+.lightbox-overlay img{max-width:min(88vw,560px);max-height:86vh;border-radius:10px;box-shadow:0 30px 70px rgba(0,0,0,.7);}
+.lightbox-close{position:absolute;top:22px;right:28px;background:rgba(255,255,255,.08);border:1px solid #4a4740;color:#fff;width:38px;height:38px;border-radius:50%;font-size:18px;display:flex;align-items:center;justify-content:center;cursor:pointer;}
+.lightbox-close:hover{background:rgba(255,255,255,.16);}
+
+/* ---------- modal ---------- */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);display:flex;align-items:flex-start;justify-content:center;padding:50px 16px;z-index:100;overflow:auto;}
+.modal{background:var(--bg2);border:var(--line);border-radius:8px;box-shadow:0 20px 50px rgba(0,0,0,.6);padding:24px;max-width:460px;width:100%;}
+.modal h3{margin-top:0;color:#fff;}
+.modal-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:16px;}
+.star-picker{display:flex;gap:4px;font-size:26px;cursor:pointer;}
+.star-picker span{color:#3a372f;}
+.star-picker span.on{color:var(--yellow);}
+.import-note{font-size:11.5px;color:var(--dim2);border-left:2px solid #4a4740;padding-left:10px;margin-top:10px;}
+.color-swatches{display:flex;gap:8px;flex-wrap:wrap;}
+.swatch{width:28px;height:28px;border-radius:6px;cursor:pointer;border:2px solid transparent;}
+.swatch.sel{border-color:#fff;}
+footer.indicia{max-width:1280px;margin:0 auto;padding:10px 32px 40px;font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--dim2);text-align:center;}
+.danger-btn{color:var(--red)!important;border-color:var(--red)!important;}
+.danger-btn:hover{background:rgba(224,57,44,.12)!important;}
+
+/* ---------- logo easter egg ---------- */
+#topbar .logo{cursor:pointer;user-select:none;transition:transform .12s ease;}
+#topbar .logo:active{transform:scale(.94);}
+
+/* ---------- currency pill ---------- */
+.currency-pill, #who-currency{
+  font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;
+  background:rgba(242,183,5,.12);color:var(--yellow);border:1px solid rgba(242,183,5,.35);
+  padding:6px 11px;border-radius:20px;display:inline-flex;align-items:center;gap:5px;white-space:nowrap;
+}
+.ach-header{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:6px;}
+.ach-header .currency-pill{font-size:15px;padding:9px 16px;}
+
+/* ---------- shop ---------- */
+.shop-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px;margin:14px 0 28px;}
+.shop-card{background:var(--card);border:var(--line);border-radius:10px;padding:14px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:8px;}
+.shop-card.active{border-color:var(--cyan);box-shadow:0 0 0 1px var(--cyan) inset;}
+.shop-swatch{width:100%;height:54px;border-radius:6px;}
+.frame-preview-avatar{width:54px;height:54px;border-radius:50%;background:#2c2a26;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;color:#fff;}
+.shop-name{font-weight:700;font-size:13px;}
+.shop-card button{width:100%;}
+
+/* ---------- badges ---------- */
+.badge-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:14px;margin:14px 0 40px;}
+.badge-card{background:var(--card);border:var(--line);border-left:4px solid #3a372f;border-radius:8px;padding:14px;display:flex;flex-direction:column;gap:6px;}
+.badge-card.locked{opacity:.55;}
+.badge-card.unlocked.tier-bronze{border-left-color:#a5673f;}
+.badge-card.unlocked.tier-silver{border-left-color:#c7cbd1;}
+.badge-card.unlocked.tier-gold{border-left-color:#f2c94c;}
+.badge-icon{font-size:26px;line-height:1;}
+.badge-name{font-weight:800;font-size:14px;}
+.badge-desc{font-size:12px;color:var(--dim);line-height:1.4;flex:1;}
+.badge-progress{height:6px;border-radius:3px;background:#2c2a26;overflow:hidden;}
+.badge-progress-fill{height:100%;background:var(--cyan);}
+.badge-progress-label{font-size:10.5px;color:var(--dim2);}
+.badge-reward{font-size:11px;color:var(--yellow);}
+
+/* ---------- achievement toast ---------- */
+.achievement-toast{
+  position:fixed;right:20px;bottom:20px;z-index:400;
+  background:var(--bg2);border:1.5px solid var(--yellow);border-radius:10px;
+  padding:12px 16px;display:flex;align-items:center;gap:12px;max-width:300px;
+  box-shadow:0 8px 30px rgba(0,0,0,.5);
+  animation:toastIn .35s cubic-bezier(.2,1.4,.4,1);
+}
+.achievement-toast.out{animation:toastOut .4s ease forwards;}
+@keyframes toastIn{from{transform:translateX(30px);opacity:0;}to{transform:translateX(0);opacity:1;}}
+@keyframes toastOut{to{transform:translateX(30px);opacity:0;}}
+.at-icon{font-size:28px;}
+.at-title{font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--dim2);font-weight:700;}
+.at-name{font-weight:800;font-size:14px;}
+.at-reward{font-size:11.5px;color:var(--yellow);margin-top:2px;}
+@media (max-width:640px){
+  .achievement-toast{left:16px;right:16px;max-width:none;}
+}
+@media (max-width:640px){
+  #topbar{padding:14px 16px 22px;}
+  #tabs{padding:0 16px;gap:14px;}
+  .wrap{padding:0 16px;}
+  #hero .hero-body{padding:0 16px 30px;}
+  .row-head{padding:0 16px;}
+  .row-track{padding:6px 16px 14px;}
+  #hero h1{font-size:36px;}
+  .kv{grid-template-columns:100px 1fr;}
+  .issue-hero .cover-col{width:100%;max-width:340px;margin:0 auto;}
+}
+</style>
+</head>
+<body>
+
+<div id="topbar" class="hidden">
+  <div class="logo" onclick="handleLogoClick()" title="COMICBOX">COMICBOX</div>
+  <input id="search-input" class="mono" placeholder="Search series…" oninput="handleSearchInput(this.value)"
+    style="max-width:220px;background:rgba(255,255,255,.08);border-color:#4a4740;" />
+  <div class="who">
+    <span id="who-currency" class="mono" style="cursor:pointer;" onclick="setTab('achievements')" title="Ink Points — spend them on themes and frames"></span>
+    <span id="who-name" class="mono" style="font-size:12px;color:var(--dim);cursor:pointer;" onclick="goMyProfile()"></span>
+    <div id="who-avatar" class="avatar" style="cursor:pointer;" onclick="goMyProfile()"></div>
+    <button class="small ghost" onclick="doSignOut()">Sign out</button>
+  </div>
+</div>
+
+<div id="tabs" class="hidden">
+  <button data-tab="home" onclick="setTab('home')">Home</button>
+  <button data-tab="mylist" onclick="setTab('mylist')">Reading List</button>
+  <button data-tab="collection" onclick="setTab('collection')">Physical Collection</button>
+  <button data-tab="heroes" onclick="setTab('heroes')">Heroes</button>
+  <button data-tab="achievements" onclick="setTab('achievements')">Achievements</button>
+  <button data-tab="news" onclick="setTab('news')">News</button>
+  <button data-tab="users" onclick="setTab('users')">Users</button>
+</div>
+
+<main>
+
+<!-- AUTH GATE -->
+<div id="view-auth">
+  <h1>COMICBOX</h1>
+  <p id="auth-tagline">Sign in to track comics with friends anywhere in the world.</p>
+  <div style="max-width:340px;margin:0 auto;text-align:left;" id="auth-form">
+    <div class="field" id="auth-name-field">
+      <label>Display name</label>
+      <input id="auth-name" maxlength="24" placeholder="e.g. Jordan" />
+    </div>
+    <div class="field">
+      <label>Email</label>
+      <input id="auth-email" type="email" placeholder="you@example.com" />
+    </div>
+    <div class="field">
+      <label>Password</label>
+      <input id="auth-password" type="password" placeholder="At least 6 characters" />
+    </div>
+    <div class="field" id="auth-color-field">
+      <label>Color</label>
+      <div class="color-swatches" id="auth-swatches"></div>
+    </div>
+    <div id="auth-error" class="mono" style="color:var(--red);font-size:12px;margin-bottom:10px;"></div>
+    <div class="modal-actions" style="justify-content:center;">
+      <button class="primary" id="auth-submit-btn" onclick="submitAuthForm()">Create account</button>
+    </div>
+    <p class="mono" style="font-size:12.5px;color:var(--dim2);text-align:center;margin-top:18px;">
+      <span id="auth-toggle-text">Already have an account?</span>
+      <a href="#" onclick="toggleAuthMode();return false;" style="color:var(--cyan);text-decoration:underline;" id="auth-toggle-link">Sign in</a>
+    </p>
+  </div>
+</div>
+
+<!-- USERS DIRECTORY -->
+<div id="view-users" class="hidden">
+  <h1>Users</h1>
+  <p>Everyone tracking comics on this ComicBox. Click a card to see their profile.</p>
+  <div class="profile-grid" id="profile-grid"></div>
+</div>
+
+<!-- SINGLE-PAGE PROFILE (yours or a friend's — reviews, lists, stats, all in one place) -->
+<div id="view-profile" class="hidden">
+  <div id="profile-body"></div>
+</div>
+
+<!-- HOME (netflix-style rows / my list / collection all render into home-body) -->
+<div id="view-home" class="hidden">
+  <div id="home-body"></div>
+</div>
+
+<!-- SERIES PAGE -->
+<div id="view-series" class="hidden">
+  <div class="wrap">
+    <button class="backbtn ghost small" onclick="setTab('home')">&larr; Back</button>
+    <div class="panel">
+      <div style="display:flex;gap:22px;flex-wrap:wrap;">
+        <div id="series-cover-wrap"></div>
+        <div style="flex:1;min-width:220px;">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;">
+            <h2 id="series-title" style="font-size:32px;color:#fff;margin:0;"></h2>
+            <div style="display:flex;align-items:center;gap:12px;flex-shrink:0;">
+              <div class="progress-ring-wrap" id="series-progress-wrap" title="Reading progress">
+                <svg viewBox="0 0 100 100" class="progress-ring">
+                  <circle class="ring-track" cx="50" cy="50" r="42"></circle>
+                  <circle class="ring-fill" id="ring-fill-circle" cx="50" cy="50" r="42"></circle>
+                </svg>
+                <div class="progress-ring-label">
+                  <div class="progress-ring-pct" id="ring-pct">0%</div>
+                  <div class="progress-ring-sub" id="ring-sub">0/0</div>
+                </div>
+              </div>
+              <button class="small ghost" onclick="openEditSeries()">Edit series</button>
+              <button class="small ghost danger-btn" onclick="deleteSeries()">Delete series</button>
+            </div>
+          </div>
+          <div id="series-publisher" class="mono" style="color:var(--dim2);margin-bottom:8px;font-size:12px;"></div>
+          <div class="genre-pills" id="series-genres"></div>
+          <p id="series-desc" style="color:var(--dim);"></p>
+          <div id="series-comicvine"></div>
+        </div>
+      </div>
+    </div>
+    <div class="section-title">Issue Covers</div>
+    <div class="row" id="series-issue-row"></div>
+    <div class="section-title">Issues <button class="small" onclick="openAddIssue()">+ Add Issue</button></div>
+    <div id="issue-list"></div>
+  </div>
+</div>
+
+<!-- ISSUE PAGE -->
+<div id="view-issue" class="hidden">
+  <div class="wrap">
+    <button class="backbtn ghost small" onclick="backToSeries()">&larr; Back to series</button>
+    <div class="panel">
+      <div class="issue-hero">
+        <div class="cover-col">
+          <div id="issue-cover-wrap"></div>
+          <div class="variant-strip" id="variant-strip"></div>
+          <button class="small ghost" style="margin-top:8px;width:100%;" onclick="openAddVariant()">+ Add variant cover</button>
+        </div>
+        <div class="info-col">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;">
+            <h2 id="issue-title"></h2>
+            <div style="display:flex;gap:8px;flex-shrink:0;">
+              <button class="small ghost" onclick="openEditIssue()">Edit issue</button>
+              <button class="small ghost danger-btn" onclick="deleteIssue()">Delete issue</button>
+            </div>
+          </div>
+          <div class="subtitle mono" id="issue-subtitle"></div>
+          <div id="issue-avg-rating" style="margin-bottom:10px;"></div>
+          <div class="kv" id="issue-kv"></div>
+          <p id="issue-desc" style="color:var(--dim);"></p>
+          <div class="hero-chip-row" id="issue-heroes"></div>
+          <div class="issue-nav-row" id="issue-nav-row"></div>
+          <div class="actions-row owner-only">
+            <button id="btn-read" onclick="toggleRead()">Mark as Read</button>
+            <button id="btn-list" onclick="toggleReadList()">Add to Reading List</button>
+            <button id="btn-collection" class="owned-btn" onclick="toggleCollection()">Add to Physical Collection</button>
+            <button class="primary" onclick="openReview()">Write a Review</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="section-title">Who's read this</div>
+    <div class="panel"><div class="who-list" id="who-read"></div></div>
+    <div class="section-title">Reviews</div>
+    <div class="panel" id="reviews-list"></div>
+  </div>
+</div>
+
+<!-- HERO DETAIL PAGE -->
+<div id="view-hero-detail" class="hidden">
+  <div class="wrap">
+    <button class="backbtn ghost small" onclick="backToHeroes()">&larr; Back to Heroes</button>
+    <div class="panel">
+      <div class="hero-hero">
+        <div class="hero-portrait-col">
+          <div id="hero-portrait-wrap"></div>
+          <div class="hero-affiliation-pill" id="hero-affiliation"></div>
+        </div>
+        <div class="info-col">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;">
+            <div>
+              <h2 id="hero-name" style="font-size:30px;margin:0 0 2px;color:#fff;"></h2>
+              <div class="subtitle mono" id="hero-alias"></div>
+            </div>
+            <div style="display:flex;gap:8px;flex-shrink:0;">
+              <button class="small ghost" id="hero-fav-btn" onclick="toggleFavoriteHero()">☆ Set as Favorite</button>
+              <button class="small ghost" onclick="openEditHero()">Edit hero</button>
+              <button class="small ghost" onclick="deleteHero()">Delete</button>
+            </div>
+          </div>
+          <blockquote id="hero-bio" class="hero-quote"></blockquote>
+          <div class="power-tags" id="hero-powers"></div>
+          <div id="hero-gallery-wrap"></div>
+          <div class="stat-grid" id="hero-stats"></div>
+        </div>
+      </div>
+    </div>
+    <div class="section-title">Appearances <span class="mono" id="hero-appearance-count" style="font-weight:400;font-size:12px;color:var(--dim2);"></span></div>
+    <div class="panel" id="hero-appearances"></div>
+    <div class="section-title" id="hero-teamups-title">Frequent Team-Ups</div>
+    <div class="panel" id="hero-teamups"></div>
+  </div>
+</div>
+
+</main>
+
+<footer class="indicia" id="footer"></footer>
+<div id="modal-root"></div>
+
+<script type="module">
+/* ===================== Firebase ===================== */
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+import {
+  getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,
+  onAuthStateChanged, signOut, updateProfile
+} from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
+import {
+  getFirestore, doc, getDoc, setDoc, deleteDoc, collection, getDocs
+} from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+
+// ⚠️ Replace with YOUR Firebase project's config (Project settings → General → Your apps → SDK setup).
+// These values are safe to expose publicly — real security comes from Firestore Rules + Auth, not secrecy.
+const firebaseConfig = {
+  apiKey: "REPLACE_ME",
+  authDomain: "REPLACE_ME.firebaseapp.com",
+  projectId: "REPLACE_ME",
+  storageBucket: "REPLACE_ME.appspot.com",
+  messagingSenderId: "REPLACE_ME",
+  appId: "REPLACE_ME"
+};
+const fbApp = initializeApp(firebaseConfig);
+const auth = getAuth(fbApp);
+const db = getFirestore(fbApp);
+let currentUser = null; // Firebase Auth user object, set by onAuthStateChanged
+
+/* ===================== storage helpers (now backed by Firestore) =====================
+   Each key from the original app (e.g. 'series-index', 'issues:s-nightshade',
+   'profile-data:UID123') becomes one document in a 'kv' collection. This keeps almost
+   all of the rendering/business logic below completely unchanged. */
+async function sGet(key){
+  try{
+    const snap = await getDoc(doc(db,'kv',key));
+    return snap.exists() ? snap.data().value : null;
+  }catch(e){ console.warn('sGet failed', key, e.code||e.message, e); return null; }
+}
+async function sSet(key, val){
+  try{ await setDoc(doc(db,'kv',key), {value: val}); return true; }
+  catch(e){
+    console.error('sSet failed for key "'+key+'":', e.code||e.message, e);
+    alert('Could not save — '+(e.code||e.message||'unknown error')+'. Check your connection and Firestore rules.');
+    return false;
+  }
+}
+async function sDel(key){
+  try{ await deleteDoc(doc(db,'kv',key)); }catch(e){ console.warn('sDel failed', key, e.code||e.message, e); }
+}
+
+/* ===================== state ===================== */
+const state = {
+  profiles: [],
+  currentProfileId: null,
+  seriesIndex: [],
+  issuesCache: {},
+  profileData: {},
+  currentSeriesId: null,
+  currentIssueId: null,
+  heroesIndex: [],
+  currentHeroId: null,
+  heroesFilter: 'all',
+  heroesSearch: '',
+  tab: 'home',
+  searchTerm: ''
+};
+
+const PALETTE = ['#e0392c','#33a1c9','#f2b705','#3c9169','#9463d9','#d97a2e'];
+const QUOTE_PALETTE = ['#e0392c','#33a1c9','#f2b705','#3c9169','#9463d9','#d97a2e','#ff2e88','#26f2b0','#c7cbd1','#f5e6c4'];
+/* ===================== quote styles (for hero signature quotes) ===================== */
+const QUOTE_STYLES = {
+  classic:{name:'Classic', font:"'Bebas Neue',sans-serif", fontStyle:'normal', letterSpacing:'0.6px'},
+  handwritten:{name:'Handwritten', font:"'Permanent Marker',cursive", fontStyle:'normal', letterSpacing:'0'},
+  typewriter:{name:'Typewriter', font:"'JetBrains Mono',monospace", fontStyle:'italic', letterSpacing:'0'},
+  elegant:{name:'Elegant Italic', font:"'Inter',sans-serif", fontStyle:'italic', letterSpacing:'0.2px'}
+};
+function heroQuoteStyle(h){ return QUOTE_STYLES[h && h.quoteStyle] || QUOTE_STYLES.classic; }
+function heroQuoteColor(h){ return (h && h.quoteColor) || colorFor(h ? h.id : 'x'); }
+function colorFor(seed){
+  let h=0; for(const c of String(seed)) h = (h*31 + c.charCodeAt(0))>>>0;
+  return PALETTE[h % PALETTE.length];
+}
+function initials(name){
+  return (name||'?').trim().split(/\s+/).map(w=>w[0]).slice(0,2).join('').toUpperCase();
+}
+/* ===================== themes ===================== */
+const THEMES = {
+  midnight:{name:'Midnight', free:true, vars:{bg:'#0a0a0c',bg2:'#161513',bg3:'#211f1c',card:'#1b1a17',text:'#f3f1e9',dim:'#a9a49a',dim2:'#716c62',red:'#e0392c',yellow:'#f2b705',green:'#3c9169',cyan:'#33a1c9',line:'1px solid #34322d'}},
+  daylight:{name:'Daylight', free:true, vars:{bg:'#f4f1ea',bg2:'#ffffff',bg3:'#eee9df',card:'#ffffff',text:'#1c1a17',dim:'#5c574d',dim2:'#8a8478',red:'#c62f22',yellow:'#b8790a',green:'#2f7a52',cyan:'#1f7f9e',line:'1px solid #ddd6c8'}},
+  newsprint:{name:'Newsprint', free:true, vars:{bg:'#e8ded0',bg2:'#f2ead9',bg3:'#ddd0b8',card:'#f2ead9',text:'#2b2317',dim:'#6b5d47',dim2:'#8f8065',red:'#9c3b2a',yellow:'#a67c1e',green:'#556b3a',cyan:'#3a6b6b',line:'1px solid #c9b998'}},
+  'high-contrast':{name:'High Contrast', free:true, vars:{bg:'#000000',bg2:'#0a0a0a',bg3:'#141414',card:'#000000',text:'#ffffff',dim:'#e0e0e0',dim2:'#bbbbbb',red:'#ff3b30',yellow:'#ffd60a',green:'#30d158',cyan:'#64d2ff',line:'2px solid #ffffff'}},
+  'golden-age':{name:'Golden Age', cost:40, vars:{bg:'#241d10',bg2:'#332811',bg3:'#402f12',card:'#2c2210',text:'#f5e6c4',dim:'#cbb27e',dim2:'#93835d',red:'#b8452f',yellow:'#e0a52b',green:'#6f7d3f',cyan:'#4f8a86',line:'1px solid #5a4820'}},
+  noir:{name:'Noir', cost:40, vars:{bg:'#0c0c0c',bg2:'#161616',bg3:'#1f1f1f',card:'#131313',text:'#f2f2f2',dim:'#a3a3a3',dim2:'#6e6e6e',red:'#a34a44',yellow:'#d9d9d9',green:'#bdbdbd',cyan:'#c9c9c9',line:'1px solid #2e2e2e'}},
+  'neon-underground':{name:'Neon Underground', cost:60, vars:{bg:'#0b0616',bg2:'#160b28',bg3:'#1e1036',card:'#150a26',text:'#f1e9ff',dim:'#b79ee0',dim2:'#7a5ea3',red:'#ff2e88',yellow:'#f2e205',green:'#26f2b0',cyan:'#33e0ff',line:'1px solid #3a2160'}},
+  'blood-moon':{name:'Blood Moon', cost:60, vars:{bg:'#0c0505',bg2:'#180808',bg3:'#230b0b',card:'#160707',text:'#f5e6e6',dim:'#c99a9a',dim2:'#8a5c5c',red:'#e0392c',yellow:'#e0392c',green:'#7a1f1f',cyan:'#c9636b',line:'1px solid #3d1414'}},
+  'true-believer':{name:'True Believer', achievementOnly:'true-believer', vars:{bg:'#150a05',bg2:'#231207',bg3:'#301909',card:'#1c0f06',text:'#fff3df',dim:'#e8c78a',dim2:'#b4884b',red:'#e0392c',yellow:'#ffcf3f',green:'#3c9169',cyan:'#f2b705',line:'1px solid #4a2c0c'}},
+  // ---- new themes ----
+  inkwash:{name:'Inkwash', cost:50, vars:{bg:'#10151a',bg2:'#182028',bg3:'#212c37',card:'#141b22',text:'#eef2f5',dim:'#9aacb8',dim2:'#657683',red:'#c65a4a',yellow:'#c9a13f',green:'#4a9a83',cyan:'#4f8fbf',line:'1px solid #2a3844'}},
+  'sunset-splash':{name:'Sunset Splash', cost:70, vars:{bg:'#1c0e13',bg2:'#2c141a',bg3:'#3d1c1f',card:'#251015',text:'#fdece0',dim:'#e0a98f',dim2:'#a06e5c',red:'#f2542d',yellow:'#f2a007',green:'#3c9169',cyan:'#e85d75',line:'1px solid #4a231f'}},
+  'chrome-age':{name:'Chrome Age', cost:90, vars:{bg:'#0d0f12',bg2:'#161a1f',bg3:'#1f242b',card:'#12151a',text:'#eef3f7',dim:'#a7b3bd',dim2:'#71808c',red:'#d8564a',yellow:'#c9c9c9',green:'#5aa3a3',cyan:'#7fb8e0',line:'1px solid #2b333c'}},
+  'genesis-gold':{name:'Genesis', achievementOnly:'genesis', vars:{bg:'#161006',bg2:'#241b0a',bg3:'#33270f',card:'#1c1508',text:'#fff6e0',dim:'#e6c98a',dim2:'#a8905e',red:'#e0392c',yellow:'#ffd23f',green:'#6f9d4f',cyan:'#f2b705',line:'1px solid #4a3a14'}},
+  century:{name:'Century Club', achievementOnly:'read-100', vars:{bg:'#0a0e14',bg2:'#121a24',bg3:'#1a2534',card:'#0f1620',text:'#eef4fb',dim:'#9fb2c9',dim2:'#647688',red:'#c04b3a',yellow:'#d8a83a',green:'#3c9169',cyan:'#4fd0e0',line:'1px solid #223347'}},
+  'rogues-den':{name:"Rogues' Den", achievementOnly:'rogues-gallery', vars:{bg:'#120608',bg2:'#1f0a0d',bg3:'#2c0f12',card:'#180709',text:'#f7e4e2',dim:'#c98a86',dim2:'#8c5652',red:'#ff3b30',yellow:'#8a6a3f',green:'#5c4040',cyan:'#a35a52',line:'1px solid #3d1216'}},
+  'ink-baron-theme':{name:'Ink Baron', achievementOnly:'ink-baron', vars:{bg:'#0c0a06',bg2:'#171208',bg3:'#211a0c',card:'#110d06',text:'#fbf3de',dim:'#cbb87f',dim2:'#8f7c4d',red:'#b8452f',yellow:'#f2c94c',green:'#8a7a2f',cyan:'#d4af37',line:'1px solid #3d3212'}},
+  'superfan-glow':{name:"Superfan", achievementOnly:'superfan', dynamicHero:true, vars:{bg:'#120a16',bg2:'#1e0f26',bg3:'#2a1533',card:'#160c1c',text:'#f6ecfa',dim:'#c9a3d9',dim2:'#8f6ba3',red:'#e0392c',yellow:'#f2b705',green:'#3c9169',cyan:'#d957f2',line:'1px solid #3d2049'}}
+};
+/* the hero whose color should drive "Superfan"-style cosmetics: whichever hero actually
+   triggered the Superfan achievement, falling back to the user's chosen Favorite Character */
+function getSuperfanHero(pd){
+  if(!pd) return null;
+  const sfHeroId = pd.achievements && pd.achievements.superfan && pd.achievements.superfan.heroId;
+  const hid = sfHeroId || pd.favoriteHeroId;
+  return hid ? findHero(hid) : null;
+}
+function applyTheme(themeId){
+  const t = THEMES[themeId] || THEMES.midnight;
+  const root = document.documentElement.style;
+  Object.entries(t.vars).forEach(([k,v])=> root.setProperty('--'+k, v));
+  if(t.dynamicHero && currentUser){
+    const hero = getSuperfanHero(state.profileData[currentUser.uid]);
+    if(hero && hero.quoteColor){
+      root.setProperty('--red', hero.quoteColor);
+      root.setProperty('--cyan', hero.quoteColor);
+    }
+  }
+  document.body.dataset.theme = themeId;
+}
+
+/* ===================== avatar frames ===================== */
+const FRAMES = {
+  none:{name:'No Frame', free:true, css:'none'},
+  bronze:{name:'Bronze Ring', cost:20, css:'0 0 0 3px #a5673f'},
+  silver:{name:'Silver Ring', cost:40, css:'0 0 0 3px #c7cbd1'},
+  gold:{name:'Gold Ring', cost:80, css:'0 0 0 3px #f2c94c'},
+  'comic-burst':{name:'Comic Burst', cost:100, css:'0 0 0 3px #e0392c, 0 0 0 6px #f2b705'},
+  villain:{name:'Villain Ring', cost:60, css:'0 0 0 3px #7a1f1f, 0 0 0 6px #0c0505'},
+  // ---- new frames ----
+  'chrome-ring':{name:'Chrome Ring', cost:100, css:'0 0 0 3px #d9dde2, 0 0 0 6px #7f8992'},
+  starburst:{name:'Starburst', cost:90, css:'0 0 0 3px #f2b705, 0 0 0 6px #e0392c, 0 0 0 9px #f2b705'},
+  'ink-splatter':{name:'Ink Splatter', cost:70, css:'0 0 0 3px #1b1a17, 0 0 0 5px #33a1c9, 0 0 0 7px #1b1a17'},
+  'genesis-frame':{name:'Genesis Frame', achievementOnly:'genesis', css:'0 0 0 3px #ffd23f, 0 0 0 6px #6f9d4f'},
+  'century-frame':{name:'Century Ring', achievementOnly:'read-100', css:'0 0 0 4px #4fd0e0, 0 0 0 7px #0f1620'},
+  'true-believer-frame':{name:'True Believer Ring', achievementOnly:'true-believer', css:'0 0 0 3px #ffcf3f, 0 0 0 6px #e0392c'},
+  'team-player-frame':{name:'Team Player Ring', achievementOnly:'team-player', css:'0 0 0 3px #33a1c9, 0 0 0 6px #9463d9, 0 0 0 9px #3c9169'},
+  'superfan-frame':{name:'Superfan Ring', achievementOnly:'superfan', dynamicHero:true, css:'0 0 0 3px #d957f2, 0 0 0 6px #9463d9'}
+};
+function applyAvatarFrame(){
+  if(!currentUser) return;
+  const pd = state.profileData[currentUser.uid];
+  if(!pd) return;
+  const f = FRAMES[pd.frame] || FRAMES.none;
+  let css = f.css;
+  if(f.dynamicHero){
+    const hero = getSuperfanHero(pd);
+    if(hero && hero.quoteColor) css = `0 0 0 3px ${hero.quoteColor}, 0 0 0 6px #1b1a17`;
+  }
+  const av = document.getElementById('who-avatar');
+  if(av) av.style.boxShadow = css;
+}
+function updateCurrencyBadge(){
+  if(!currentUser) return;
+  const pd = state.profileData[currentUser.uid];
+  const el = document.getElementById('who-currency');
+  if(el && pd) el.textContent = '🖋️ ' + (pd.currency||0);
+}
+
+/* ===================== achievements catalog ===================== */
+const ACHIEVEMENTS = [
+  // reading milestones
+  {id:'first-read', name:'First Page', desc:'Read your first issue.', tier:'bronze', reward:10, icon:'📖',
+    check:(ctx)=>({unlocked: ctx.totalRead>=1, progress:Math.min(ctx.totalRead,1), target:1})},
+  {id:'read-10', name:'Getting Into It', desc:'Read 10 issues.', tier:'bronze', reward:15, icon:'📚',
+    check:(ctx)=>({unlocked: ctx.totalRead>=10, progress:Math.min(ctx.totalRead,10), target:10})},
+  {id:'read-25', name:'Bookworm', desc:'Read 25 issues.', tier:'silver', reward:25, icon:'🐛',
+    check:(ctx)=>({unlocked: ctx.totalRead>=25, progress:Math.min(ctx.totalRead,25), target:25})},
+  {id:'read-50', name:'Longbox Legend', desc:'Read 50 issues.', tier:'silver', reward:40, icon:'📦',
+    check:(ctx)=>({unlocked: ctx.totalRead>=50, progress:Math.min(ctx.totalRead,50), target:50})},
+  {id:'read-100', name:'Century Club', desc:'Read 100 issues.', tier:'gold', reward:75, icon:'💯',
+    check:(ctx)=>({unlocked: ctx.totalRead>=100, progress:Math.min(ctx.totalRead,100), target:100})},
+  {id:'read-250', name:'Living Archive', desc:'Read 250 issues.', tier:'gold', reward:150, icon:'🏛️',
+    check:(ctx)=>({unlocked: ctx.totalRead>=250, progress:Math.min(ctx.totalRead,250), target:250})},
+  // series completion
+  {id:'series-1', name:'The Full Run', desc:'Finish reading every issue of a series.', tier:'bronze', reward:20, icon:'✅',
+    check:(ctx)=>({unlocked: ctx.seriesCompleted>=1, progress:Math.min(ctx.seriesCompleted,1), target:1})},
+  {id:'series-5', name:'Shelf Clearer', desc:'Complete 5 series.', tier:'silver', reward:50, icon:'🗄️',
+    check:(ctx)=>({unlocked: ctx.seriesCompleted>=5, progress:Math.min(ctx.seriesCompleted,5), target:5})},
+  {id:'series-10', name:'Completionist', desc:'Complete 10 series.', tier:'gold', reward:100, icon:'🏆',
+    check:(ctx)=>({unlocked: ctx.seriesCompleted>=10, progress:Math.min(ctx.seriesCompleted,10), target:10})},
+  // genres
+  {id:'genre-devotee', name:'Genre Devotee', desc:'Read 15 issues in a single genre.', tier:'silver', reward:30, icon:'🎭',
+    check:(ctx)=>({unlocked: ctx.maxGenreCount>=15, progress:Math.min(ctx.maxGenreCount,15), target:15})},
+  {id:'genre-omnivore', name:'Genre Omnivore', desc:'Read issues across 5 different genres.', tier:'silver', reward:30, icon:'🍽️',
+    check:(ctx)=>({unlocked: ctx.distinctGenres>=5, progress:Math.min(ctx.distinctGenres,5), target:5})},
+  {id:'genre-completionist', name:'Genre Obsessed', desc:'Read 30 issues in a single genre.', tier:'gold', reward:60, icon:'🔥',
+    check:(ctx)=>({unlocked: ctx.maxGenreCount>=30, progress:Math.min(ctx.maxGenreCount,30), target:30})},
+  // characters
+  {id:'superfan', name:'Superfan', desc:'Read 10 issues featuring the same hero.', tier:'silver', reward:30, icon:'💥',
+    check:(ctx)=>({unlocked: ctx.maxHeroCount>=10, progress:Math.min(ctx.maxHeroCount,10), target:10})},
+  {id:'team-player', name:'Team Player', desc:'Read issues featuring 10 different heroes.', tier:'silver', reward:30, icon:'🦸',
+    check:(ctx)=>({unlocked: ctx.distinctHeroes>=10, progress:Math.min(ctx.distinctHeroes,10), target:10})},
+  {id:'rogues-gallery', name:"Rogues' Gallery", desc:'Read 10 issues featuring a villain.', tier:'bronze', reward:20, icon:'😈',
+    check:(ctx)=>({unlocked: ctx.villainReadCount>=10, progress:Math.min(ctx.villainReadCount,10), target:10})},
+  // collector
+  {id:'collector-10', name:'Longboxer', desc:'Own 10 physical issues.', tier:'bronze', reward:15, icon:'🗃️',
+    check:(ctx)=>({unlocked: ctx.collectionCount>=10, progress:Math.min(ctx.collectionCount,10), target:10})},
+  {id:'collector-25', name:'Serious Collector', desc:'Own 25 physical issues.', tier:'silver', reward:35, icon:'💎',
+    check:(ctx)=>({unlocked: ctx.collectionCount>=25, progress:Math.min(ctx.collectionCount,25), target:25})},
+  // critic
+  {id:'first-review', name:'On the Record', desc:'Write your first review.', tier:'bronze', reward:10, icon:'✍️',
+    check:(ctx)=>({unlocked: ctx.reviewsCount>=1, progress:Math.min(ctx.reviewsCount,1), target:1})},
+  {id:'critic-10', name:'House Critic', desc:'Write 10 reviews.', tier:'silver', reward:30, icon:'📝',
+    check:(ctx)=>({unlocked: ctx.reviewsCount>=10, progress:Math.min(ctx.reviewsCount,10), target:10})},
+  {id:'five-star-fan', name:'Five-Star Fan', desc:'Give an issue a 5-star rating.', tier:'bronze', reward:10, icon:'⭐',
+    check:(ctx)=>({unlocked: ctx.fiveStar, progress:ctx.fiveStar?1:0, target:1})},
+  {id:'harsh-critic', name:'Harsh Critic', desc:'Give an issue a 1-star rating.', tier:'bronze', reward:10, icon:'💢',
+    check:(ctx)=>({unlocked: ctx.oneStar, progress:ctx.oneStar?1:0, target:1})},
+  // creator
+  {id:'world-builder', name:'World Builder', desc:'Add your first series.', tier:'bronze', reward:15, icon:'🏗️',
+    check:(ctx,pd)=>({unlocked: (pd.stats.seriesCreated||0)>=1, progress:Math.min(pd.stats.seriesCreated||0,1), target:1})},
+  {id:'cast-member', name:'Cast Member', desc:'Add your first hero.', tier:'bronze', reward:15, icon:'🎬',
+    check:(ctx,pd)=>({unlocked: (pd.stats.heroesCreated||0)>=1, progress:Math.min(pd.stats.heroesCreated||0,1), target:1})},
+  {id:'archivist', name:'Archivist', desc:'Add 10 issues to the library.', tier:'silver', reward:35, icon:'🗂️',
+    check:(ctx,pd)=>({unlocked: (pd.stats.issuesCreated||0)>=10, progress:Math.min(pd.stats.issuesCreated||0,10), target:10})},
+  // secret / niche
+  {id:'night-owl', name:'Night Owl', desc:'Mark an issue read between midnight and 4AM.', tier:'bronze', reward:20, icon:'🦉', secret:true,
+    check:(ctx,pd)=>({unlocked: !!pd.eggFlags.nightOwl, progress:pd.eggFlags.nightOwl?1:0, target:1})},
+  {id:'true-believer', name:'True Believer', desc:'Click the COMICBOX logo like you mean it.', tier:'bronze', reward:15, icon:'✊', secret:true,
+    check:(ctx,pd)=>({unlocked: !!pd.eggFlags.trueBeliever, progress:pd.eggFlags.trueBeliever?1:0, target:1})},
+  {id:'konami', name:'The Code', desc:'Some button sequences are legendary.', tier:'gold', reward:50, icon:'🕹️', secret:true,
+    check:(ctx,pd)=>({unlocked: !!pd.eggFlags.konami, progress:pd.eggFlags.konami?1:0, target:1})},
+  {id:'excelsior', name:'Excelsior!', desc:'Search for the word that says it all.', tier:'bronze', reward:15, icon:'🌟', secret:true,
+    check:(ctx,pd)=>({unlocked: !!pd.eggFlags.excelsior, progress:pd.eggFlags.excelsior?1:0, target:1})},
+  {id:'maxed-out', name:'Maxed Out', desc:'Create a hero with every stat at full power.', tier:'silver', reward:25, icon:'📈', secret:true,
+    check:(ctx,pd)=>({unlocked: !!pd.eggFlags.maxedHero, progress:pd.eggFlags.maxedHero?1:0, target:1})},
+  {id:'indecisive', name:'Indecisive', desc:'Flip a rating from one extreme straight to the other.', tier:'bronze', reward:15, icon:'🔄', secret:true,
+    check:(ctx,pd)=>({unlocked: !!pd.eggFlags.indecisive, progress:pd.eggFlags.indecisive?1:0, target:1})},
+  // new: creator milestones
+  {id:'genesis', name:'Genesis', desc:'Add your first series, hero, and issue.', tier:'bronze', reward:20, icon:'✨',
+    check:(ctx,pd)=>{
+      const done = (pd.stats.seriesCreated||0)>=1 && (pd.stats.heroesCreated||0)>=1 && (pd.stats.issuesCreated||0)>=1;
+      const progress = [pd.stats.seriesCreated, pd.stats.heroesCreated, pd.stats.issuesCreated].filter(v=>(v||0)>=1).length;
+      return {unlocked: done, progress, target:3};
+    }},
+  // new: characters
+  {id:'dynamic-duo', name:'Dynamic Duo', desc:'Read 5 issues featuring the same two heroes together.', tier:'silver', reward:30, icon:'🤝',
+    check:(ctx)=>({unlocked: ctx.maxPairCount>=5, progress:Math.min(ctx.maxPairCount,5), target:5})},
+  {id:'anti-hero-fan', name:'Morally Grey', desc:'Read 10 issues featuring an anti-hero.', tier:'bronze', reward:20, icon:'🌗',
+    check:(ctx)=>({unlocked: ctx.antiReadCount>=10, progress:Math.min(ctx.antiReadCount,10), target:10})},
+  // new: critic / collector progressions
+  {id:'critic-25', name:'Ink-Stained Wretch', desc:'Write 25 reviews.', tier:'gold', reward:60, icon:'🖋️',
+    check:(ctx)=>({unlocked: ctx.reviewsCount>=25, progress:Math.min(ctx.reviewsCount,25), target:25})},
+  {id:'collector-50', name:'Vault Keeper', desc:'Own 50 physical issues.', tier:'gold', reward:70, icon:'🏦',
+    check:(ctx)=>({unlocked: ctx.collectionCount>=50, progress:Math.min(ctx.collectionCount,50), target:50})},
+  // new: meta / currency
+  {id:'ink-baron', name:'Ink Baron', desc:'Earn 500 Ink total from achievements.', tier:'gold', reward:0, icon:'💰',
+    check:(ctx,pd)=>({unlocked: (pd.stats.totalInkEarned||0)>=500, progress:Math.min(pd.stats.totalInkEarned||0,500), target:500})},
+  // new: secret / discovery combos
+  {id:'fickle-fan', name:'Fickle Fan', desc:'Change your Favorite Character three different times.', tier:'bronze', reward:15, icon:'💔', secret:true,
+    check:(ctx,pd)=>({unlocked: !!pd.eggFlags.fickleFan, progress:pd.eggFlags.fickleFan?1:0, target:1})},
+  {id:'perfectly-fine', name:'Perfectly Fine', desc:'Rate 5 different issues exactly 3 stars.', tier:'bronze', reward:15, icon:'😐', secret:true,
+    check:(ctx,pd)=>({unlocked: !!pd.eggFlags.perfectlyFine, progress:pd.eggFlags.perfectlyFine?1:0, target:1})},
+  // new: secret keyboard sequences
+  {id:'shazam', name:'One Magic Word', desc:'Some words have power, if you know how to type them.', tier:'bronze', reward:20, icon:'⚡', secret:true,
+    check:(ctx,pd)=>({unlocked: !!pd.eggFlags.shazam, progress:pd.eggFlags.shazam?1:0, target:1})},
+  {id:'flame-on', name:'Flame On', desc:'Some phrases are best typed, not spoken.', tier:'bronze', reward:20, icon:'🔥', secret:true,
+    check:(ctx,pd)=>({unlocked: !!pd.eggFlags.flameOn, progress:pd.eggFlags.flameOn?1:0, target:1})},
+  {id:'born-to-read', name:'Born to Read', desc:'Read a comic published on your birthday (month + day).', tier:'silver', reward:25, icon:'🎂',
+    check:(ctx)=>({unlocked: ctx.readOnBirthday, progress:ctx.readOnBirthday?1:0, target:1})}
+];
+
+/* build the stats context achievements are checked against */
+async function buildAchievementContext(pd, uid){
+  const ctx = {
+    totalRead: pd.read.length,
+    collectionCount: pd.collection.length,
+    reviewsCount: Object.keys(pd.reviews||{}).length,
+    genreCounts:{}, heroCounts:{}, pairCounts:{}, seriesCompleted:0, villainReadCount:0, antiReadCount:0,
+    fiveStar:false, oneStar:false, readOnBirthday:false
+  };
+  const profile = uid ? state.profiles.find(p=>p.id===uid) : null;
+  const birthdayMD = profile && profile.birthday ? profile.birthday.slice(5) : null; // 'MM-DD'
+  const bySeries = {};
+  pd.read.forEach(r=>{ (bySeries[r.seriesId] = bySeries[r.seriesId]||[]).push(r.issueId); });
+  for(const [seriesId, issueIds] of Object.entries(bySeries)){
+    const issues = await getIssues(seriesId);
+    const series = findSeries(seriesId);
+    if(issues.length && issueIds.length>=issues.length) ctx.seriesCompleted++;
+    for(const iid of issueIds){
+      const iss = issues.find(i=>i.id===iid);
+      if(!iss) continue;
+      if(birthdayMD && iss.publishDate && iss.publishDate.slice(5)===birthdayMD) ctx.readOnBirthday = true;
+      (series?.genres||[]).forEach(g=>{ ctx.genreCounts[g]=(ctx.genreCounts[g]||0)+1; });
+      const hids = iss.heroIds||[];
+      hids.forEach(hid=>{
+        ctx.heroCounts[hid]=(ctx.heroCounts[hid]||0)+1;
+        const hero = findHero(hid);
+        if(hero && hero.affiliation==='villain') ctx.villainReadCount++;
+        if(hero && hero.affiliation==='anti') ctx.antiReadCount++;
+      });
+      for(let i=0;i<hids.length;i++){
+        for(let j=i+1;j<hids.length;j++){
+          const key = [hids[i],hids[j]].sort().join('|');
+          ctx.pairCounts[key] = (ctx.pairCounts[key]||0)+1;
+        }
+      }
+    }
+  }
+  ctx.distinctGenres = Object.keys(ctx.genreCounts).length;
+  ctx.distinctHeroes = Object.keys(ctx.heroCounts).length;
+  ctx.maxGenreCount = Object.values(ctx.genreCounts).reduce((m,v)=>Math.max(m,v),0);
+  ctx.maxHeroCount = Object.values(ctx.heroCounts).reduce((m,v)=>Math.max(m,v),0);
+  ctx.maxHeroId = Object.entries(ctx.heroCounts).reduce((best,[hid,v])=> v>best.v?{hid,v}:best, {hid:null,v:0}).hid;
+  ctx.maxPairCount = Object.values(ctx.pairCounts).reduce((m,v)=>Math.max(m,v),0);
+  Object.values(pd.reviews||{}).forEach(r=>{ if(r.rating===5) ctx.fiveStar=true; if(r.rating===1) ctx.oneStar=true; });
+  return ctx;
+}
+
+/* checks every achievement, unlocks + pays out any newly-earned ones, toasts them */
+async function checkAchievements(uid){
+  if(!uid) return [];
+  const pd = await getProfileData(uid);
+  const ctx = await buildAchievementContext(pd, uid);
+  const newlyUnlocked = [];
+  for(const a of ACHIEVEMENTS){
+    if(pd.achievements[a.id]) continue;
+    let result;
+    try{ result = a.check(ctx, pd); }catch(e){ continue; }
+    if(result && result.unlocked){
+      pd.achievements[a.id] = {unlockedAt: Date.now()};
+      if(a.id==='superfan') pd.achievements[a.id].heroId = ctx.maxHeroId;
+      pd.currency = (pd.currency||0) + a.reward;
+      pd.stats.totalInkEarned = (pd.stats.totalInkEarned||0) + a.reward;
+      newlyUnlocked.push(a);
+    }
+  }
+  if(newlyUnlocked.length){
+    await saveProfileData(uid);
+    updateCurrencyBadge();
+    newlyUnlocked.forEach((a,i)=> setTimeout(()=>showAchievementToast(a), i*450));
+  }
+  return newlyUnlocked;
+}
+function showAchievementToast(a){
+  const el = document.createElement('div');
+  el.className = 'achievement-toast';
+  el.innerHTML = `<div class="at-icon">${a.icon}</div><div class="at-body"><div class="at-title">Achievement Unlocked</div><div class="at-name">${escapeHtml(a.name)}</div><div class="at-reward">+${a.reward} 🖋️ Ink</div></div>`;
+  document.body.appendChild(el);
+  if(a.tier==='gold') fireConfetti(70);
+  setTimeout(()=>{ el.classList.add('out'); setTimeout(()=>el.remove(),420); }, 3800);
+}
+
+/* ===================== shop actions ===================== */
+async function buyTheme(id){
+  const pd = await getProfileData(state.currentProfileId);
+  const t = THEMES[id];
+  if(!t || t.achievementOnly || pd.ownedThemes.includes(id) || pd.currency<t.cost) return;
+  pd.currency -= t.cost;
+  pd.ownedThemes.push(id);
+  pd.theme = id;
+  await saveProfileData(state.currentProfileId);
+  applyTheme(id);
+  updateCurrencyBadge();
+  await renderAchievementsTab();
+}
+async function selectTheme(id){
+  const pd = await getProfileData(state.currentProfileId);
+  const t = THEMES[id];
+  if(!t) return;
+  const owned = t.free || pd.ownedThemes.includes(id) || (t.achievementOnly && pd.achievements[t.achievementOnly]);
+  if(!owned) return;
+  pd.theme = id;
+  await saveProfileData(state.currentProfileId);
+  applyTheme(id);
+  await renderAchievementsTab();
+}
+async function buyFrame(id){
+  const pd = await getProfileData(state.currentProfileId);
+  const f = FRAMES[id];
+  if(!f || pd.ownedFrames.includes(id) || pd.currency<f.cost) return;
+  pd.currency -= f.cost;
+  pd.ownedFrames.push(id);
+  pd.frame = id;
+  await saveProfileData(state.currentProfileId);
+  applyAvatarFrame();
+  updateCurrencyBadge();
+  await renderAchievementsTab();
+}
+async function selectFrame(id){
+  const pd = await getProfileData(state.currentProfileId);
+  if(!FRAMES[id] || !pd.ownedFrames.includes(id)) return;
+  pd.frame = id;
+  await saveProfileData(state.currentProfileId);
+  applyAvatarFrame();
+  await renderAchievementsTab();
+}
+window.buyTheme=buyTheme; window.selectTheme=selectTheme; window.buyFrame=buyFrame; window.selectFrame=selectFrame;
+
+/* ===================== achievements tab ===================== */
+async function renderAchievementsTab(){
+  showView('home');
+  const body = document.getElementById('home-body');
+  const pd = await getProfileData(state.currentProfileId);
+  const ctx = await buildAchievementContext(pd);
+  const unlockedCount = ACHIEVEMENTS.filter(a=>pd.achievements[a.id]).length;
+  body.innerHTML = `
+    <div class="wrap" style="padding-top:30px;">
+      <div class="ach-header">
+        <div>
+          <h1 style="margin:0;">Achievements</h1>
+          <div class="mono" style="color:var(--dim2);font-size:12.5px;">${unlockedCount} / ${ACHIEVEMENTS.length} unlocked</div>
+        </div>
+        <div class="currency-pill">🖋️ <b>${pd.currency}</b> Ink</div>
+      </div>
+
+      <div class="section-title">Themes</div>
+      <div class="shop-grid" id="shop-themes"></div>
+
+      <div class="section-title">Avatar Frames</div>
+      <div class="shop-grid" id="shop-frames"></div>
+
+      <div class="section-title">Badges</div>
+      <div class="badge-grid" id="badge-grid"></div>
+    </div>
+  `;
+
+  const themeGrid = document.getElementById('shop-themes');
+  themeGrid.innerHTML = Object.entries(THEMES).map(([id,t])=>{
+    const owned = t.free || pd.ownedThemes.includes(id);
+    const lockedByAch = t.achievementOnly && !pd.achievements[t.achievementOnly];
+    const active = pd.theme===id;
+    let btn;
+    if(active) btn = `<button class="small ghost" disabled>Active</button>`;
+    else if(lockedByAch) btn = `<button class="small ghost" disabled>🔒 Secret achievement</button>`;
+    else if(t.achievementOnly || owned) btn = `<button class="small" onclick="selectTheme('${id}')">Select</button>`;
+    else btn = `<button class="small ${pd.currency>=t.cost?'primary':'ghost'}" onclick="buyTheme('${id}')" ${pd.currency<t.cost?'disabled':''}>Unlock — ${t.cost} 🖋️</button>`;
+    return `<div class="shop-card ${active?'active':''}">
+      <div class="shop-swatch" style="background:linear-gradient(135deg, ${t.vars.bg}, ${t.vars.red})"></div>
+      <div class="shop-name">${escapeHtml(t.name)}</div>
+      ${btn}
+    </div>`;
+  }).join('');
+
+  const frameGrid = document.getElementById('shop-frames');
+  const meName = (state.profiles.find(x=>x.id===currentUser.uid)||{}).name || '?';
+  const meColor = (state.profiles.find(x=>x.id===currentUser.uid)||{}).color || '#2c2a26';
+  frameGrid.innerHTML = Object.entries(FRAMES).map(([id,f])=>{
+    const owned = f.free || pd.ownedFrames.includes(id);
+    const active = pd.frame===id;
+    let btn;
+    if(active) btn = `<button class="small ghost" disabled>Active</button>`;
+    else if(owned) btn = `<button class="small" onclick="selectFrame('${id}')">Select</button>`;
+    else btn = `<button class="small ${pd.currency>=f.cost?'primary':'ghost'}" onclick="buyFrame('${id}')" ${pd.currency<f.cost?'disabled':''}>Unlock — ${f.cost} 🖋️</button>`;
+    return `<div class="shop-card ${active?'active':''}">
+      <div class="frame-preview-avatar" style="background:${meColor};box-shadow:${f.css};">${initials(meName)}</div>
+      <div class="shop-name">${escapeHtml(f.name)}</div>
+      ${btn}
+    </div>`;
+  }).join('');
+
+  const badgeGrid = document.getElementById('badge-grid');
+  badgeGrid.innerHTML = ACHIEVEMENTS.map(a=>{
+    const unlocked = pd.achievements[a.id];
+    let res = {progress:0, target:1};
+    try{ res = a.check(ctx, pd); }catch(e){}
+    const isSecret = a.secret && !unlocked;
+    const pct = res.target ? Math.min(100, Math.round((res.progress/res.target)*100)) : (unlocked?100:0);
+    return `<div class="badge-card ${unlocked?('unlocked tier-'+a.tier):'locked'}">
+      <div class="badge-icon">${isSecret ? '❓' : a.icon}</div>
+      <div class="badge-name">${isSecret ? 'Secret Achievement' : escapeHtml(a.name)}</div>
+      <div class="badge-desc">${isSecret ? 'Keep exploring to find this one.' : escapeHtml(a.desc)}</div>
+      ${(!unlocked && !a.secret && res.target>1) ? `<div class="badge-progress"><div class="badge-progress-fill" style="width:${pct}%"></div></div><div class="badge-progress-label mono">${res.progress}/${res.target}</div>` : ''}
+      ${unlocked ? `<div class="badge-reward mono">+${a.reward} 🖋️ earned</div>` : ''}
+    </div>`;
+  }).join('');
+}
+window.renderAchievementsTab = renderAchievementsTab;
+
+/* ===================== easter eggs ===================== */
+const KONAMI = ['arrowup','arrowup','arrowdown','arrowdown','arrowleft','arrowright','arrowleft','arrowright','b','a'];
+let konamiIdx = 0;
+let typedBuffer = '';
+document.addEventListener('keydown', (e)=>{
+  const key = e.key.length===1 ? e.key.toLowerCase() : e.key.toLowerCase();
+  if(key === KONAMI[konamiIdx]){
+    konamiIdx++;
+    if(konamiIdx===KONAMI.length){ konamiIdx=0; triggerKonami(); }
+  } else {
+    konamiIdx = (key===KONAMI[0]) ? 1 : 0;
+  }
+  // rolling text buffer for typed-word easter eggs (ignores which element has focus)
+  if(e.key.length===1) typedBuffer += e.key.toLowerCase();
+  else if(e.key===' ') typedBuffer += ' ';
+  typedBuffer = typedBuffer.slice(-20);
+  if(typedBuffer.endsWith('shazam')) triggerShazam();
+  if(typedBuffer.endsWith('flame on')) triggerFlameOn();
+});
+async function triggerKonami(){
+  if(!currentUser) return;
+  const pd = await getProfileData(currentUser.uid);
+  if(pd.eggFlags.konami) return;
+  pd.eggFlags.konami = true;
+  await saveProfileData(currentUser.uid);
+  fireConfetti(150);
+  await checkAchievements(currentUser.uid);
+}
+async function triggerShazam(){
+  if(!currentUser) return;
+  const pd = await getProfileData(currentUser.uid);
+  if(pd.eggFlags.shazam) return;
+  pd.eggFlags.shazam = true;
+  await saveProfileData(currentUser.uid);
+  comicBurst(document.querySelector('#topbar .logo') || document.body, 'SHAZAM!');
+  fireConfetti(90);
+  await checkAchievements(currentUser.uid);
+}
+async function triggerFlameOn(){
+  if(!currentUser) return;
+  const pd = await getProfileData(currentUser.uid);
+  if(pd.eggFlags.flameOn) return;
+  pd.eggFlags.flameOn = true;
+  await saveProfileData(currentUser.uid);
+  comicBurst(document.querySelector('#topbar .logo') || document.body, '🔥 FLAME ON! 🔥');
+  await checkAchievements(currentUser.uid);
+}
+
+let logoClickTimes = [];
+function handleLogoClick(){
+  const now = Date.now();
+  logoClickTimes.push(now);
+  logoClickTimes = logoClickTimes.filter(t=> now-t < 2500);
+  if(logoClickTimes.length>=7){
+    logoClickTimes = [];
+    triggerTrueBeliever();
+  }
+}
+async function triggerTrueBeliever(){
+  if(!currentUser) return;
+  const pd = await getProfileData(currentUser.uid);
+  if(pd.eggFlags.trueBeliever) return;
+  pd.eggFlags.trueBeliever = true;
+  await saveProfileData(currentUser.uid);
+  comicBurst(document.querySelector('#topbar .logo'), 'EXCELSIOR!');
+  await checkAchievements(currentUser.uid);
+}
+window.handleLogoClick = handleLogoClick;
+
+async function triggerExcelsior(){
+  if(!currentUser) return;
+  const pd = await getProfileData(currentUser.uid);
+  if(pd.eggFlags.excelsior) return;
+  pd.eggFlags.excelsior = true;
+  await saveProfileData(currentUser.uid);
+  comicBurst(document.getElementById('search-input'), 'EXCELSIOR!');
+  await checkAchievements(currentUser.uid);
+}
+
+function emptyProfileData(){
+  return {
+    toRead:[], read:[], collection:[], reviews:{},
+    currency:0, achievements:{}, theme:'midnight', frame:'none',
+    ownedThemes:['midnight','daylight','newsprint','high-contrast'],
+    ownedFrames:['none'],
+    stats:{seriesCreated:0, heroesCreated:0, issuesCreated:0, totalInkEarned:0},
+    eggFlags:{},
+    favoriteHeroId:null,
+    favoriteHeroHistory:[]
+  };
+}
+
+/* ===================== seed data =====================
+   IMPORTANT: seeding now only ever runs once, guarded by the 'seed-complete' flag doc.
+   Previously this re-ran the demo-data seed any time series-index/heroes-index failed
+   to load (e.g. a rules/permission problem, or a network hiccup) — which silently
+   overwrote anything real you'd added, right after a refresh. Now: if the flag is
+   already set, or either index already has *some* data in it, we just load what's
+   there and leave it alone. A real save failure will now show you the "Could not
+   save" error (with the actual Firestore error code) instead of quietly resetting. */
+async function seedIfEmpty(){
+  const seeded = await sGet('seed-complete');
+  const idx = await sGet('series-index');
+  const heroIdxExisting = await sGet('heroes-index');
+  if(seeded || idx || heroIdxExisting){
+    if(idx) state.seriesIndex = idx;
+    if(heroIdxExisting) state.heroesIndex = heroIdxExisting;
+    if(!seeded) await sSet('seed-complete', true); // backfill the flag for installs that predate it
+    return;
+  }
+  {
+    const now = Date.now();
+    const s1 = { id:'s-nightshade', title:'Nightshade Ink', publisher:'Halftone Comics', genres:['Mystery','Crime'],
+      description:'A disgraced forensic illustrator starts seeing the crimes before they happen, sketched in ink that only she can see.', coverUrl:'', addedAt: now-1000*60*60*24*30 };
+    const s2 = { id:'s-ironfeather', title:'Ironfeather', publisher:'Gutter & Gantry', genres:['Adventure','Fantasy'],
+      description:'A retired sky-pirate is dragged back into the clouds when her old crew\'s ship is found flying itself.', coverUrl:'', addedAt: now-1000*60*60*24*5 };
+    state.seriesIndex = [s1,s2];
+    await sSet('series-index', state.seriesIndex);
+
+    const issues1 = [
+      {id:'ni-1', number:1, title:'The First Sketch', publishDate:'2019-03-06', writer:'Delia Kova', penciller:'Ruth Ambroza', coverArtist:'Ruth Ambroza', description:'Mara Voss draws a murder three days before it happens, and can\'t explain why the ink won\'t wash off her hands.', coverUrl:'', variants:[], heroIds:['h-mara']},
+      {id:'ni-2', number:2, title:'Wet Paint', publishDate:'2019-04-03', writer:'Delia Kova', penciller:'Ruth Ambroza', coverArtist:'Jun Okafor', description:'The detective who doesn\'t believe her starts believing the sketches more than the evidence.', coverUrl:'', variants:[], heroIds:['h-mara','h-pryor']},
+      {id:'ni-3', number:3, title:'Negative Space', publishDate:'2019-05-01', writer:'Delia Kova', penciller:'Ruth Ambroza', coverArtist:'Ruth Ambroza', description:'A sketch of Mara\'s own apartment turns up in the evidence locker.', coverUrl:'', variants:[], heroIds:['h-mara','h-pryor']},
+      {id:'ni-4', number:4, title:'The Unfinished Face', publishDate:'2019-06-05', writer:'Delia Kova', penciller:'Sam Iyer', coverArtist:'Jun Okafor', description:'Mara races to finish a drawing before the person in it stops breathing.', coverUrl:'', variants:[], heroIds:['h-mara','h-pryor']}
+    ];
+    const issues2 = [
+      {id:'if-1', number:1, title:'Grounded', publishDate:'2021-09-14', writer:'Otis Marchetti', penciller:'Priya Nandakumar', coverArtist:'Priya Nandakumar', description:'Cove Ashworth swore off the sky. The sky didn\'t swear off her.', coverUrl:'', variants:[], heroIds:['h-cove']},
+      {id:'if-2', number:2, title:'The Ship That Waited', publishDate:'2021-10-12', writer:'Otis Marchetti', penciller:'Priya Nandakumar', coverArtist:'Priya Nandakumar', description:'The Ironfeather has been flying a search pattern for six years with no one aboard.', coverUrl:'', variants:[], heroIds:['h-cove']},
+      {id:'if-3', number:3, title:'Old Crew', publishDate:'2021-11-09', writer:'Otis Marchetti', penciller:'Bea Solheim', coverArtist:'Priya Nandakumar', description:'Cove finds out exactly who\'s been feeding the ship coordinates.', coverUrl:'', variants:[], heroIds:['h-cove','h-shrike']}
+    ];
+    state.issuesCache['s-nightshade'] = issues1;
+    state.issuesCache['s-ironfeather'] = issues2;
+    await sSet('issues:s-nightshade', issues1);
+    await sSet('issues:s-ironfeather', issues2);
+  }
+
+  state.heroesIndex = [
+    {id:'h-mara', name:'Mara Voss', alias:'The Ink Witch', affiliation:'anti', imageUrl:'',
+      bio:'Every line I draw comes true. I stopped asking why a long time ago.', quoteColor:'#9463d9', quoteStyle:'handwritten',
+      powers:['Precognitive Drawing','Enhanced Perception'], stats:{strength:2,speed:2,intelligence:6,energy:3,fighting:2,durability:2}, addedAt: Date.now()},
+    {id:'h-pryor', name:'Ellis Pryor', alias:'Detective Pryor', affiliation:'hero', imageUrl:'',
+      bio:'I stopped trusting the evidence. I started trusting her instead.', quoteColor:'#33a1c9', quoteStyle:'typewriter',
+      powers:['Investigation','Marksmanship'], stats:{strength:3,speed:3,intelligence:5,energy:1,fighting:4,durability:3}, addedAt: Date.now()},
+    {id:'h-cove', name:'Cove Ashworth', alias:'Ironfeather', affiliation:'hero', imageUrl:'',
+      bio:'I swore off the sky. The sky didn\'t swear off me.', quoteColor:'#f2b705', quoteStyle:'classic',
+      powers:['Flight','Aerial Combat','Ship Empathy'], stats:{strength:4,speed:6,intelligence:4,energy:5,fighting:5,durability:4}, addedAt: Date.now()},
+    {id:'h-shrike', name:'The Shrike', alias:'', affiliation:'villain', imageUrl:'',
+      bio:'Six years I fed that ship her coordinates. Let\'s see what she does with the truth.', quoteColor:'#e0392c', quoteStyle:'elegant',
+      powers:['Manipulation','Sabotage'], stats:{strength:3,speed:3,intelligence:6,energy:2,fighting:4,durability:3}, addedAt: Date.now()}
+  ];
+  await sSet('heroes-index', state.heroesIndex);
+  await sSet('seed-complete', true);
+}
+
+/* ===================== issues cache ===================== */
+async function getIssues(seriesId){
+  if(state.issuesCache[seriesId]) return state.issuesCache[seriesId];
+  const data = await sGet('issues:'+seriesId) || [];
+  state.issuesCache[seriesId] = data;
+  return data;
+}
+async function saveIssues(seriesId, issues){
+  state.issuesCache[seriesId] = issues;
+  await sSet('issues:'+seriesId, issues);
+}
+function findSeries(id){ return state.seriesIndex.find(s=>s.id===id); }
+
+/* ===================== heroes data layer ===================== */
+async function getHeroes(){
+  if(state.heroesIndex && state.heroesIndex.length) return state.heroesIndex;
+  const data = await sGet('heroes-index') || [];
+  state.heroesIndex = data;
+  return data;
+}
+async function saveHeroes(heroes){
+  state.heroesIndex = heroes;
+  await sSet('heroes-index', heroes);
+}
+function findHero(id){ return (state.heroesIndex||[]).find(h=>h.id===id); }
+function heroAffLabel(aff){ return aff==='villain' ? 'Villain' : (aff==='anti' ? 'Anti-Hero' : 'Hero'); }
+function heroAffClass(aff){ return aff==='villain' ? 'aff-villain' : (aff==='anti' ? 'aff-anti' : 'aff-hero'); }
+/* every issue across every series that tags this hero, newest series data pulled from cache/storage */
+async function getHeroAppearances(heroId){
+  const out = [];
+  for(const series of state.seriesIndex){
+    const issues = await getIssues(series.id);
+    for(const iss of issues){
+      if((iss.heroIds||[]).includes(heroId)) out.push({series, issue: iss});
+    }
+  }
+  out.sort((a,b)=> (a.issue.publishDate||'9999').localeCompare(b.issue.publishDate||'9999'));
+  return out;
+}
+/* other heroes who share at least one issue with this hero, ranked by shared-issue count */
+async function getHeroTeamUps(heroId){
+  const appearances = await getHeroAppearances(heroId);
+  const counts = {};
+  appearances.forEach(a=>{
+    (a.issue.heroIds||[]).forEach(id=>{
+      if(id===heroId) return;
+      counts[id] = (counts[id]||0)+1;
+    });
+  });
+  return Object.entries(counts).map(([id,count])=>({hero: findHero(id), count})).filter(x=>x.hero).sort((a,b)=>b.count-a.count);
+}
+
+/* ===================== profile data ===================== */
+async function getProfileData(pid){
+  if(state.profileData[pid]) return state.profileData[pid];
+  const d = await sGet('profile-data:'+pid) || emptyProfileData();
+  d.toRead = d.toRead||[]; d.read = d.read||[]; d.collection = d.collection||[]; d.reviews = d.reviews||{};
+  d.currency = d.currency||0;
+  d.achievements = d.achievements||{};
+  d.theme = d.theme||'midnight';
+  d.frame = d.frame||'none';
+  d.ownedThemes = Array.from(new Set([...(d.ownedThemes||[]), 'midnight','daylight','newsprint','high-contrast']));
+  d.ownedFrames = (d.ownedFrames && d.ownedFrames.length) ? d.ownedFrames : ['none'];
+  d.stats = d.stats || {seriesCreated:0, heroesCreated:0, issuesCreated:0};
+  d.stats.totalInkEarned = d.stats.totalInkEarned||0;
+  d.eggFlags = d.eggFlags || {};
+  d.favoriteHeroId = d.favoriteHeroId || null;
+  d.favoriteHeroHistory = d.favoriteHeroHistory || [];
+  state.profileData[pid] = d;
+  return d;
+}
+async function saveProfileData(pid){
+  await sSet('profile-data:'+pid, state.profileData[pid]);
+}
+
+/* ===================== accounts (Firebase Auth + 'users' collection) =====================
+   A "profile" is now a real worldwide account: id === Firebase Auth uid. The 'users'
+   collection is the public directory (name/color/email), one doc per uid, world-readable,
+   writable only by that uid (enforced in Firestore Rules). */
+async function fetchAllUsers(){
+  const snap = await getDocs(collection(db,'users'));
+  return snap.docs.map(d=>({id:d.id, ...d.data()}));
+}
+
+let authMode = 'signup'; // 'signup' | 'signin'
+function toggleAuthMode(){
+  authMode = authMode==='signup' ? 'signin' : 'signup';
+  const isSignup = authMode==='signup';
+  document.getElementById('auth-name-field').classList.toggle('hidden', !isSignup);
+  document.getElementById('auth-color-field').classList.toggle('hidden', !isSignup);
+  document.getElementById('auth-submit-btn').textContent = isSignup ? 'Create account' : 'Sign in';
+  document.getElementById('auth-toggle-text').textContent = isSignup ? 'Already have an account?' : "New here?";
+  document.getElementById('auth-toggle-link').textContent = isSignup ? 'Sign in' : 'Create one';
+  document.getElementById('auth-error').textContent = '';
+}
+function renderAuthSwatches(){
+  const sw = document.getElementById('auth-swatches');
+  sw.innerHTML = '';
+  let chosen = PALETTE[0];
+  PALETTE.forEach((c,i)=>{
+    const d = document.createElement('div');
+    d.className = 'swatch'+(i===0?' sel':'');
+    d.style.background = c;
+    d.onclick = ()=>{ chosen=c; [...sw.children].forEach(x=>x.classList.remove('sel')); d.classList.add('sel'); };
+    sw.appendChild(d);
+  });
+  window._chosenColor = ()=>chosen;
+}
+async function submitAuthForm(){
+  const email = document.getElementById('auth-email').value.trim();
+  const password = document.getElementById('auth-password').value;
+  const errEl = document.getElementById('auth-error');
+  errEl.textContent = '';
+  if(!email || !password){ errEl.textContent = 'Enter an email and password.'; return; }
+  try{
+    if(authMode==='signup'){
+      const name = document.getElementById('auth-name').value.trim();
+      if(!name){ errEl.textContent = 'Give yourself a display name.'; return; }
+      const color = window._chosenColor ? window._chosenColor() : colorFor(name);
+      const cred = await createUserWithEmailAndPassword(auth, email, password);
+      await updateProfile(cred.user, {displayName: name});
+      await setDoc(doc(db,'users',cred.user.uid), {name, color, email, createdAt: Date.now()});
+      state.profileData[cred.user.uid] = emptyProfileData();
+      await saveProfileData(cred.user.uid);
+      // onAuthStateChanged fires automatically and takes it from here
+    } else {
+      await signInWithEmailAndPassword(auth, email, password);
+    }
+  }catch(e){
+    errEl.textContent = (e && e.message) ? e.message.replace(/^Firebase:\s*/,'') : 'Something went wrong.';
+  }
+}
+async function doSignOut(){
+  applyTheme('midnight');
+  await signOut(auth);
+}
+
+/* ===================== init ===================== */
+onAuthStateChanged(auth, async (user)=>{
+  currentUser = user;
+  if(user){
+    document.getElementById('auth-error').textContent = '';
+    await seedIfEmpty();
+    await enterApp();
+  } else {
+    state.currentProfileId = null;
+    document.getElementById('topbar').classList.add('hidden');
+    document.getElementById('tabs').classList.add('hidden');
+    showView('auth');
+  }
+});
+renderAuthSwatches();
+toggleAuthMode(); toggleAuthMode(); // ensure signup UI state on first paint
+
+async function enterApp(){
+  state.currentProfileId = currentUser.uid; // you always act as yourself while browsing
+  const pd = await getProfileData(currentUser.uid);
+  state.profiles = await fetchAllUsers();
+  const me = state.profiles.find(x=>x.id===currentUser.uid);
+  document.getElementById('who-name').textContent = me ? me.name : (currentUser.displayName || 'You');
+  const av = document.getElementById('who-avatar');
+  if(me){ av.style.background = me.color; av.textContent = initials(me.name); }
+  applyTheme(pd.theme);
+  applyAvatarFrame();
+  updateCurrencyBadge();
+  document.getElementById('topbar').classList.remove('hidden');
+  document.getElementById('tabs').classList.remove('hidden');
+  document.getElementById('footer').textContent = 'COMICBOX — READ. COLLECT. REVIEW.';
+  await checkAchievements(currentUser.uid);
+  setTab('home');
+}
+
+function goMyProfile(){ if(currentUser) openProfile(currentUser.uid); }
+
+/* ===================== users directory ===================== */
+async function renderUsersGrid(){
+  const grid = document.getElementById('profile-grid');
+  grid.innerHTML = '';
+  for(const p of state.profiles){
+    const isMe = currentUser && p.id===currentUser.uid;
+    const pd = await getProfileData(p.id);
+    const frame = FRAMES[pd.frame] || FRAMES.none;
+    const card = document.createElement('div');
+    card.className='profile-card';
+    card.innerHTML = `
+      <div class="big-avatar" style="background:${p.color};${p.avatarUrl?`background-image:url('${escapeAttr(p.avatarUrl)}');background-size:cover;background-position:center;`:''}box-shadow:${frame.css};">${p.avatarUrl?'':initials(p.name)}</div>
+      <div class="pname">${escapeHtml(p.name)}</div>
+      ${isMe? '<div class="you-badge">YOU</div>' : ''}`;
+    card.onclick = ()=>openProfile(p.id);
+    grid.appendChild(card);
+  }
+}
+
+async function goUsers(){
+  state.searchTerm = '';
+  const si = document.getElementById('search-input'); if(si) si.value='';
+  state.profiles = await fetchAllUsers(); // refresh so new members show up
+  await renderUsersGrid();
+  showView('users');
+}
+
+/* ===================== single profile page (yours or a friend's) ===================== */
+async function openProfile(uid){
+  showView('profile');
+  document.getElementById('profile-body').innerHTML = '<div class="empty" style="padding:60px 0;text-align:center;">Loading…</div>';
+  await renderProfilePage(uid);
+}
+
+async function renderProfilePage(uid){
+  let p = state.profiles.find(x=>x.id===uid);
+  if(!p){ state.profiles = await fetchAllUsers(); p = state.profiles.find(x=>x.id===uid); }
+  const body = document.getElementById('profile-body');
+  if(!p){ body.innerHTML = '<div class="wrap"><div class="empty">User not found.</div></div>'; return; }
+
+  const pd = await getProfileData(uid);
+  const isOwner = currentUser && uid===currentUser.uid;
+  const reviewEntries = Object.entries(pd.reviews||{});
+  const avg = reviewEntries.length ? reviewEntries.reduce((a,[,r])=>a+r.rating,0)/reviewEntries.length : 0;
+  const frame = FRAMES[pd.frame] || FRAMES.none;
+  const unlockedBadges = ACHIEVEMENTS.filter(a=>pd.achievements && pd.achievements[a.id]);
+
+  await getHeroes(); // make sure heroesIndex is populated before we look up the favorite
+  const favHero = pd.favoriteHeroId ? findHero(pd.favoriteHeroId) : null;
+  let favHeroBlock = '';
+  if(favHero){
+    const qs = heroQuoteStyle(favHero);
+    const qc = heroQuoteColor(favHero);
+    favHeroBlock = `
+      <div class="fav-hero-card" style="border-color:${qc};cursor:pointer;" onclick="openHero('${favHero.id}')">
+        <div class="fh-portrait">${coverOrFallback(favHero.imageUrl, initials(favHero.name), favHero.id)}</div>
+        <div class="fh-info">
+          <div class="fh-label mono" style="color:${qc};">★ FAVORITE CHARACTER</div>
+          <div class="fh-name">${escapeHtml(favHero.name)}${favHero.alias?` <span class="fh-alias">"${escapeHtml(favHero.alias)}"</span>`:''}</div>
+          ${favHero.bio ? `<div class="fh-quote" style="font-family:${qs.font};font-style:${qs.fontStyle};letter-spacing:${qs.letterSpacing};color:${qc};">&ldquo;${escapeHtml(favHero.bio)}&rdquo;</div>` : ''}
+        </div>
+      </div>`;
+  }
+
+  body.innerHTML = `
+    <div class="wrap">
+      <button class="backbtn ghost small" onclick="setTab('home')">&larr; Back</button>
+      <div class="profile-header">
+        <div class="big-avatar profile-avatar" style="background:${p.color};${p.avatarUrl?`background-image:url('${escapeAttr(p.avatarUrl)}')`:''};box-shadow:${frame.css};">${p.avatarUrl?'':initials(p.name)}</div>
+        <div class="profile-meta">
+          <h1>${escapeHtml(p.name)}</h1>
+          ${p.bio? `<p class="profile-bio">${escapeHtml(p.bio)}</p>` : ''}
+          <div class="profile-stats">
+            <div><b>${pd.read.length}</b><span>Read</span></div>
+            <div><b>${pd.collection.length}</b><span>Owned</span></div>
+            <div><b>${reviewEntries.length}</b><span>Reviews</span></div>
+            <div><b>${avg? avg.toFixed(1) : '–'}</b><span>Avg Rating</span></div>
+            <div><b>${unlockedBadges.length}</b><span>Badges</span></div>
+          </div>
+        </div>
+        ${isOwner? `<button class="ghost small" onclick="openEditProfile()">Edit profile</button>` : ''}
+      </div>
+      ${favHeroBlock}
+      ${unlockedBadges.length ? `<div class="section-title">Badges</div><div class="badge-grid">${unlockedBadges.slice(0,8).map(a=>`<div class="badge-card unlocked tier-${a.tier}" style="padding:10px;"><div class="badge-icon" style="font-size:20px;">${a.icon}</div><div class="badge-name" style="font-size:12.5px;">${escapeHtml(a.name)}</div></div>`).join('')}</div>` : ''}
+      <div class="section-title">Reviews</div>
+      <div class="panel" id="profile-reviews-panel"></div>
+      <div id="profile-shelves"></div>
+    </div>
+  `;
+
+  const revPanel = document.getElementById('profile-reviews-panel');
+  if(!reviewEntries.length){
+    revPanel.innerHTML = '<div class="empty">No reviews yet.</div>';
+  } else {
+    revPanel.innerHTML = '';
+    for(const [issueId, rev] of reviewEntries.sort((a,b)=>(b[1].updatedAt||0)-(a[1].updatedAt||0))){
+      const series = findSeries(rev.seriesId);
+      if(!series) continue;
+      const issues = await getIssues(rev.seriesId);
+      const iss = issues.find(x=>x.id===issueId);
+      if(!iss) continue;
+      const card = document.createElement('div');
+      card.className='review-card';
+      card.style.cursor='pointer';
+      card.innerHTML = `
+        <div class="rhead">
+          <div class="tt" style="font-weight:700;">${escapeHtml(series.title)} #${iss.number}${iss.title? ' — '+escapeHtml(iss.title):''}</div>
+          <div class="stars">${'★'.repeat(rev.rating)}${'☆'.repeat(5-rev.rating)}</div>
+        </div>
+        <div style="color:var(--dim);">${escapeHtml(rev.text)||'<span class="empty">No written review, just a rating.</span>'}</div>
+      `;
+      card.onclick = ()=>jumpToIssue(rev.seriesId, issueId);
+      revPanel.appendChild(card);
+    }
+  }
+
+  const shelves = document.getElementById('profile-shelves');
+  shelves.innerHTML = '';
+  if(pd.read.length) shelves.appendChild(await buildIssueRow('Read', pd.read, pd));
+  if(pd.toRead.length) shelves.appendChild(await buildIssueRow('To Read', pd.toRead, pd));
+  if(pd.collection.length) shelves.appendChild(await buildIssueRow('Physical Collection', pd.collection, pd));
+  if(!pd.read.length && !pd.toRead.length && !pd.collection.length){
+    shelves.innerHTML = '<div class="empty" style="padding:0 32px;">No lists yet.</div>';
+  }
+}
+
+function openEditProfile(){
+  const p = state.profiles.find(x=>x.id===currentUser.uid) || {};
+  showModal(`
+    <h3>Edit profile</h3>
+    <div class="field"><label>Display name</label><input id="ep-name" maxlength="24" value="${escapeAttr(p.name||'')}"/></div>
+    <div class="field"><label>Bio</label><textarea id="ep-bio" maxlength="160" placeholder="A sentence about your taste in comics…">${escapeHtml(p.bio||'')}</textarea></div>
+    <div class="field"><label>Avatar image URL (optional)</label><input id="ep-avatar" placeholder="https://..." value="${escapeAttr(p.avatarUrl||'')}"/></div>
+    <div class="field"><label>Birthday (optional)</label><input id="ep-birthday" type="date" value="${escapeAttr(p.birthday||'')}"/></div>
+    <div class="import-note">Your birthday is visible to other members here, same as your name/bio — and unlocks a special achievement if you read a comic published on your birthday (month + day).</div>
+    <div class="field"><label>Color</label><div class="color-swatches" id="ep-swatches"></div></div>
+    <div class="import-note">Leave the avatar blank to keep your color + initials avatar.</div>
+    <div class="modal-actions">
+      <button class="ghost" onclick="closeModal()">Cancel</button>
+      <button class="primary" onclick="saveEditProfile()">Save</button>
+    </div>
+  `);
+  let chosen = p.color || PALETTE[0];
+  const sw = document.getElementById('ep-swatches');
+  PALETTE.forEach(c=>{
+    const d = document.createElement('div');
+    d.className = 'swatch'+(c===chosen?' sel':'');
+    d.style.background = c;
+    d.onclick = ()=>{ chosen=c; [...sw.children].forEach(x=>x.classList.remove('sel')); d.classList.add('sel'); };
+    sw.appendChild(d);
+  });
+  window._chosenColor = ()=>chosen;
+}
+async function saveEditProfile(){
+  const name = document.getElementById('ep-name').value.trim();
+  if(!name){ alert('Give yourself a name.'); return; }
+  const bio = document.getElementById('ep-bio').value.trim();
+  const avatarUrl = document.getElementById('ep-avatar').value.trim();
+  const birthday = document.getElementById('ep-birthday').value;
+  const color = window._chosenColor ? window._chosenColor() : colorFor(name);
+  const existing = state.profiles.find(x=>x.id===currentUser.uid) || {};
+  await setDoc(doc(db,'users',currentUser.uid), {
+    name, bio, avatarUrl, color, birthday,
+    email: currentUser.email,
+    createdAt: existing.createdAt || Date.now()
+  }, {merge:true});
+  try{ await updateProfile(currentUser, {displayName:name}); }catch(e){}
+  state.profiles = await fetchAllUsers();
+  document.getElementById('who-name').textContent = name;
+  const av = document.getElementById('who-avatar');
+  av.style.background = color; av.textContent = initials(name);
+  closeModal();
+  await renderProfilePage(currentUser.uid);
+  if(currentUser) await checkAchievements(currentUser.uid);
+}
+
+/* ===================== view switching ===================== */
+function showView(name){
+  ['auth','users','profile','home','series','issue','hero-detail'].forEach(v=>{
+    document.getElementById('view-'+v).classList.toggle('hidden', v!==name);
+  });
+  document.getElementById('topbar').classList.toggle('solid', name!=='home');
+}
+function setTab(tab){
+  state.tab = tab;
+  [...document.querySelectorAll('#tabs button')].forEach(b=>b.classList.toggle('active', b.dataset.tab===tab));
+  if(tab==='users'){ goUsers(); return; }
+  showView('home');
+  if(tab==='home') renderHomeTab();
+  else if(tab==='mylist') renderReadingListGrid();
+  else if(tab==='collection') renderSimpleList('collection','Physical Collection','No issues marked as owned yet. Open an issue and hit "Add to Physical Collection."');
+  else if(tab==='heroes') renderHeroesTab();
+  else if(tab==='achievements') renderAchievementsTab();
+  else if(tab==='news') renderNewsTab();
+}
+
+/* ===================== cover helpers ===================== */
+function coverOrFallback(url, title, seed){
+  if(url){ return `<img src="${escapeAttr(url)}" onerror="this.outerHTML=fallbackHtml('${escapeAttr(title)}','${escapeAttr(seed)}')"/>`; }
+  return fallbackHtml(title, seed);
+}
+function fallbackHtml(title, seed){
+  return `<div class="cover-fallback" style="background:${colorFor(seed)}">${escapeHtml(title)}</div>`;
+}
+window.fallbackHtml = fallbackHtml;
+
+/* ===================== HOME: hero + netflix rows ===================== */
+function handleSearchInput(val){
+  state.searchTerm = val;
+  if(val.trim().toLowerCase()==='excelsior') triggerExcelsior();
+  if(state.tab !== 'home') setTab('home');
+  else renderHomeTab();
+}
+
+async function renderHomeTab(){
+  const body = document.getElementById('home-body');
+  if(!state.seriesIndex.length){
+    body.innerHTML = `<div class="wrap" style="padding-top:60px;">
+      <div class="section-title">Nothing here yet</div>
+      <div class="empty">Add your first series to start building your library.</div>
+      <button class="primary" onclick="openAddSeries()">+ Add series</button>
+    </div>`;
+    return;
+  }
+
+  const term = (state.searchTerm||'').trim().toLowerCase();
+  if(term){
+    const matches = state.seriesIndex.filter(s=>s.title.toLowerCase().includes(term) || (s.publisher||'').toLowerCase().includes(term) || (s.genres||[]).some(g=>g.toLowerCase().includes(term)));
+    body.innerHTML = `<div class="wrap" style="padding-top:34px;">
+      <div class="section-title">Results for "${escapeHtml(state.searchTerm)}"</div>
+      ${matches.length ? '' : '<div class="empty">No series match that search.</div>'}
+      <div class="grid-results" style="display:flex;flex-wrap:wrap;gap:16px;"></div>
+    </div>`;
+    const resWrap = body.querySelector('.grid-results');
+    matches.forEach(s=>{
+      const card = document.createElement('div');
+      card.className='poster-card';
+      card.innerHTML = `<div class="art">${coverOrFallback(s.coverUrl, s.title, s.id)}</div>
+        <div class="t">${escapeHtml(s.title)}</div><div class="s">${escapeHtml(s.publisher||'')}</div>`;
+      card.onclick = ()=>openSeries(s.id);
+      resWrap.appendChild(card);
+    });
+    return;
+  }
+
+  const pd = await getProfileData(state.currentProfileId);
+
+  // hero: most recently added series
+  const featured = state.seriesIndex.slice().sort((a,b)=>(b.addedAt||0)-(a.addedAt||0))[0];
+  const hasCover = !!featured.coverUrl;
+  const bgStyle = hasCover
+    ? `background-image:url('${escapeAttr(featured.coverUrl)}')`
+    : `background:linear-gradient(135deg, ${colorFor(featured.id)}, #0a0a0c)`;
+  const coverInner = hasCover
+    ? `<img src="${escapeAttr(featured.coverUrl)}" onerror="this.outerHTML=fallbackHtml('${escapeAttr(featured.title)}','${escapeAttr(featured.id)}')"/>`
+    : fallbackHtml(featured.title, featured.id);
+
+  let html = `
+    <div id="hero">
+      <div id="hero-bg" style="${bgStyle}"></div>
+      <div class="scrim"></div>
+      <div class="hero-content">
+        <div class="hero-cover">${coverInner}</div>
+        <div class="hero-body">
+          <div class="eyebrow">Recently Added</div>
+          <h1>${escapeHtml(featured.title)}</h1>
+          <div class="genre-pills">${(featured.genres||[]).map(g=>`<span class="pill">${escapeHtml(g)}</span>`).join('')}</div>
+          <p>${escapeHtml(featured.description||'')}</p>
+          <div class="hero-actions">
+            <button class="primary" onclick="openSeries('${featured.id}')">View Series</button>
+            <button class="ghost" onclick="openAddSeries()">+ Add Series</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wrap" id="rows-wrap"></div>
+  `;
+  body.innerHTML = html;
+  const rowsWrap = document.getElementById('rows-wrap');
+
+  // Community Activity row (recent reviews from everyone on this ComicBox)
+  const activityRow = await buildActivityRow();
+  if(activityRow) rowsWrap.appendChild(activityRow);
+
+  // Continue Reading row (on list, not yet read)
+  const continueItems = pd.toRead.filter(x=>!pd.read.some(r=>r.issueId===x.issueId));
+  if(continueItems.length){
+    rowsWrap.appendChild(await buildIssueRow('Continue Reading', continueItems, pd));
+  }
+
+  // Recently Added — the 5 most recent additions across series, heroes, and issues (not every addition ever made)
+  rowsWrap.appendChild(await buildRecentlyAddedRow());
+
+  // Genre rows
+  const genreMap = {};
+  state.seriesIndex.forEach(s=>{
+    (s.genres && s.genres.length ? s.genres : ['Uncategorized']).forEach(g=>{
+      genreMap[g] = genreMap[g] || [];
+      genreMap[g].push(s);
+    });
+  });
+  Object.keys(genreMap).sort().forEach(g=>{
+    rowsWrap.appendChild(buildSeriesRow(g, genreMap[g]));
+  });
+
+  // Physical collection preview row
+  if(pd.collection.length){
+    rowsWrap.appendChild(await buildIssueRow('From Your Physical Collection', pd.collection, pd));
+  }
+}
+
+/* Recent reviews across every member — a shared activity feed, like a group chat about comics. */
+async function buildActivityRow(){
+  const activity = [];
+  for(const p of state.profiles){
+    const d = await getProfileData(p.id);
+    for(const [issueId, rev] of Object.entries(d.reviews||{})){
+      activity.push({p, issueId, rev});
+    }
+  }
+  if(!activity.length) return null;
+  activity.sort((a,b)=>(b.rev.updatedAt||0)-(a.rev.updatedAt||0));
+  const top = activity.slice(0,14);
+
+  const row = document.createElement('div');
+  row.className='row';
+  const cardEls = [];
+  for(const {p,issueId,rev} of top){
+    const series = findSeries(rev.seriesId);
+    if(!series) continue;
+    const issues = await getIssues(rev.seriesId);
+    const iss = issues.find(x=>x.id===issueId);
+    if(!iss) continue;
+    const card = document.createElement('div');
+    card.className='poster-card';
+    card.innerHTML = `
+      <div class="art">
+        ${coverOrFallback(iss.coverUrl || series.coverUrl, series.title+' #'+iss.number, iss.id)}
+        <span class="badge" style="background:${p.color};">${initials(p.name)}</span>
+      </div>
+      <div class="t">${escapeHtml(series.title)} #${iss.number}</div>
+      <div class="s">${escapeHtml(p.name)} · ${'★'.repeat(rev.rating)}${'☆'.repeat(5-rev.rating)}</div>
+    `;
+    card.onclick = ()=>jumpToIssue(series.id, iss.id);
+    cardEls.push(card);
+  }
+  if(!cardEls.length) return null;
+  row.innerHTML = `<div class="row-head"><h2>Community Activity</h2></div><div class="row-track" id="activity-track"></div>`;
+  const track = row.querySelector('#activity-track');
+  cardEls.forEach(c=>track.appendChild(c));
+  return row;
+}
+
+/* Unified "Recently Added" feed: the 5 most recent additions across series, heroes,
+   and issues — not a full listing of everything ever added. */
+async function buildRecentlyAddedRow(){
+  const items = [];
+  state.seriesIndex.forEach(s=> items.push({type:'series', addedAt:s.addedAt||0, data:s}));
+  state.heroesIndex.forEach(h=> items.push({type:'hero', addedAt:h.addedAt||0, data:h}));
+  for(const s of state.seriesIndex){
+    const issues = await getIssues(s.id);
+    issues.forEach(iss=> items.push({type:'issue', addedAt:iss.addedAt||0, data:iss, series:s}));
+  }
+  items.sort((a,b)=>b.addedAt-a.addedAt);
+  const top = items.slice(0,5);
+  const row = document.createElement('div');
+  row.className='row';
+  const cards = top.map(item=>{
+    if(item.type==='series'){
+      const s = item.data;
+      return `<div class="poster-card" onclick="openSeries('${s.id}')">
+        <div class="art">${coverOrFallback(s.coverUrl, s.title, s.id)}<span class="badge">SERIES</span></div>
+        <div class="t">${escapeHtml(s.title)}</div><div class="s">${escapeHtml(s.publisher||'')}</div>
+      </div>`;
+    }
+    if(item.type==='hero'){
+      const h = item.data;
+      return `<div class="poster-card" onclick="openHero('${h.id}')">
+        <div class="art" style="box-shadow:0 0 0 3px ${heroQuoteColor(h)};border-radius:8px;">${coverOrFallback(h.imageUrl, initials(h.name), h.id)}<span class="badge">HERO</span></div>
+        <div class="t">${escapeHtml(h.name)}</div><div class="s">${escapeHtml(h.alias||heroAffLabel(h.affiliation))}</div>
+      </div>`;
+    }
+    const iss = item.data, s = item.series;
+    return `<div class="poster-card" onclick="jumpToIssue('${s.id}','${iss.id}')">
+      <div class="art">${coverOrFallback(iss.coverUrl || s.coverUrl, s.title+' #'+iss.number, iss.id)}<span class="badge">ISSUE</span></div>
+      <div class="t">${escapeHtml(s.title)} #${iss.number}</div><div class="s">${escapeHtml(iss.title||'')}</div>
+    </div>`;
+  }).join('');
+  row.innerHTML = `<div class="row-head"><h2>Recently Added</h2></div><div class="row-track">${cards}</div>`;
+  return row;
+}
+
+function buildSeriesRow(title, seriesList){
+  const row = document.createElement('div');
+  row.className='row';
+  const cards = seriesList.map(s=>`
+    <div class="poster-card" onclick="openSeries('${s.id}')">
+      <div class="art">${coverOrFallback(s.coverUrl, s.title, s.id)}</div>
+      <div class="t">${escapeHtml(s.title)}</div>
+      <div class="s">${escapeHtml(s.publisher||'')}</div>
+    </div>
+  `).join('');
+  row.innerHTML = `<div class="row-head"><h2>${escapeHtml(title)}</h2></div><div class="row-track">${cards}</div>`;
+  return row;
+}
+
+async function buildIssueRow(title, items, pd){
+  const row = document.createElement('div');
+  row.className='row';
+  const cardsArr = [];
+  for(const item of items.slice().sort((a,b)=>(b.addedAt||0)-(a.addedAt||0))){
+    const series = findSeries(item.seriesId);
+    if(!series) continue;
+    const issues = await getIssues(item.seriesId);
+    const iss = issues.find(x=>x.id===item.issueId);
+    if(!iss) continue;
+    const isRead = pd.read.some(x=>x.issueId===iss.id);
+    const isOwned = pd.collection.some(x=>x.issueId===iss.id);
+    cardsArr.push(`
+      <div class="poster-card" onclick="jumpToIssue('${series.id}','${iss.id}')">
+        <div class="art">
+          ${coverOrFallback(iss.coverUrl || series.coverUrl, series.title+' #'+iss.number, iss.id)}
+          ${isRead? '<span class="badge read">READ</span>' : (isOwned? '<span class="badge owned">OWNED</span>' : '')}
+        </div>
+        <div class="t">${escapeHtml(series.title)} #${iss.number}</div>
+        <div class="s">${escapeHtml(iss.title||'')}</div>
+      </div>
+    `);
+  }
+  row.innerHTML = `<div class="row-head"><h2>${escapeHtml(title)}</h2></div><div class="row-track">${cardsArr.join('')}</div>`;
+  return row;
+}
+
+async function jumpToIssue(seriesId, issueId){
+  state.currentSeriesId = seriesId;
+  await openIssue(issueId);
+}
+
+/* ===================== News / Updates ===================== */
+async function getNewsPosts(){
+  if(state.newsIndex) return state.newsIndex;
+  state.newsIndex = (await sGet('news-index')) || [];
+  return state.newsIndex;
+}
+async function renderNewsTab(){
+  const body = document.getElementById('home-body');
+  const posts = (await getNewsPosts()).slice().sort((a,b)=>(b.date||0)-(a.date||0));
+  body.innerHTML = `<div class="wrap" style="padding-top:30px;max-width:720px;">
+    <div class="section-title">News &amp; Updates <button class="small" onclick="openPostNews()">+ Post Update</button></div>
+    <div id="news-list"></div>
+  </div>`;
+  const listEl = document.getElementById('news-list');
+  if(!posts.length){ listEl.innerHTML = '<div class="empty">Nothing posted yet.</div>'; return; }
+  listEl.innerHTML = posts.map(p=>`
+    <div class="panel news-post">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;">
+        <h3 style="margin:0 0 4px;">${escapeHtml(p.title)}</h3>
+        ${currentUser && p.authorUid===currentUser.uid ? `<button class="small ghost danger-btn" onclick="deleteNewsPost('${p.id}')">Delete</button>` : ''}
+      </div>
+      <div class="mono" style="color:var(--dim2);font-size:11.5px;margin-bottom:8px;">${formatDate(new Date(p.date).toISOString().slice(0,10))} · ${escapeHtml(p.authorName||'')}</div>
+      <div style="color:var(--dim);white-space:pre-wrap;">${escapeHtml(p.body)}</div>
+    </div>
+  `).join('');
+}
+function openPostNews(){
+  showModal(`
+    <h3>Post an update</h3>
+    <div class="field"><label>Title</label><input id="np-title" placeholder="e.g. New hero galleries!"/></div>
+    <div class="field"><label>Details</label><textarea id="np-body" placeholder="What changed?"></textarea></div>
+    <div class="modal-actions">
+      <button class="ghost" onclick="closeModal()">Cancel</button>
+      <button class="primary" onclick="savePostNews()">Post</button>
+    </div>
+  `);
+  document.getElementById('np-title').focus();
+}
+async function savePostNews(){
+  const title = document.getElementById('np-title').value.trim();
+  if(!title){ alert('Give the update a title.'); return; }
+  const body = document.getElementById('np-body').value.trim();
+  const posts = await getNewsPosts();
+  const profile = currentUser ? state.profiles.find(p=>p.id===currentUser.uid) : null;
+  posts.push({
+    id:'n-'+Math.random().toString(36).slice(2,10),
+    title, body, date:Date.now(),
+    authorUid: currentUser?currentUser.uid:'',
+    authorName: profile? profile.name : 'Someone'
+  });
+  await sSet('news-index', posts);
+  closeModal();
+  await renderNewsTab();
+}
+async function deleteNewsPost(id){
+  if(!confirm('Delete this update?')) return;
+  const posts = (await getNewsPosts()).filter(p=>p.id!==id);
+  state.newsIndex = posts;
+  await sSet('news-index', posts);
+  await renderNewsTab();
+}
+window.openPostNews=openPostNews; window.savePostNews=savePostNews; window.deleteNewsPost=deleteNewsPost;
+
+/* ===================== My List / Collection / Reviews tabs ===================== */
+async function renderReadingListGrid(){
+  const body = document.getElementById('home-body');
+  const pd = await getProfileData(state.currentProfileId);
+  const items = pd.toRead;
+  body.innerHTML = `<div class="wrap" style="padding-top:30px;"><div class="section-title">Reading List</div><div id="list-body" style="display:flex;flex-wrap:wrap;gap:16px;"></div></div>`;
+  const listBody = document.getElementById('list-body');
+  if(!items.length){ listBody.innerHTML = `<div class="empty">Nothing on your list yet. Open any issue and hit "Add to Reading List."</div>`; return; }
+  for(const item of items.slice().sort((a,b)=>(b.addedAt||0)-(a.addedAt||0))){
+    const series = findSeries(item.seriesId);
+    if(!series) continue;
+    const issues = await getIssues(item.seriesId);
+    const iss = issues.find(x=>x.id===item.issueId);
+    if(!iss) continue;
+    const card = document.createElement('div');
+    card.className='poster-card';
+    card.innerHTML = `<div class="art">${coverOrFallback(iss.coverUrl || series.coverUrl, series.title+' #'+iss.number, iss.id)}</div>
+      <div class="t">${escapeHtml(series.title)} #${iss.number}</div><div class="s">${escapeHtml(iss.title||'')}</div>`;
+    card.onclick = ()=>jumpToIssue(item.seriesId, item.issueId);
+    listBody.appendChild(card);
+  }
+}
+async function renderSimpleList(key, title, emptyMsg){
+  const body = document.getElementById('home-body');
+  const pd = await getProfileData(state.currentProfileId);
+  const items = pd[key];
+  body.innerHTML = `<div class="wrap" style="padding-top:30px;"><div class="section-title">${title}</div><div id="list-body"></div></div>`;
+  const listBody = document.getElementById('list-body');
+  if(!items.length){ listBody.innerHTML = `<div class="empty">${emptyMsg}</div>`; return; }
+  for(const item of items.slice().sort((a,b)=>(b.addedAt||0)-(a.addedAt||0))){
+    const series = findSeries(item.seriesId);
+    if(!series) continue;
+    const issues = await getIssues(item.seriesId);
+    const iss = issues.find(x=>x.id===item.issueId);
+    if(!iss) continue;
+    const row = document.createElement('div');
+    row.className='issue-row';
+    row.innerHTML = `
+      <div class="burst">#${iss.number}</div>
+      <div class="it">
+        <div class="tt">${escapeHtml(series.title)} — ${escapeHtml(iss.title||('Issue #'+iss.number))}</div>
+        <div class="dd">${escapeHtml(series.publisher||'')}</div>
+      </div>`;
+    row.onclick = ()=>jumpToIssue(item.seriesId, item.issueId);
+    listBody.appendChild(row);
+  }
+}
+
+/* "My Reviews" now lives on the profile page (see renderProfilePage) instead of its own tab. */
+
+/* ===================== HEROES: tab (grid + filter + search) ===================== */
+async function renderHeroesTab(){
+  const body = document.getElementById('home-body');
+  const heroes = await getHeroes();
+  if(!state.heroesSort) state.heroesSort = 'alpha';
+
+  body.innerHTML = `<div class="wrap" style="padding-top:34px;">
+    <div class="section-title">Heroes <button class="small" onclick="openAddHero()">+ Add Hero</button></div>
+    <div class="heroes-toolbar">
+      <input id="heroes-search" placeholder="Search heroes…" value="${escapeAttr(state.heroesSearch)}" oninput="handleHeroesSearch(this.value)"/>
+      <div class="aff-filter" id="aff-filter">
+        <button data-aff="all" onclick="setHeroesFilter('all')">All</button>
+        <button data-aff="hero" onclick="setHeroesFilter('hero')">Heroes</button>
+        <button data-aff="villain" onclick="setHeroesFilter('villain')">Villains</button>
+        <button data-aff="anti" onclick="setHeroesFilter('anti')">Anti-Heroes</button>
+      </div>
+      <select id="heroes-sort" onchange="setHeroesSort(this.value)" style="margin-left:auto;">
+        <option value="alpha" ${state.heroesSort==='alpha'?'selected':''}>Sort: A–Z</option>
+        <option value="appearances" ${state.heroesSort==='appearances'?'selected':''}>Sort: Most Appearances</option>
+      </select>
+    </div>
+    <div id="heroes-grid" class="heroes-grid"></div>
+  </div>`;
+  [...document.querySelectorAll('#aff-filter button')].forEach(b=>b.classList.toggle('active', b.dataset.aff===state.heroesFilter));
+
+  if(!heroes.length){
+    document.getElementById('heroes-grid').innerHTML = '<div class="empty">No heroes yet. Add one, or tag a hero on any issue to create one on the fly.</div>';
+    return;
+  }
+
+  const term = (state.heroesSearch||'').trim().toLowerCase();
+  let list = heroes.filter(h=>{
+    if(state.heroesFilter!=='all' && (h.affiliation||'hero')!==state.heroesFilter) return false;
+    if(term && !(h.name.toLowerCase().includes(term) || (h.alias||'').toLowerCase().includes(term))) return false;
+    return true;
+  });
+
+  // appearance counts, for the sort option + "most featured" crown
+  const counts = {};
+  for(const h of list){ counts[h.id] = (await getHeroAppearances(h.id)).length; }
+  list = state.heroesSort==='appearances'
+    ? list.slice().sort((a,b)=> counts[b.id]-counts[a.id] || a.name.localeCompare(b.name))
+    : list.slice().sort((a,b)=> a.name.localeCompare(b.name));
+  const maxCount = list.length ? Math.max(...list.map(h=>counts[h.id])) : 0;
+
+  const grid = document.getElementById('heroes-grid');
+  if(!list.length){ grid.innerHTML = '<div class="empty">No heroes match that search.</div>'; return; }
+  grid.innerHTML = list.map(h=>`
+    <div class="hero-card" onclick="openHero('${h.id}')">
+      ${(maxCount>0 && counts[h.id]===maxCount) ? '<div class="hc-crown" title="Most featured">👑</div>' : ''}
+      <div class="hc-portrait" style="box-shadow:0 0 0 3px ${heroQuoteColor(h)};border-radius:50%;">${coverOrFallback(h.imageUrl, initials(h.name), h.id)}</div>
+      <div class="hc-name">${escapeHtml(h.name)}</div>
+      <div class="hc-alias">${escapeHtml(h.alias||heroAffLabel(h.affiliation))}</div>
+      <div class="hc-count">${counts[h.id]} appearance${counts[h.id]===1?'':'s'}</div>
+    </div>
+  `).join('');
+}
+function handleHeroesSearch(val){ state.heroesSearch = val; renderHeroesTab(); }
+function setHeroesFilter(aff){ state.heroesFilter = aff; renderHeroesTab(); }
+function setHeroesSort(val){ state.heroesSort = val; renderHeroesTab(); }
+window.setHeroesSort = setHeroesSort;
+window.handleHeroesSearch = handleHeroesSearch;
+window.setHeroesFilter = setHeroesFilter;
+
+/* ===================== HEROES: detail page ===================== */
+async function openHero(id){
+  state.currentHeroId = id;
+  const h = findHero(id);
+  if(!h) return;
+
+  document.getElementById('hero-name').textContent = h.name;
+  document.getElementById('hero-alias').textContent = h.alias || '';
+  const bioEl = document.getElementById('hero-bio');
+  if(h.bio){
+    const qs = heroQuoteStyle(h);
+    const qc = heroQuoteColor(h);
+    bioEl.innerHTML = `<span class="hq-mark" style="color:${qc};">&ldquo;</span><span class="hq-text" style="font-family:${qs.font};font-style:${qs.fontStyle};letter-spacing:${qs.letterSpacing};color:${qc};">${escapeHtml(h.bio)}</span><span class="hq-mark" style="color:${qc};">&rdquo;</span>`;
+    bioEl.style.borderLeftColor = qc;
+  } else {
+    bioEl.innerHTML = '<span style="color:var(--dim);">No signature quote on file yet.</span>';
+    bioEl.style.borderLeftColor = 'var(--line)';
+  }
+
+  const affClass = heroAffClass(h.affiliation);
+  document.getElementById('hero-portrait-wrap').innerHTML =
+    `<div class="hero-portrait-frame ${affClass}" style="box-shadow:0 0 0 4px ${heroQuoteColor(h)}, 0 18px 40px rgba(0,0,0,.5);">${coverOrFallback(h.imageUrl, initials(h.name), h.id)}</div>`;
+  const affPill = document.getElementById('hero-affiliation');
+  affPill.textContent = heroAffLabel(h.affiliation);
+  affPill.className = 'hero-affiliation-pill '+affClass;
+
+  document.getElementById('hero-powers').innerHTML = (h.powers||[]).map(p=>`<span class="tag2">${escapeHtml(p)}</span>`).join('') || '';
+
+  const galWrap = document.getElementById('hero-gallery-wrap');
+  const gallery = h.gallery||[];
+  galWrap.innerHTML = gallery.length ? `
+    <div class="section-title" style="font-size:13px;margin:16px 0 8px;">Gallery</div>
+    <div class="hero-gallery">${gallery.map((url,i)=>`<img src="${escapeAttr(url)}" onclick="openHeroGalleryLightbox('${h.id}',${i})" onerror="this.remove()"/>`).join('')}</div>
+  ` : '';
+
+  const stats = Object.assign({strength:1,speed:1,intelligence:1,energy:1,fighting:1,durability:1}, h.stats||{});
+  const statLabels = {strength:'Strength',speed:'Speed',intelligence:'Intelligence',energy:'Energy',fighting:'Fighting',durability:'Durability'};
+  const statGrid = document.getElementById('hero-stats');
+  statGrid.innerHTML = Object.keys(statLabels).map(k=>`
+    <div class="stat-row">
+      <div class="stat-label">${statLabels[k]}</div>
+      <div class="stat-track"><div class="stat-fill" data-target="${(stats[k]/7*100)}" id="stat-${k}"></div></div>
+      <div class="stat-num">${stats[k]}/7</div>
+    </div>
+  `).join('');
+
+  showView('hero-detail');
+
+  // animate stat bars in after paint
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{
+    Object.keys(statLabels).forEach(k=>{
+      const el = document.getElementById('stat-'+k);
+      if(el) el.style.width = el.dataset.target+'%';
+    });
+  }));
+
+  const appearances = await getHeroAppearances(id);
+  document.getElementById('hero-appearance-count').textContent = `${appearances.length} issue${appearances.length===1?'':'s'} across ${new Set(appearances.map(a=>a.series.id)).size} series`;
+  const apWrap = document.getElementById('hero-appearances');
+  if(!appearances.length){
+    apWrap.innerHTML = '<div class="empty">Not tagged in any issues yet. Add this hero to an issue from that issue\'s edit form.</div>';
+  } else {
+    apWrap.innerHTML = appearances.map((a,i)=>`
+      <div class="appearance-row" onclick="jumpToIssue('${a.series.id}','${a.issue.id}')">
+        <div class="ar-cover">${coverOrFallback(a.issue.coverUrl, a.series.title+' #'+a.issue.number, a.issue.id)}</div>
+        <div class="it">
+          <div class="tt">${escapeHtml(a.series.title)} #${a.issue.number}${a.issue.title? ' — '+escapeHtml(a.issue.title):''}</div>
+          <div class="dd">${a.issue.publishDate? formatDate(a.issue.publishDate):'No date on file'}</div>
+        </div>
+        ${i===0? '<div class="first-appearance-badge">★ First Appearance</div>' : ''}
+      </div>
+    `).join('');
+  }
+
+  const teamUps = await getHeroTeamUps(id);
+  document.getElementById('hero-teamups-title').style.display = teamUps.length ? 'flex' : 'none';
+  document.getElementById('hero-teamups').style.display = teamUps.length ? '' : 'none';
+  document.getElementById('hero-teamups').innerHTML = teamUps.map(t=>`
+    <span class="teamup-chip" onclick="openHero('${t.hero.id}')">
+      <span class="tc-dot">${coverOrFallback(t.hero.imageUrl, initials(t.hero.name), t.hero.id)}</span>
+      <span class="tc-n">${escapeHtml(t.hero.name)}</span>
+      <span class="tc-c">×${t.count}</span>
+    </span>
+  `).join('');
+
+  await updateFavoriteHeroButton();
+}
+function backToHeroes(){
+  showView('home');
+  renderHeroesTab();
+}
+window.openHero = openHero;
+window.backToHeroes = backToHeroes;
+
+/* ===================== HEROES: add / edit / delete ===================== */
+function heroFormFields(h){
+  h = h || {name:'',alias:'',affiliation:'hero',bio:'',imageUrl:'',powers:[],stats:{},quoteColor:'',quoteStyle:'classic',gallery:[]};
+  const stats = Object.assign({strength:3,speed:3,intelligence:3,energy:3,fighting:3,durability:3}, h.stats||{});
+  const statLabels = {strength:'Strength',speed:'Speed',intelligence:'Intelligence',energy:'Energy',fighting:'Fighting',durability:'Durability'};
+  return `
+    <div class="field"><label>Name</label><input id="hf-name" value="${escapeAttr(h.name||'')}" placeholder="e.g. Cove Ashworth"/></div>
+    <div class="field"><label>Alias / Codename</label><input id="hf-alias" value="${escapeAttr(h.alias||'')}" placeholder="e.g. Ironfeather"/></div>
+    <div class="field"><label>Affiliation</label>
+      <select id="hf-affiliation">
+        <option value="hero" ${h.affiliation==='hero'?'selected':''}>Hero</option>
+        <option value="villain" ${h.affiliation==='villain'?'selected':''}>Villain</option>
+        <option value="anti" ${h.affiliation==='anti'?'selected':''}>Anti-Hero</option>
+      </select>
+    </div>
+    <div class="field"><label>Portrait image URL (optional)</label><input id="hf-image" value="${escapeAttr(h.imageUrl||'')}" placeholder="https://..."/></div>
+    <div class="field"><label>Powers (comma separated)</label><input id="hf-powers" value="${escapeAttr((h.powers||[]).join(', '))}" placeholder="e.g. Flight, Enhanced Strength"/></div>
+    <div class="field"><label>Gallery image URLs (one per line, optional)</label><textarea id="hf-gallery" placeholder="https://...\nhttps://...">${escapeHtml((h.gallery||[]).join('\n'))}</textarea></div>
+    <div class="field"><label>Signature Quote</label><textarea id="hf-bio" placeholder="e.g. &quot;With great power comes great responsibility.&quot;">${escapeHtml(h.bio||'')}</textarea></div>
+    <div class="field"><label>Quote Style</label>
+      <select id="hf-quote-style">
+        ${Object.entries(QUOTE_STYLES).map(([k,qs])=>`<option value="${k}" ${((h.quoteStyle||'classic')===k)?'selected':''}>${escapeHtml(qs.name)}</option>`).join('')}
+      </select>
+    </div>
+    <div class="field"><label>Quote Color</label><div class="color-swatches" id="hf-quote-swatches"></div></div>
+    <div class="field"><label>Power grid</label>
+      <div class="stat-grid">
+        ${Object.keys(statLabels).map(k=>`
+          <div class="stat-row">
+            <div class="stat-label">${statLabels[k]}</div>
+            <input type="range" min="1" max="7" step="1" id="hf-stat-${k}" value="${stats[k]}" oninput="document.getElementById('hf-stat-${k}-n').textContent=this.value"/>
+            <div class="stat-num" id="hf-stat-${k}-n">${stats[k]}</div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `;
+}
+/* builds the quote-color swatch picker inside a hero add/edit modal; call right after showModal() */
+function renderHeroQuoteSwatches(h){
+  const sw = document.getElementById('hf-quote-swatches');
+  if(!sw) return;
+  let chosen = (h && h.quoteColor) || QUOTE_PALETTE[0];
+  sw.innerHTML = '';
+  QUOTE_PALETTE.forEach(c=>{
+    const d = document.createElement('div');
+    d.className = 'swatch'+(c===chosen?' sel':'');
+    d.style.background = c;
+    d.onclick = ()=>{ chosen=c; [...sw.children].forEach(x=>x.classList.remove('sel')); d.classList.add('sel'); };
+    sw.appendChild(d);
+  });
+  window._chosenQuoteColor = ()=>chosen;
+}
+function readHeroForm(){
+  const statKeys = ['strength','speed','intelligence','energy','fighting','durability'];
+  const stats = {};
+  statKeys.forEach(k=>{ stats[k] = parseInt(document.getElementById('hf-stat-'+k).value,10) || 1; });
+  return {
+    name: document.getElementById('hf-name').value.trim(),
+    alias: document.getElementById('hf-alias').value.trim(),
+    affiliation: document.getElementById('hf-affiliation').value,
+    quoteStyle: document.getElementById('hf-quote-style').value,
+    quoteColor: window._chosenQuoteColor ? window._chosenQuoteColor() : QUOTE_PALETTE[0],
+    imageUrl: document.getElementById('hf-image').value.trim(),
+    powers: document.getElementById('hf-powers').value.split(',').map(s=>s.trim()).filter(Boolean),
+    gallery: document.getElementById('hf-gallery').value.split('\n').map(s=>s.trim()).filter(Boolean),
+    bio: document.getElementById('hf-bio').value.trim(),
+    stats
+  };
+}
+function openAddHero(){
+  showModal(`
+    <h3>Add a hero</h3>
+    ${heroFormFields()}
+    <div class="modal-actions">
+      <button class="ghost" onclick="closeModal()">Cancel</button>
+      <button class="primary" onclick="createHero()">Add hero</button>
+    </div>
+  `);
+  renderHeroQuoteSwatches();
+  document.getElementById('hf-name').focus();
+}
+async function createHero(){
+  const data = readHeroForm();
+  if(!data.name){ alert('Give this hero a name.'); return; }
+  const heroes = await getHeroes();
+  const h = Object.assign({id:'h-'+Math.random().toString(36).slice(2,10), addedAt:Date.now()}, data);
+  heroes.push(h);
+  await saveHeroes(heroes);
+  closeModal();
+  if(state.tab==='heroes') await renderHeroesTab();
+  if(currentUser){
+    const pd = await getProfileData(currentUser.uid);
+    pd.stats.heroesCreated = (pd.stats.heroesCreated||0)+1;
+    if(data.stats && Object.values(data.stats).length && Object.values(data.stats).every(v=>v>=7)) pd.eggFlags.maxedHero = true;
+    await saveProfileData(currentUser.uid);
+    await checkAchievements(currentUser.uid);
+  }
+}
+function openEditHero(){
+  const h = findHero(state.currentHeroId);
+  if(!h) return;
+  showModal(`
+    <h3>Edit hero</h3>
+    ${heroFormFields(h)}
+    <div class="modal-actions">
+      <button class="ghost" onclick="closeModal()">Cancel</button>
+      <button class="primary" onclick="saveEditHero()">Save changes</button>
+    </div>
+  `);
+  renderHeroQuoteSwatches(h);
+}
+async function saveEditHero(){
+  const data = readHeroForm();
+  if(!data.name){ alert('Give this hero a name.'); return; }
+  const heroes = await getHeroes();
+  const h = heroes.find(x=>x.id===state.currentHeroId);
+  if(!h) return;
+  Object.assign(h, data);
+  await saveHeroes(heroes);
+  closeModal();
+  await openHero(h.id);
+}
+async function deleteHero(){
+  const h = findHero(state.currentHeroId);
+  if(!h) return;
+  if(!confirm(`Delete ${h.name}? This removes them from every issue they're tagged in.`)) return;
+  for(const series of state.seriesIndex){
+    const issues = await getIssues(series.id);
+    let changed = false;
+    issues.forEach(iss=>{
+      if((iss.heroIds||[]).includes(h.id)){ iss.heroIds = iss.heroIds.filter(id=>id!==h.id); changed = true; }
+    });
+    if(changed) await saveIssues(series.id, issues);
+  }
+  const heroes = (await getHeroes()).filter(x=>x.id!==h.id);
+  await saveHeroes(heroes);
+  backToHeroes();
+}
+window.openAddHero=openAddHero; window.createHero=createHero; window.openEditHero=openEditHero;
+window.saveEditHero=saveEditHero; window.deleteHero=deleteHero;
+
+/* ===================== HEROES: favorite character ===================== */
+async function toggleFavoriteHero(){
+  if(!currentUser) return;
+  const h = findHero(state.currentHeroId);
+  if(!h) return;
+  const pd = await getProfileData(currentUser.uid);
+  if(pd.favoriteHeroId === h.id){
+    pd.favoriteHeroId = null;
+  } else {
+    pd.favoriteHeroId = h.id;
+    pd.favoriteHeroHistory = pd.favoriteHeroHistory || [];
+    if(pd.favoriteHeroHistory[pd.favoriteHeroHistory.length-1] !== h.id) pd.favoriteHeroHistory.push(h.id);
+    if(new Set(pd.favoriteHeroHistory).size >= 3) pd.eggFlags.fickleFan = true;
+  }
+  await saveProfileData(currentUser.uid);
+  await updateFavoriteHeroButton();
+  applyTheme(pd.theme); // in case the active theme/frame is hero-colored
+  applyAvatarFrame();
+  await checkAchievements(currentUser.uid);
+}
+async function updateFavoriteHeroButton(){
+  const btn = document.getElementById('hero-fav-btn');
+  if(!btn || !currentUser) return;
+  const pd = await getProfileData(currentUser.uid);
+  const isFav = pd.favoriteHeroId === state.currentHeroId;
+  btn.textContent = isFav ? '★ Favorite Character' : '☆ Set as Favorite';
+  btn.classList.toggle('fav-active', isFav);
+}
+window.toggleFavoriteHero = toggleFavoriteHero;
+
+/* ===================== HEROES: picker used inside issue add/edit forms ===================== */
+async function heroPickerHtml(selectedIds){
+  const heroes = await getHeroes();
+  selectedIds = selectedIds||[];
+  if(!heroes.length) return '<div class="empty" style="padding:8px 0;">No heroes yet — quick-add one below.</div>';
+  return heroes.map(h=>`
+    <label class="hero-check ${selectedIds.includes(h.id)?'checked':''}">
+      <input type="checkbox" value="${h.id}" ${selectedIds.includes(h.id)?'checked':''} onchange="this.closest('label').classList.toggle('checked', this.checked)"/>
+      ${escapeHtml(h.name)}
+    </label>
+  `).join('');
+}
+async function quickAddHero(prefix){
+  const input = document.getElementById(prefix+'-hero-quickadd');
+  const name = input.value.trim();
+  if(!name) return;
+  const heroes = await getHeroes();
+  const h = {id:'h-'+Math.random().toString(36).slice(2,10), name, alias:'', affiliation:'hero', imageUrl:'', powers:[], bio:'', stats:{strength:3,speed:3,intelligence:3,energy:3,fighting:3,durability:3}, addedAt:Date.now()};
+  heroes.push(h);
+  await saveHeroes(heroes);
+  input.value='';
+  const picker = document.getElementById(prefix+'-hero-picker');
+  const selected = [...picker.querySelectorAll('input:checked')].map(x=>x.value);
+  selected.push(h.id);
+  picker.innerHTML = await heroPickerHtml(selected);
+  if(currentUser){
+    const pd = await getProfileData(currentUser.uid);
+    pd.stats.heroesCreated = (pd.stats.heroesCreated||0)+1;
+    await saveProfileData(currentUser.uid);
+    await checkAchievements(currentUser.uid);
+  }
+}
+window.quickAddHero = quickAddHero;
+
+/* ===================== Add series ===================== */
+function openAddSeries(){
+  showModal(`
+    <h3>Add a series</h3>
+    <div class="field"><label>Title</label><input id="as-title" placeholder="e.g. Ironfeather"/></div>
+    <div class="field"><label>Publisher</label><input id="as-publisher" placeholder="e.g. Gutter & Gantry"/></div>
+    <div class="field"><label>Genres (comma separated)</label><input id="as-genres" placeholder="e.g. Fantasy, Adventure"/></div>
+    <div class="field"><label>Description</label><textarea id="as-desc" placeholder="What's it about?"></textarea></div>
+    <div class="field"><label>Cover image URL (optional)</label><input id="as-cover" placeholder="https://..."/></div>
+    <div class="field"><label>ComicVine link (optional)</label><input id="as-comicvine" placeholder="https://comicvine.gamespot.com/..."/></div>
+    <div class="import-note">Leave the cover blank and COMICBOX will generate a placeholder cover automatically.</div>
+    <div class="modal-actions">
+      <button class="ghost" onclick="closeModal()">Cancel</button>
+      <button class="primary" onclick="createSeries()">Add series</button>
+    </div>
+  `);
+  document.getElementById('as-title').focus();
+}
+async function createSeries(){
+  const title = document.getElementById('as-title').value.trim();
+  if(!title){ alert('Give the series a title.'); return; }
+  const genres = document.getElementById('as-genres').value.split(',').map(g=>g.trim()).filter(Boolean);
+  const s = {
+    id: 's-'+Math.random().toString(36).slice(2,10),
+    title,
+    publisher: document.getElementById('as-publisher').value.trim(),
+    genres,
+    description: document.getElementById('as-desc').value.trim(),
+    coverUrl: document.getElementById('as-cover').value.trim(),
+    comicVineUrl: document.getElementById('as-comicvine').value.trim(),
+    addedAt: Date.now()
+  };
+  state.seriesIndex.push(s);
+  await sSet('series-index', state.seriesIndex);
+  await saveIssues(s.id, []);
+  closeModal();
+  renderHomeTab();
+  if(currentUser){
+    const pd = await getProfileData(currentUser.uid);
+    pd.stats.seriesCreated = (pd.stats.seriesCreated||0)+1;
+    await saveProfileData(currentUser.uid);
+    await checkAchievements(currentUser.uid);
+  }
+}
+
+function openEditSeries(){
+  const s = findSeries(state.currentSeriesId);
+  if(!s) return;
+  showModal(`
+    <h3>Edit series</h3>
+    <div class="field"><label>Title</label><input id="es-title" value="${escapeAttr(s.title)}"/></div>
+    <div class="field"><label>Publisher</label><input id="es-publisher" value="${escapeAttr(s.publisher||'')}"/></div>
+    <div class="field"><label>Genres (comma separated)</label><input id="es-genres" value="${escapeAttr((s.genres||[]).join(', '))}"/></div>
+    <div class="field"><label>Description</label><textarea id="es-desc">${escapeHtml(s.description||'')}</textarea></div>
+    <div class="field"><label>Cover image URL</label><input id="es-cover" placeholder="https://..." value="${escapeAttr(s.coverUrl||'')}"/></div>
+    <div class="field"><label>ComicVine link (optional)</label><input id="es-comicvine" placeholder="https://comicvine.gamespot.com/..." value="${escapeAttr(s.comicVineUrl||'')}"/></div>
+    <div class="import-note">Paste a link to an image (e.g. from a cover archive site or Imgur) — COMICBOX doesn't accept direct uploads, just links.</div>
+    <div class="modal-actions">
+      <button class="ghost" onclick="closeModal()">Cancel</button>
+      <button class="primary" onclick="saveEditSeries()">Save changes</button>
+    </div>
+  `);
+  document.getElementById('es-title').focus();
+}
+async function saveEditSeries(){
+  const s = findSeries(state.currentSeriesId);
+  if(!s) return;
+  const title = document.getElementById('es-title').value.trim();
+  if(!title){ alert('The series needs a title.'); return; }
+  s.title = title;
+  s.publisher = document.getElementById('es-publisher').value.trim();
+  s.genres = document.getElementById('es-genres').value.split(',').map(g=>g.trim()).filter(Boolean);
+  s.description = document.getElementById('es-desc').value.trim();
+  s.coverUrl = document.getElementById('es-cover').value.trim();
+  s.comicVineUrl = document.getElementById('es-comicvine').value.trim();
+  await sSet('series-index', state.seriesIndex);
+  closeModal();
+  await openSeries(s.id);
+}
+
+async function deleteSeries(){
+  const s = findSeries(state.currentSeriesId);
+  if(!s) return;
+  const issues = await getIssues(s.id);
+  if(!confirm(`Delete "${s.title}" and all ${issues.length} issue(s) in it? This can't be undone — it also removes it from everyone's lists and reviews.`)) return;
+  const issueIds = new Set(issues.map(i=>i.id));
+  const allUsers = await fetchAllUsers();
+  for(const u of allUsers){
+    const pd = await getProfileData(u.id);
+    let changed = false;
+    ['toRead','read','collection'].forEach(key=>{
+      const before = pd[key].length;
+      pd[key] = pd[key].filter(x=>!issueIds.has(x.issueId));
+      if(pd[key].length!==before) changed = true;
+    });
+    Object.keys(pd.reviews||{}).forEach(iid=>{ if(issueIds.has(iid)){ delete pd.reviews[iid]; changed = true; } });
+    if(changed) await saveProfileData(u.id);
+  }
+  state.seriesIndex = state.seriesIndex.filter(x=>x.id!==s.id);
+  await sSet('series-index', state.seriesIndex);
+  await sDel('issues:'+s.id);
+  delete state.issuesCache[s.id];
+  setTab('home');
+}
+
+/* ===================== series page ===================== */
+async function openSeries(id){
+  state.currentSeriesId = id;
+  const s = findSeries(id);
+  document.getElementById('series-title').textContent = s.title;
+  document.getElementById('series-publisher').textContent = s.publisher || '';
+  document.getElementById('series-desc').textContent = s.description || '';
+  document.getElementById('series-comicvine').innerHTML = s.comicVineUrl
+    ? `<a href="${escapeAttr(s.comicVineUrl)}" target="_blank" rel="noopener" class="mono" style="color:var(--cyan);font-size:12px;">View on ComicVine ↗</a>`
+    : '';
+  document.getElementById('series-genres').innerHTML = (s.genres||[]).map(g=>`<span class="pill">${escapeHtml(g)}</span>`).join('');
+  document.getElementById('series-cover-wrap').innerHTML = `<div class="cover-tall-wrap" style="width:180px;">${
+    s.coverUrl ? `<img class="cover-tall" src="${escapeAttr(s.coverUrl)}" onerror="this.outerHTML=fallbackTall('${escapeAttr(s.title)}','${escapeAttr(s.id)}')"/>` : fallbackTall(s.title, s.id)
+  }</div>`;
+  showView('series');
+  await renderIssueList();
+}
+function fallbackTall(title, seed){
+  return `<div class="cover-fallback-tall" style="background:${colorFor(seed)}">${escapeHtml(title)}</div>`;
+}
+window.fallbackTall = fallbackTall;
+
+async function renderIssueList(){
+  const issues = (await getIssues(state.currentSeriesId)).slice().sort((a,b)=>a.number-b.number);
+  const pd = await getProfileData(state.currentProfileId);
+  const series = findSeries(state.currentSeriesId);
+  const wrap = document.getElementById('issue-list');
+  const rowWrap = document.getElementById('series-issue-row');
+  wrap.innerHTML='';
+
+  const readCount = issues.filter(i=>pd.read.some(x=>x.issueId===i.id)).length;
+  paintProgressRing(readCount, issues.length);
+
+  if(issues.length===0){
+    wrap.innerHTML = '<div class="empty">No issues added yet. Use "+ Add Issue" above to start building this series.</div>';
+    if(rowWrap) rowWrap.innerHTML = '';
+    return;
+  }
+
+  if(rowWrap){
+    rowWrap.innerHTML = `<div class="row-track">${issues.map(iss=>{
+      const isRead = pd.read.some(x=>x.issueId===iss.id);
+      const isOwned = pd.collection.some(x=>x.issueId===iss.id);
+      return `<div class="poster-card" onclick="openIssue('${iss.id}')">
+        <div class="art">
+          ${coverOrFallback(iss.coverUrl || series.coverUrl, series.title+' #'+iss.number, iss.id)}
+          ${isRead? '<span class="badge read">READ</span>' : (isOwned? '<span class="badge owned">OWNED</span>' : '')}
+        </div>
+        <div class="t">#${iss.number}</div>
+        <div class="s">${escapeHtml(iss.title||'')}</div>
+      </div>`;
+    }).join('')}</div>`;
+  }
+
+  issues.forEach(iss=>{
+    const isRead = pd.read.some(x=>x.issueId===iss.id);
+    const isOwned = pd.collection.some(x=>x.issueId===iss.id);
+    const row = document.createElement('div');
+    row.className='issue-row';
+    row.innerHTML = `
+      <div class="burst">#${iss.number}</div>
+      <div class="it">
+        <div class="tt">${escapeHtml(iss.title||('Issue #'+iss.number))}</div>
+        <div class="dd">${iss.publishDate ? formatDate(iss.publishDate) : 'No date on file'} ${iss.writer? '· '+escapeHtml(iss.writer):''}</div>
+      </div>
+      ${isRead?'<span class="tag read">READ</span>':''}
+      ${isOwned?'<span class="tag owned">OWNED</span>':''}
+    `;
+    row.onclick=()=>openIssue(iss.id);
+    wrap.appendChild(row);
+  });
+}
+
+function paintProgressRing(read, total){
+  const wrapEl = document.getElementById('series-progress-wrap');
+  const fill = document.getElementById('ring-fill-circle');
+  if(!wrapEl || !fill) return;
+  const circumference = 2*Math.PI*42;
+  const pct = total ? read/total : 0;
+  const prevOffset = fill.style.strokeDashoffset;
+  fill.style.strokeDasharray = `${circumference}`;
+  fill.style.strokeDashoffset = `${circumference*(1-pct)}`;
+  const isComplete = total>0 && read===total;
+  fill.classList.toggle('complete', isComplete);
+  document.getElementById('ring-pct').textContent = Math.round(pct*100)+'%';
+  document.getElementById('ring-sub').textContent = `${read}/${total}`;
+  if(prevOffset && prevOffset !== fill.style.strokeDashoffset){
+    wrapEl.classList.remove('pulse'); void wrapEl.offsetWidth; wrapEl.classList.add('pulse');
+  }
+}
+
+async function openAddIssue(){
+  const pickerHtml = await heroPickerHtml([]);
+  showModal(`
+    <h3>Add an issue</h3>
+    <div class="field"><label>Issue number</label><input id="ai-number" type="number" min="0" step="1" placeholder="1"/></div>
+    <div class="field"><label>Title</label><input id="ai-title" placeholder="e.g. The First Sketch"/></div>
+    <div class="field"><label>Publish date</label><input id="ai-date" type="date"/></div>
+    <div class="field"><label>Writer</label><input id="ai-writer"/></div>
+    <div class="field"><label>Penciller</label><input id="ai-penciller"/></div>
+    <div class="field"><label>Cover artist</label><input id="ai-cover-artist"/></div>
+    <div class="field"><label>Description</label><textarea id="ai-desc"></textarea></div>
+    <div class="field"><label>Cover image URL (optional)</label><input id="ai-cover-url" placeholder="https://..."/></div>
+    <div class="field">
+      <label>Heroes in this issue</label>
+      <div class="hero-picker" id="ai-hero-picker">${pickerHtml}</div>
+      <div style="display:flex;gap:8px;margin-top:8px;">
+        <input id="ai-hero-quickadd" placeholder="Quick-add a new hero by name…" style="flex:1;"/>
+        <button type="button" class="small ghost" onclick="quickAddHero('ai')">+ Add</button>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="ghost" onclick="closeModal()">Cancel</button>
+      <button class="primary" onclick="createIssue()">Add issue</button>
+    </div>
+  `);
+  document.getElementById('ai-number').focus();
+}
+async function createIssue(){
+  const number = parseFloat(document.getElementById('ai-number').value);
+  if(isNaN(number)){ alert('Give this issue a number.'); return; }
+  const issues = await getIssues(state.currentSeriesId);
+  const iss = {
+    id: 'i-'+Math.random().toString(36).slice(2,10),
+    number,
+    title: document.getElementById('ai-title').value.trim(),
+    publishDate: document.getElementById('ai-date').value,
+    writer: document.getElementById('ai-writer').value.trim(),
+    penciller: document.getElementById('ai-penciller').value.trim(),
+    coverArtist: document.getElementById('ai-cover-artist').value.trim(),
+    description: document.getElementById('ai-desc').value.trim(),
+    coverUrl: document.getElementById('ai-cover-url').value.trim(),
+    variants: [],
+    heroIds: [...document.querySelectorAll('#ai-hero-picker input:checked')].map(x=>x.value),
+    addedAt: Date.now()
+  };
+  issues.push(iss);
+  await saveIssues(state.currentSeriesId, issues);
+  closeModal();
+  await renderIssueList();
+  if(currentUser){
+    const pd = await getProfileData(currentUser.uid);
+    pd.stats.issuesCreated = (pd.stats.issuesCreated||0)+1;
+    await saveProfileData(currentUser.uid);
+    await checkAchievements(currentUser.uid);
+  }
+}
+
+async function openEditIssue(){
+  const issues = await getIssues(state.currentSeriesId);
+  const iss = issues.find(x=>x.id===state.currentIssueId);
+  if(!iss) return;
+  const pickerHtml = await heroPickerHtml(iss.heroIds||[]);
+  showModal(`
+    <h3>Edit issue</h3>
+    <div class="field"><label>Issue number</label><input id="ei-number" type="number" step="1" value="${escapeAttr(iss.number)}"/></div>
+    <div class="field"><label>Title</label><input id="ei-title" value="${escapeAttr(iss.title||'')}"/></div>
+    <div class="field"><label>Publish date</label><input id="ei-date" type="date" value="${escapeAttr(iss.publishDate||'')}"/></div>
+    <div class="field"><label>Writer</label><input id="ei-writer" value="${escapeAttr(iss.writer||'')}"/></div>
+    <div class="field"><label>Penciller</label><input id="ei-penciller" value="${escapeAttr(iss.penciller||'')}"/></div>
+    <div class="field"><label>Cover artist</label><input id="ei-cover-artist" value="${escapeAttr(iss.coverArtist||'')}"/></div>
+    <div class="field"><label>Description</label><textarea id="ei-desc">${escapeHtml(iss.description||'')}</textarea></div>
+    <div class="field"><label>Cover image URL</label><input id="ei-cover-url" placeholder="https://..." value="${escapeAttr(iss.coverUrl||'')}"/></div>
+    <div class="field">
+      <label>Heroes in this issue</label>
+      <div class="hero-picker" id="ei-hero-picker">${pickerHtml}</div>
+      <div style="display:flex;gap:8px;margin-top:8px;">
+        <input id="ei-hero-quickadd" placeholder="Quick-add a new hero by name…" style="flex:1;"/>
+        <button type="button" class="small ghost" onclick="quickAddHero('ei')">+ Add</button>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="ghost" onclick="closeModal()">Cancel</button>
+      <button class="primary" onclick="saveEditIssue()">Save changes</button>
+    </div>
+  `);
+}
+async function saveEditIssue(){
+  const number = parseFloat(document.getElementById('ei-number').value);
+  if(isNaN(number)){ alert('Give this issue a number.'); return; }
+  const issues = await getIssues(state.currentSeriesId);
+  const iss = issues.find(x=>x.id===state.currentIssueId);
+  if(!iss) return;
+  iss.number = number;
+  iss.title = document.getElementById('ei-title').value.trim();
+  iss.publishDate = document.getElementById('ei-date').value;
+  iss.writer = document.getElementById('ei-writer').value.trim();
+  iss.penciller = document.getElementById('ei-penciller').value.trim();
+  iss.coverArtist = document.getElementById('ei-cover-artist').value.trim();
+  iss.description = document.getElementById('ei-desc').value.trim();
+  iss.coverUrl = document.getElementById('ei-cover-url').value.trim();
+  iss.heroIds = [...document.querySelectorAll('#ei-hero-picker input:checked')].map(x=>x.value);
+  await saveIssues(state.currentSeriesId, issues);
+  closeModal();
+  await openIssue(iss.id);
+}
+
+async function deleteIssue(){
+  const issues = await getIssues(state.currentSeriesId);
+  const iss = issues.find(x=>x.id===state.currentIssueId);
+  if(!iss) return;
+  if(!confirm(`Delete issue #${iss.number}${iss.title? ' — '+iss.title:''}? This removes it from everyone's lists and reviews.`)) return;
+  const allUsers = await fetchAllUsers();
+  for(const u of allUsers){
+    const pd = await getProfileData(u.id);
+    let changed = false;
+    ['toRead','read','collection'].forEach(key=>{
+      const before = pd[key].length;
+      pd[key] = pd[key].filter(x=>x.issueId!==iss.id);
+      if(pd[key].length!==before) changed = true;
+    });
+    if(pd.reviews && pd.reviews[iss.id]){ delete pd.reviews[iss.id]; changed = true; }
+    if(changed) await saveProfileData(u.id);
+  }
+  const remaining = issues.filter(x=>x.id!==iss.id);
+  await saveIssues(state.currentSeriesId, remaining);
+  backToSeries();
+}
+
+function backToSeries(){
+  showView('series');
+  renderIssueList();
+}
+
+/* ===================== issue page ===================== */
+async function openIssue(id){
+  state.currentIssueId = id;
+  const issues = await getIssues(state.currentSeriesId);
+  const iss = issues.find(x=>x.id===id);
+  const series = findSeries(state.currentSeriesId);
+  if(!iss || !series) return;
+
+  document.getElementById('issue-title').textContent = `${series.title} #${iss.number}${iss.title? ' — '+iss.title:''}`;
+  document.getElementById('issue-subtitle').textContent = series.publisher || '';
+  document.getElementById('issue-desc').textContent = iss.description || 'No description on file yet.';
+
+  const coverTitle = series.title+' #'+iss.number;
+  state.issueMainCover = {url: iss.coverUrl||'', title: coverTitle, seed: iss.id};
+  renderCoverFrame(state.issueMainCover, false);
+
+  document.getElementById('issue-kv').innerHTML = `
+    <div>Publish Date</div><div>${iss.publishDate? formatDate(iss.publishDate):'Unknown'}</div>
+    <div>Writer</div><div>${escapeHtml(iss.writer)||'Unknown'}</div>
+    <div>Penciller</div><div>${escapeHtml(iss.penciller)||'Unknown'}</div>
+    <div>Cover Artist</div><div>${escapeHtml(iss.coverArtist)||'Unknown'}</div>
+  `;
+
+  const vwrap = document.getElementById('variant-strip');
+  vwrap.innerHTML='';
+  (iss.variants||[]).forEach((v,i)=>{
+    const img = document.createElement('img');
+    img.src = v.url; img.title = v.label||'Variant cover'; img.dataset.variantIndex = i;
+    img.onerror=()=>img.remove();
+    img.onclick=()=>focusVariant(v, img);
+    vwrap.appendChild(img);
+  });
+
+  const heroWrap = document.getElementById('issue-heroes');
+  const heroes = await getHeroes();
+  const tagged = (iss.heroIds||[]).map(hid=>heroes.find(h=>h.id===hid)).filter(Boolean);
+  heroWrap.innerHTML = tagged.map(h=>`
+    <span class="hero-chip" onclick="jumpToHeroFromIssue('${h.id}')">
+      <span class="hc-dot" style="background:${colorFor(h.id)}">${h.imageUrl? `<img src="${escapeAttr(h.imageUrl)}"/>` : initials(h.name)}</span>
+      ${escapeHtml(h.name)}
+    </span>
+  `).join('');
+
+  // prev/next navigation within this series, ordered by issue number
+  const ordered = issues.slice().sort((a,b)=>a.number-b.number);
+  const idx = ordered.findIndex(x=>x.id===id);
+  const prevIss = idx>0 ? ordered[idx-1] : null;
+  const nextIss = idx>=0 && idx<ordered.length-1 ? ordered[idx+1] : null;
+  const navWrap = document.getElementById('issue-nav-row');
+  navWrap.innerHTML = `
+    <button class="small ghost" ${prevIss?'':'disabled'} onclick="${prevIss?`openIssue('${prevIss.id}')`:''}">&larr; ${prevIss? '#'+prevIss.number : 'No earlier issue'}</button>
+    <button class="small ghost" ${nextIss?'':'disabled'} onclick="${nextIss?`openIssue('${nextIss.id}')`:''}">${nextIss? '#'+nextIss.number : 'No later issue'} &rarr;</button>
+  `;
+
+  showView('issue');
+  await refreshIssueActionsAndSocial();
+}
+function jumpToHeroFromIssue(heroId){ openHero(heroId); }
+window.jumpToHeroFromIssue = jumpToHeroFromIssue;
+
+/* ---------- cover frame: main cover + variant focus + lightbox ---------- */
+function renderCoverFrame(coverData, isVariant){
+  const frame = document.getElementById('issue-cover-wrap');
+  const flag = isVariant
+    ? `<div class="variant-flag" onclick="event.stopPropagation();resetToMainCover();" title="Back to main cover">${escapeHtml(coverData.label||'Variant')} · reset ↺</div>`
+    : '';
+  frame.innerHTML = `<div class="issue-cover-frame" onclick="openCoverLightbox()">${flag}${coverOrFallback(coverData.url, coverData.title, coverData.seed)}</div>`;
+}
+function focusVariant(v, imgEl){
+  renderCoverFrame({url:v.url, title:v.label||'Variant cover', seed:state.issueMainCover.seed, label:v.label}, true);
+  document.querySelectorAll('.variant-strip img').forEach(el=>el.classList.remove('active'));
+  imgEl.classList.add('active');
+}
+function resetToMainCover(){
+  renderCoverFrame(state.issueMainCover, false);
+  document.querySelectorAll('.variant-strip img').forEach(el=>el.classList.remove('active'));
+}
+function openCoverLightbox(){
+  const img = document.querySelector('.issue-cover-frame img');
+  if(!img) return;
+  const root = document.getElementById('modal-root');
+  root.innerHTML = `<div class="lightbox-overlay" onclick="closeModal()">
+      <div class="lightbox-close" onclick="closeModal()">&times;</div>
+      <img src="${escapeAttr(img.src)}"/>
+    </div>`;
+}
+function openHeroGalleryLightbox(heroId, idx){
+  const h = findHero(heroId);
+  if(!h || !h.gallery || !h.gallery[idx]) return;
+  const root = document.getElementById('modal-root');
+  root.innerHTML = `<div class="lightbox-overlay" onclick="closeModal()">
+      <div class="lightbox-close" onclick="closeModal()">&times;</div>
+      <img src="${escapeAttr(h.gallery[idx])}"/>
+    </div>`;
+}
+window.openHeroGalleryLightbox = openHeroGalleryLightbox;
+
+async function refreshIssueActionsAndSocial(){
+  const pd = await getProfileData(state.currentProfileId);
+  const isRead = pd.read.some(x=>x.issueId===state.currentIssueId);
+  const inList = pd.toRead.some(x=>x.issueId===state.currentIssueId);
+  const owned = pd.collection.some(x=>x.issueId===state.currentIssueId);
+
+  const bRead = document.getElementById('btn-read');
+  bRead.textContent = isRead ? '✓ Read' : 'Mark as Read';
+  bRead.classList.toggle('active', isRead);
+
+  const bList = document.getElementById('btn-list');
+  bList.textContent = inList ? '✓ On Reading List' : 'Add to Reading List';
+  bList.classList.toggle('active', inList);
+
+  const bColl = document.getElementById('btn-collection');
+  bColl.textContent = owned ? '✓ In Physical Collection' : 'Add to Physical Collection';
+  bColl.classList.toggle('active', owned);
+
+  const whoWrap = document.getElementById('who-read');
+  const revWrap = document.getElementById('reviews-list');
+  whoWrap.innerHTML=''; revWrap.innerHTML='';
+  let anyRead = false, anyReview = false;
+  const allRatings = [];
+  const allComments = (await sGet('review-comments:'+state.currentIssueId)) || {};
+
+  for(const p of state.profiles){
+    const d = await getProfileData(p.id);
+    if(d.read.some(x=>x.issueId===state.currentIssueId)){
+      anyRead = true;
+      const chip = document.createElement('div');
+      chip.className='who-chip';
+      chip.style.cursor='pointer';
+      chip.innerHTML = `<span class="dot" style="background:${p.color}">${initials(p.name)}</span>${escapeHtml(p.name)}`;
+      chip.onclick = ()=>openProfile(p.id);
+      whoWrap.appendChild(chip);
+    }
+    const rev = d.reviews[state.currentIssueId];
+    if(rev){
+      anyReview = true;
+      allRatings.push(rev.rating);
+      const comments = allComments[p.id] || [];
+      const card = document.createElement('div');
+      card.className='review-card';
+      card.innerHTML = `
+        <div class="rhead">
+          <div class="who-chip" style="cursor:pointer;"><span class="dot" style="background:${p.color}">${initials(p.name)}</span>${escapeHtml(p.name)}</div>
+          <div class="stars">${'★'.repeat(rev.rating)}${'☆'.repeat(5-rev.rating)}</div>
+        </div>
+        <div style="color:var(--dim);">${escapeHtml(rev.text)||'<span class="empty">No written review, just a rating.</span>'}</div>
+        <div class="comment-thread">
+          ${comments.map(c=>`
+            <div class="comment-row">
+              <span class="dot" style="background:${c.color||'#555'};">${initials(c.name||'?')}</span>
+              <div><span class="c-name">${escapeHtml(c.name||'Someone')}</span> <span class="c-text">${escapeHtml(c.text)}</span></div>
+            </div>
+          `).join('')}
+          ${currentUser ? `
+            <div class="comment-add-row">
+              <input type="text" placeholder="Add a comment…" id="cmt-input-${p.id}" onkeydown="if(event.key==='Enter')addReviewComment('${p.id}')"/>
+              <button class="small ghost" onclick="addReviewComment('${p.id}')">Reply</button>
+            </div>
+          ` : ''}
+        </div>
+      `;
+      card.querySelector('.who-chip').onclick = (e)=>{ e.stopPropagation(); openProfile(p.id); };
+      revWrap.appendChild(card);
+    }
+  }
+  const avgEl = document.getElementById('issue-avg-rating');
+  if(allRatings.length){
+    const avg = allRatings.reduce((a,b)=>a+b,0) / allRatings.length;
+    avgEl.innerHTML = `<span class="stars">${'★'.repeat(Math.round(avg))}${'☆'.repeat(5-Math.round(avg))}</span> <span class="mono" style="color:var(--dim2);font-size:11.5px;">${avg.toFixed(1)} · ${allRatings.length} rating${allRatings.length===1?'':'s'}</span>`;
+  } else {
+    avgEl.innerHTML = `<span class="mono" style="color:var(--dim2);font-size:11.5px;">No ratings yet</span>`;
+  }
+  if(!anyRead) whoWrap.innerHTML = '<div class="empty">Nobody\'s marked this one read yet.</div>';
+  if(!anyReview) revWrap.innerHTML = '<div class="empty">No reviews yet. Be the first.</div>';
+}
+async function addReviewComment(reviewOwnerUid){
+  if(!currentUser) return;
+  const input = document.getElementById('cmt-input-'+reviewOwnerUid);
+  const text = input.value.trim();
+  if(!text) return;
+  const key = 'review-comments:'+state.currentIssueId;
+  const all = (await sGet(key)) || {};
+  const profile = state.profiles.find(p=>p.id===currentUser.uid);
+  all[reviewOwnerUid] = all[reviewOwnerUid] || [];
+  all[reviewOwnerUid].push({uid:currentUser.uid, name: profile?profile.name:'Someone', color: profile?profile.color:'#555', text, createdAt:Date.now()});
+  await sSet(key, all);
+  await refreshIssueActionsAndSocial();
+}
+window.addReviewComment = addReviewComment;
+
+async function toggleRead(){
+  const pd = await getProfileData(state.currentProfileId);
+  const has = pd.read.some(x=>x.issueId===state.currentIssueId);
+  const issues = await getIssues(state.currentSeriesId);
+  const wasComplete = issues.length>0 && issues.every(i=>pd.read.some(x=>x.issueId===i.id));
+  if(has){ pd.read = pd.read.filter(x=>x.issueId!==state.currentIssueId); }
+  else{
+    pd.read.push({issueId:state.currentIssueId, seriesId:state.currentSeriesId, addedAt:Date.now()});
+    comicBurst(document.getElementById('btn-read'), pickBurstWord());
+    const hr = new Date().getHours();
+    if(hr>=0 && hr<4) pd.eggFlags.nightOwl = true;
+  }
+  await saveProfileData(state.currentProfileId);
+  await refreshIssueActionsAndSocial();
+  const nowComplete = issues.length>0 && issues.every(i=>pd.read.some(x=>x.issueId===i.id));
+  if(!has && nowComplete && !wasComplete){
+    const series = findSeries(state.currentSeriesId);
+    celebrateSeriesComplete(series ? series.title : 'Series');
+  }
+  await checkAchievements(state.currentProfileId);
+}
+async function toggleReadList(){
+  const pd = await getProfileData(state.currentProfileId);
+  const has = pd.toRead.some(x=>x.issueId===state.currentIssueId);
+  if(has){ pd.toRead = pd.toRead.filter(x=>x.issueId!==state.currentIssueId); }
+  else{
+    pd.toRead.push({issueId:state.currentIssueId, seriesId:state.currentSeriesId, addedAt:Date.now()});
+    comicBurst(document.getElementById('btn-list'), 'NOTED!');
+  }
+  await saveProfileData(state.currentProfileId);
+  await refreshIssueActionsAndSocial();
+}
+async function toggleCollection(){
+  const pd = await getProfileData(state.currentProfileId);
+  const has = pd.collection.some(x=>x.issueId===state.currentIssueId);
+  if(has){ pd.collection = pd.collection.filter(x=>x.issueId!==state.currentIssueId); }
+  else{
+    pd.collection.push({issueId:state.currentIssueId, seriesId:state.currentSeriesId, addedAt:Date.now()});
+    comicBurst(document.getElementById('btn-collection'), 'GOT IT!');
+  }
+  await saveProfileData(state.currentProfileId);
+  await refreshIssueActionsAndSocial();
+  await checkAchievements(state.currentProfileId);
+}
+
+/* ---------- fun feedback: comic bursts, confetti, completion banner ---------- */
+const BURST_WORDS = ['POW!','ZAP!','BAM!','YEAH!','WHAM!','NICE!'];
+function pickBurstWord(){ return BURST_WORDS[Math.floor(Math.random()*BURST_WORDS.length)]; }
+const BURST_COLORS = ['#e0392c','#f2b705','#3c9169','#33a1c9'];
+function comicBurst(anchorEl, text){
+  if(!anchorEl) return;
+  const r = anchorEl.getBoundingClientRect();
+  const el = document.createElement('div');
+  el.className = 'comic-burst';
+  el.textContent = text;
+  el.style.left = (r.left + r.width/2) + 'px';
+  el.style.top = r.top + 'px';
+  el.style.color = BURST_COLORS[Math.floor(Math.random()*BURST_COLORS.length)];
+  el.style.setProperty('--rot', (Math.random()*16-8)+'deg');
+  document.body.appendChild(el);
+  el.addEventListener('animationend', ()=>el.remove());
+  setTimeout(()=>el.remove(), 1300);
+}
+function fireConfetti(count){
+  count = count || 90;
+  for(let i=0;i<count;i++){
+    const piece = document.createElement('div');
+    piece.className = 'confetti-piece';
+    const size = 6 + Math.random()*7;
+    piece.style.width = size+'px';
+    piece.style.height = (size*0.4)+'px';
+    piece.style.left = (Math.random()*100)+'vw';
+    piece.style.background = BURST_COLORS[Math.floor(Math.random()*BURST_COLORS.length)];
+    piece.style.animationDuration = (1.6 + Math.random()*1.4)+'s';
+    piece.style.animationDelay = (Math.random()*0.5)+'s';
+    document.body.appendChild(piece);
+    setTimeout(()=>piece.remove(), 3600);
+  }
+}
+function celebrateSeriesComplete(seriesTitle){
+  fireConfetti(110);
+  const banner = document.createElement('div');
+  banner.className = 'complete-banner';
+  banner.innerHTML = `<div class="cb-title">SERIES COMPLETE! 🎉</div><div class="cb-sub">You've read every issue of ${escapeHtml(seriesTitle)}</div>`;
+  document.body.appendChild(banner);
+  setTimeout(()=>banner.remove(), 3200);
+}
+window.comicBurst=comicBurst; window.fireConfetti=fireConfetti; window.celebrateSeriesComplete=celebrateSeriesComplete;
+
+function openAddVariant(){
+  showModal(`
+    <h3>Add a variant cover</h3>
+    <div class="field"><label>Label</label><input id="av-label" placeholder="e.g. 1:25 Retailer Incentive"/></div>
+    <div class="field"><label>Image URL</label><input id="av-url" placeholder="https://..."/></div>
+    <div class="import-note">Artifacts can't accept direct file uploads, host the image somewhere (e.g. Imgur) and paste the link here.</div>
+    <div class="modal-actions">
+      <button class="ghost" onclick="closeModal()">Cancel</button>
+      <button class="primary" onclick="saveVariant()">Add variant</button>
+    </div>
+  `);
+}
+async function saveVariant(){
+  const url = document.getElementById('av-url').value.trim();
+  if(!url){ alert('Paste an image URL.'); return; }
+  const label = document.getElementById('av-label').value.trim();
+  const issues = await getIssues(state.currentSeriesId);
+  const iss = issues.find(x=>x.id===state.currentIssueId);
+  iss.variants = iss.variants || [];
+  iss.variants.push({url,label});
+  await saveIssues(state.currentSeriesId, issues);
+  closeModal();
+  await openIssue(state.currentIssueId);
+}
+
+function openReview(){
+  const existing = state.profileData[state.currentProfileId] && state.profileData[state.currentProfileId].reviews[state.currentIssueId];
+  showModal(`
+    <h3>Write a review</h3>
+    <div class="field">
+      <label>Rating</label>
+      <div class="star-picker" id="star-picker"></div>
+      <div class="star-picker-label" id="star-picker-label">&nbsp;</div>
+    </div>
+    <div class="field"><label>Review</label><textarea id="rv-text" placeholder="What'd you think?">${existing? escapeHtml(existing.text):''}</textarea></div>
+    <div class="modal-actions">
+      <button class="ghost" onclick="closeModal()">Cancel</button>
+      <button class="primary" onclick="saveReview()">Save review</button>
+    </div>
+  `);
+  let rating = existing? existing.rating : 0;
+  const picker = document.getElementById('star-picker');
+  const labelEl = document.getElementById('star-picker-label');
+  const labels = ['','Meh.','Okay!','Pretty good!','Great!','AMAZING!'];
+  // build the 5 stars ONCE and just repaint their classes — never tear down/rebuild
+  // DOM on hover or click, which is what made the old version flaky on real pointers.
+  const starEls = [];
+  for(let i=1;i<=5;i++){
+    const s = document.createElement('span');
+    s.textContent = '★';
+    s.addEventListener('mouseenter', ()=>paint(i));
+    s.addEventListener('click', (e)=>{
+      e.stopPropagation();
+      rating = i;
+      paint(rating);
+      s.classList.add('pop');
+      setTimeout(()=>s.classList.remove('pop'),350);
+    });
+    starEls.push(s);
+    picker.appendChild(s);
+  }
+  function paint(shown){
+    starEls.forEach((s,idx)=> s.classList.toggle('on', idx < shown));
+    labelEl.textContent = shown ? labels[shown] : '';
+  }
+  picker.addEventListener('mouseleave', ()=>paint(rating));
+  paint(rating);
+  window._getRating = ()=>rating;
+}
+async function saveReview(){
+  const rating = window._getRating ? window._getRating() : 0;
+  if(!rating){ alert('Pick a star rating.'); return; }
+  const text = document.getElementById('rv-text').value.trim();
+  const pd = await getProfileData(state.currentProfileId);
+  const prev = pd.reviews[state.currentIssueId];
+  if(prev && ((prev.rating===1 && rating===5) || (prev.rating===5 && rating===1))) pd.eggFlags.indecisive = true;
+  pd.reviews[state.currentIssueId] = {seriesId: state.currentSeriesId, rating, text, updatedAt: Date.now()};
+  if(rating===3){
+    const threeStarCount = Object.values(pd.reviews).filter(r=>r.rating===3).length;
+    if(threeStarCount>=5) pd.eggFlags.perfectlyFine = true;
+  }
+  await saveProfileData(state.currentProfileId);
+  closeModal();
+  await refreshIssueActionsAndSocial();
+  await checkAchievements(state.currentProfileId);
+}
+
+/* ===================== modal ===================== */
+function showModal(innerHtml){
+  const root = document.getElementById('modal-root');
+  root.innerHTML = `<div class="modal-overlay" onclick="if(event.target===this)closeModal()"><div class="modal">${innerHtml}</div></div>`;
+}
+function closeModal(){ document.getElementById('modal-root').innerHTML=''; }
+
+/* ===================== utils ===================== */
+function escapeHtml(str){
+  if(str===undefined||str===null) return '';
+  return String(str).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+function escapeAttr(str){ return escapeHtml(str); }
+function formatDate(d){
+  try{
+    const dt = new Date(d+'T00:00:00');
+    if(isNaN(dt)) return d;
+    return dt.toLocaleDateString(undefined,{year:'numeric',month:'short',day:'numeric'});
+  }catch(e){ return d; }
+}
+
+/* expose globals used by inline handlers */
+window.goMyProfile=goMyProfile; window.openProfile=openProfile; window.openEditProfile=openEditProfile; window.saveEditProfile=saveEditProfile;
+window.toggleAuthMode=toggleAuthMode; window.submitAuthForm=submitAuthForm; window.doSignOut=doSignOut;
+window.setTab=setTab; window.openSeries=openSeries; window.openAddSeries=openAddSeries; window.createSeries=createSeries;
+window.openAddIssue=openAddIssue; window.createIssue=createIssue; window.backToSeries=backToSeries;
+window.openEditSeries=openEditSeries; window.saveEditSeries=saveEditSeries; window.handleSearchInput=handleSearchInput;
+window.openEditIssue=openEditIssue; window.saveEditIssue=saveEditIssue;
+window.deleteSeries=deleteSeries; window.deleteIssue=deleteIssue;
+window.openIssue=openIssue; window.jumpToIssue=jumpToIssue; window.toggleRead=toggleRead; window.toggleReadList=toggleReadList; window.toggleCollection=toggleCollection;
+window.openAddVariant=openAddVariant; window.saveVariant=saveVariant; window.openReview=openReview; window.saveReview=saveReview;
+window.closeModal=closeModal;
+window.focusVariant=focusVariant; window.resetToMainCover=resetToMainCover; window.openCoverLightbox=openCoverLightbox;
+
+</script>
+</body>
+</html>
