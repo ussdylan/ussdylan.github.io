@@ -682,15 +682,17 @@ body[data-theme="infinity"] .event-row-card:hover .art{
 }
 
 /* ---------- Brand New Day ---------- */
-.fx-cloud{position:absolute;background:#fff;border-radius:50%;filter:blur(6px);opacity:.85;animation:fxCloudDrift var(--dur,60s) linear infinite;}
+body[data-theme="brand-new-day"] #theme-fx-layer{background:linear-gradient(180deg,#bfe0f7 0%,#dcedfa 45%,#eaf4fb 100%);}
+.fx-cloud{position:absolute;background:radial-gradient(ellipse at 32% 30%, #ffffff 0%, #d7e9f5 78%, #c3ddef 100%);border-radius:50%;filter:blur(3px);opacity:.95;box-shadow:0 10px 22px rgba(18,33,46,.14);animation:fxCloudDrift var(--dur,60s) linear infinite;}
 @keyframes fxCloudDrift{from{transform:translateX(-14vw);}to{transform:translateX(114vw);}}
-.fx-bird{position:absolute;width:14px;height:8px;opacity:.55;animation:fxBirdDrift var(--dur,22s) linear forwards, fxBirdFlap .5s ease-in-out infinite;}
-.fx-bird::before,.fx-bird::after{content:'';position:absolute;top:50%;width:7px;height:2px;background:#12212e;border-radius:2px;}
-.fx-bird::before{left:0;transform:rotate(24deg);}
-.fx-bird::after{right:0;transform:rotate(-24deg);}
-@keyframes fxBirdDrift{from{transform:translate(-5vw,0);}to{transform:translate(108vw,-50px);}}
-@keyframes fxBirdFlap{0%,100%{transform:scaleY(1);}50%{transform:scaleY(.35);}}
-.fx-skyline{position:absolute;left:-4%;right:-4%;bottom:0;height:120px;display:flex;align-items:flex-end;gap:4px;opacity:.9;}
+.fx-bird{position:absolute;width:18px;height:11px;opacity:.75;animation:fxBirdDrift var(--dur,16s) linear forwards;}
+.fx-bird::before,.fx-bird::after{content:'';position:absolute;top:50%;width:9px;height:2.5px;background:#0d1a24;border-radius:2px;}
+.fx-bird::before{left:0;transform-origin:100% 50%;animation:fxBirdFlapL .42s ease-in-out infinite;}
+.fx-bird::after{right:0;transform-origin:0% 50%;animation:fxBirdFlapR .42s ease-in-out infinite;}
+@keyframes fxBirdFlapL{0%,100%{transform:rotate(8deg);}50%{transform:rotate(58deg);}}
+@keyframes fxBirdFlapR{0%,100%{transform:rotate(-8deg);}50%{transform:rotate(-58deg);}}
+@keyframes fxBirdDrift{from{transform:translate(-8vw,0);}to{transform:translate(112vw,-60px);}}
+.fx-skyline{position:absolute;left:0;right:0;bottom:0;height:120px;display:flex;align-items:flex-end;justify-content:space-between;gap:3px;opacity:.92;}
 .fx-building{background:linear-gradient(180deg,#1f3a52,#12212e);position:relative;border-radius:2px 2px 0 0;flex-shrink:0;}
 .fx-building::after{content:'';position:absolute;inset:6px;background-image:repeating-linear-gradient(rgba(242,169,0,.35) 0 3px, transparent 3px 9px),repeating-linear-gradient(90deg,rgba(242,169,0,.35) 0 3px, transparent 3px 9px);opacity:.4;}
 .fx-spiderman{position:absolute;width:10px;height:10px;border-radius:50%;background:#d81e2c;box-shadow:0 0 0 2px #1f6fd1;animation:fxSpideySwing 3.2s cubic-bezier(.4,0,.2,1) forwards;}
@@ -707,8 +709,15 @@ body[data-theme="brand-new-day"] .event-row-card:hover .art{
 }
 
 /* ---------- Doctor Doom ---------- */
-.fx-castle{position:absolute;left:-2%;right:-2%;bottom:0;height:90px;display:flex;gap:3px;opacity:.9;}
-.fx-castle-block{background:linear-gradient(180deg,#0d1712,#070d0a);border-top:6px solid #132019;flex-shrink:0;}
+.fx-castle{position:absolute;left:0;right:0;bottom:0;height:170px;display:flex;align-items:flex-end;justify-content:space-between;gap:2px;opacity:.95;}
+.fx-castle-block{position:relative;flex-shrink:0;background:linear-gradient(180deg,#18271e,#070d0a);box-shadow:inset -2px 0 0 rgba(0,0,0,.35);}
+.fx-castle-block::before{content:'';position:absolute;top:-9px;left:0;right:0;height:9px;background-image:repeating-linear-gradient(90deg,#18271e 0 9px,transparent 9px 16px);}
+.fx-castle-block::after{content:'';position:absolute;inset:12px 5px 6px;background-image:repeating-linear-gradient(rgba(60,145,105,.4) 0 3px,transparent 3px 12px),repeating-linear-gradient(90deg,rgba(60,145,105,.4) 0 3px,transparent 3px 15px);opacity:.5;}
+.fx-castle-tower{position:relative;flex-shrink:0;background:linear-gradient(180deg,#1c2e22,#070d0a);box-shadow:inset -2px 0 0 rgba(0,0,0,.4), 4px 0 18px rgba(0,0,0,.3);}
+.fx-castle-tower::before{content:'';position:absolute;top:-9px;left:0;right:0;height:9px;background-image:repeating-linear-gradient(90deg,#1c2e22 0 8px,transparent 8px 14px);}
+.fx-castle-tower::after{content:'';position:absolute;inset:16px 6px 6px;background-image:repeating-linear-gradient(rgba(60,145,105,.5) 0 3px,transparent 3px 15px);opacity:.6;}
+.fx-castle-roof{position:absolute;bottom:100%;left:50%;transform:translateX(-50%);width:0;height:0;border-left:19px solid transparent;border-right:19px solid transparent;border-bottom:24px solid #0e1a13;filter:drop-shadow(0 0 7px rgba(18,183,106,.55));}
+.fx-castle-roof::after{content:'';position:absolute;top:-15px;left:-1px;width:2px;height:15px;background:#0e1a13;box-shadow:0 0 6px 1px rgba(18,183,106,.7);}
 .fx-raindrop{position:absolute;top:-10%;width:1px;height:60px;background:linear-gradient(180deg,rgba(140,220,180,.55),transparent);animation:fxRainFall linear infinite;}
 @keyframes fxRainFall{from{transform:translateY(-10vh);}to{transform:translateY(112vh);}}
 .fx-lightning-flash{position:absolute;inset:0;background:rgba(180,255,220,.14);opacity:0;animation:fxFlash .55s ease-out;}
@@ -726,12 +735,20 @@ body[data-theme="doctor-doom"] .event-row-card:hover .art{
   transition:box-shadow .35s ease!important;
 }
 
-/* ---------- Fantastic Four ---------- */
+/* ---------- Fantastic Four (retro-future) ---------- */
 .fx-blueprint-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(10,95,209,.08) 1px, transparent 1px),linear-gradient(90deg,rgba(10,95,209,.08) 1px, transparent 1px);background-size:34px 34px;animation:fxGridDrift 44s linear infinite;}
 @keyframes fxGridDrift{from{background-position:0 0,0 0;}to{background-position:34px 34px,34px 34px;}}
 .fx-orbit{position:absolute;border:1px dashed rgba(10,95,209,.2);border-radius:50%;animation:fxOrbitSpin var(--dur,50s) linear infinite;}
 .fx-orbit::after{content:'';position:absolute;top:-3px;left:50%;width:6px;height:6px;margin-left:-3px;border-radius:50%;background:#e0392c;box-shadow:0 0 6px #e0392c;}
 @keyframes fxOrbitSpin{from{transform:rotate(0);}to{transform:rotate(360deg);}}
+.fx-starburst{position:absolute;border-radius:50%;opacity:.16;
+  background-image:repeating-conic-gradient(from 0deg, #0a5fd1 0deg 4deg, transparent 4deg 18deg);
+  animation:fxOrbitSpin var(--dur,140s) linear infinite;mix-blend-mode:multiply;}
+.fx-scanlines{position:absolute;inset:0;background-image:repeating-linear-gradient(180deg, rgba(10,95,209,.05) 0 1px, transparent 1px 4px);opacity:.6;}
+.fx-fantasticar{position:absolute;width:26px;height:10px;pointer-events:none;animation:fxCarFly 3.6s cubic-bezier(.4,0,.2,1) forwards;}
+.fx-fantasticar::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,#0a5fd1,#5aa6f2);border-radius:50% 70% 70% 50%;box-shadow:0 0 10px 2px rgba(10,95,209,.5);}
+.fx-fantasticar::after{content:'';position:absolute;left:-16px;top:50%;width:16px;height:1.5px;background:linear-gradient(90deg,transparent,rgba(10,95,209,.6));transform:translateY(-50%);}
+@keyframes fxCarFly{0%{transform:translate(-10vw,10vh) rotate(-4deg);opacity:0;}8%{opacity:.9;}100%{transform:translate(118vw,-18vh) rotate(6deg);opacity:0;}}
 .fx-cursor-rock{position:fixed;width:6px;height:6px;border-radius:2px;background:#b5651d;pointer-events:none;z-index:300;animation:fxCursorFade .7s ease forwards;}
 .fx-cursor-flame{position:fixed;width:8px;height:10px;border-radius:50% 50% 50% 0;background:linear-gradient(#ffcf3f,#e0392c);pointer-events:none;z-index:300;animation:fxCursorFade .5s ease forwards;}
 .fx-cursor-mag{position:fixed;width:9px;height:9px;border-radius:50%;border:1.5px solid #7c8b99;pointer-events:none;z-index:300;animation:fxCursorFade .6s ease forwards;}
@@ -765,6 +782,14 @@ body[data-theme="fantastic-four"] .event-row-card:hover .art::before{border-colo
 .fx-crack{position:absolute;width:74px;height:74px;opacity:0;animation:fxCrackPop 1.4s ease-out forwards;
   background:linear-gradient(105deg,transparent 48%,rgba(233,240,230,.55) 49%,transparent 51%),linear-gradient(60deg,transparent 47%,rgba(233,240,230,.4) 48%,transparent 52%),linear-gradient(160deg,transparent 46%,rgba(233,240,230,.35) 47%,transparent 53%);}
 @keyframes fxCrackPop{0%{opacity:0;transform:scale(.4);}15%{opacity:1;transform:scale(1);}100%{opacity:0;transform:scale(1.15);}}
+.fx-rorschach{position:absolute;opacity:0;pointer-events:none;filter:blur(2.5px);animation:fxRorschachPulse 850ms ease-out forwards;}
+.fx-rorschach::before,.fx-rorschach::after{content:'';position:absolute;top:0;width:50%;height:100%;
+  background:radial-gradient(ellipse at 32% 38%, rgba(62,207,91,.6), transparent 62%),radial-gradient(ellipse at 62% 68%, rgba(62,207,91,.42), transparent 58%);
+  animation:fxRorschachMorph 850ms ease-in-out;}
+.fx-rorschach::before{left:0;border-radius:62% 38% 55% 45% / 48% 62% 38% 52%;}
+.fx-rorschach::after{right:0;transform:scaleX(-1);border-radius:62% 38% 55% 45% / 48% 62% 38% 52%;}
+@keyframes fxRorschachMorph{0%{border-radius:62% 38% 55% 45% / 48% 62% 38% 52%;}50%{border-radius:40% 60% 42% 58% / 58% 40% 62% 38%;}100%{border-radius:55% 45% 60% 40% / 42% 58% 45% 55%;}}
+@keyframes fxRorschachPulse{0%{opacity:0;transform:scale(.65);}22%{opacity:.9;}65%{opacity:.6;}100%{opacity:0;transform:scale(1.2);}}
 .fx-cursor-smoke{position:fixed;width:10px;height:10px;border-radius:50%;background:rgba(160,180,160,.5);pointer-events:none;z-index:300;filter:blur(2px);animation:fxSmokeRise .9s ease forwards;}
 @keyframes fxSmokeRise{0%{opacity:.6;transform:translate(-50%,-50%) scale(1);}100%{opacity:0;transform:translate(-50%,-50%) translateY(-22px) scale(1.8);}}
 body[data-theme="hulk"] .hero-card,
@@ -796,8 +821,18 @@ body[data-theme="hulk"] .poster-card:hover .art::after,
 body[data-theme="hulk"] .event-row-card:hover .art::after{opacity:1;}
 
 /* ---------- Asgard ---------- */
+body[data-theme="asgard"] #theme-fx-layer{background:linear-gradient(180deg,#181f42 0%,#0e1330 55%,#0a0e26 100%);}
+.fx-aurora{position:absolute;left:-10%;right:-10%;height:220px;opacity:.28;filter:blur(30px);mix-blend-mode:screen;
+  background:linear-gradient(100deg,transparent 0%,#4f6fd1 18%,#3c9169 38%,transparent 55%,#f2c94c 72%,transparent 90%);
+  animation:fxAuroraWave 34s ease-in-out infinite alternate;}
+@keyframes fxAuroraWave{0%{transform:translateX(-4%) skewX(-6deg);}100%{transform:translateX(4%) skewX(4deg);}}
+.fx-star-dim{position:absolute;border-radius:50%;background:#fff;opacity:.5;animation:fxTwinkle var(--dur,4s) ease-in-out infinite;}
+.fx-asgard-skyline{position:absolute;left:0;right:0;bottom:0;height:150px;display:flex;align-items:flex-end;justify-content:space-between;gap:3px;opacity:.95;}
+.fx-spire{position:relative;flex-shrink:0;background:linear-gradient(180deg,#2a3468,#151a3a);box-shadow:inset -2px 0 0 rgba(0,0,0,.3);}
+.fx-spire::after{content:'';position:absolute;inset:8px 4px 4px;background-image:repeating-linear-gradient(rgba(242,201,76,.4) 0 3px, transparent 3px 13px);opacity:.55;}
+.fx-spire-dome{position:absolute;bottom:100%;left:50%;transform:translateX(-50%);width:0;height:0;border-left:12px solid transparent;border-right:12px solid transparent;border-bottom:20px solid #f2c94c;filter:drop-shadow(0 0 8px rgba(242,201,76,.6));opacity:.9;}
 .fx-kingdom{position:absolute;top:0;left:0;right:0;height:50px;background-image:radial-gradient(circle at 20px 0, transparent 18px, rgba(242,201,76,.16) 19px 20px, transparent 21px);background-size:60px 50px;opacity:.75;}
-.fx-cloud-gold{position:absolute;background:radial-gradient(circle,rgba(242,201,76,.5),transparent 70%);border-radius:50%;filter:blur(10px);animation:fxCloudDrift var(--dur,55s) linear infinite;}
+.fx-cloud-gold{position:absolute;background:radial-gradient(ellipse at 35% 35%, rgba(255,236,180,.75), rgba(242,201,76,.28) 65%, transparent 80%);border-radius:50%;filter:blur(6px);opacity:.9;animation:fxCloudDrift var(--dur,55s) linear infinite;}
 .fx-bifrost{position:absolute;top:0;width:5px;height:0;background:linear-gradient(180deg,#e0562c,#f2c94c,#3c9169,#4f6fd1,#9463d9);opacity:0;filter:blur(1px);animation:fxBifrostStream 2.6s ease-in-out forwards;}
 @keyframes fxBifrostStream{0%{height:0;opacity:0;}25%{opacity:.8;}60%{height:100vh;opacity:.6;}100%{height:100vh;opacity:0;}}
 .fx-thor{position:absolute;font-size:16px;line-height:1;animation:fxThorFly 2.4s ease-in forwards;filter:drop-shadow(0 0 6px #f2c94c);}
@@ -832,11 +867,27 @@ body[data-theme="asgard"] .poster-card:hover .art,
 body[data-theme="asgard"] .event-row-card:hover .art{box-shadow:0 0 0 1px #f2c94c, 0 0 20px 2px rgba(242,201,76,.5)!important;}
 
 /* ---------- Symbiote ---------- */
-.fx-tendril{position:absolute;border-radius:42% 58% 60% 40% / 45% 40% 60% 55%;background:radial-gradient(circle at 30% 30%, rgba(45,95,224,.28), rgba(5,6,8,0) 70%);filter:blur(22px);
+body[data-theme="symbiote"] #theme-fx-layer{background:radial-gradient(ellipse at 50% 30%, #0a0d14 0%, #050608 75%);}
+.fx-symbiote-vignette{position:absolute;inset:0;background:radial-gradient(ellipse at center, transparent 45%, rgba(5,6,8,.6) 100%);}
+.fx-tendril{position:absolute;border-radius:42% 58% 60% 40% / 45% 40% 60% 55%;background:radial-gradient(circle at 30% 30%, rgba(45,95,224,.32), rgba(5,6,8,0) 70%);filter:blur(22px);
   animation:fxTendrilMorph var(--dur,26s) ease-in-out infinite alternate, fxTendrilDrift var(--dur2,80s) ease-in-out infinite alternate;}
 @keyframes fxTendrilMorph{0%{border-radius:42% 58% 60% 40% / 45% 40% 60% 55%;}50%{border-radius:60% 40% 45% 55% / 55% 60% 40% 45%;}100%{border-radius:42% 58% 60% 40% / 45% 40% 60% 55%;}}
 @keyframes fxTendrilDrift{from{transform:translate(0,0);}to{transform:translate(var(--dx,80px),var(--dy,40px));}}
-.fx-vein-strand{position:fixed;height:1.5px;background:linear-gradient(90deg,rgba(45,95,224,.9),transparent);transform-origin:0 0;pointer-events:none;z-index:300;animation:fxWebFade .5s ease forwards;}
+.fx-drip{position:absolute;top:-16px;width:3px;border-radius:0 0 8px 8px;background:linear-gradient(180deg,rgba(15,18,26,.95),rgba(45,95,224,.4));filter:blur(.4px);animation:fxDripFall ease-in forwards;}
+.fx-drip::after{content:'';position:absolute;bottom:-3px;left:50%;transform:translateX(-50%);width:5px;height:5px;border-radius:50%;background:rgba(45,95,224,.5);}
+@keyframes fxDripFall{0%{transform:translateY(-20px) scaleY(.5);opacity:0;}12%{opacity:.9;}88%{opacity:.65;}100%{transform:translateY(70px) scaleY(1.5);opacity:0;}}
+.fx-symbiote-eyes{position:absolute;display:flex;gap:11px;opacity:0;animation:fxEyesFlash .85s ease-out forwards;filter:drop-shadow(0 0 9px rgba(255,255,255,.65));}
+.fx-symbiote-eyes::before,.fx-symbiote-eyes::after{content:'';width:17px;height:9px;background:#f4f7fb;clip-path:polygon(0 55%,32% 0,68% 0,100% 55%,68% 100%,32% 100%);}
+@keyframes fxEyesFlash{0%{opacity:0;transform:scale(.6);}18%{opacity:1;transform:scale(1.08);}35%{opacity:1;transform:scale(1);}72%{opacity:.9;}100%{opacity:0;}}
+.fx-vein-strand{position:fixed;height:1.5px;background:linear-gradient(90deg,rgba(138,47,58,.85),rgba(45,95,224,.6),transparent);transform-origin:0 0;pointer-events:none;z-index:300;animation:fxWebFade .5s ease forwards;}
+body[data-theme="symbiote"] .hero-card:hover,
+body[data-theme="symbiote"] .event-card:hover,
+body[data-theme="symbiote"] .shop-card:hover,
+body[data-theme="symbiote"] .fav-hero-card:hover,
+body[data-theme="symbiote"] .poster-card:hover .art,
+body[data-theme="symbiote"] .event-row-card:hover .art{
+  box-shadow:0 0 0 1px rgba(138,47,58,.7), 0 0 22px 3px rgba(45,95,224,.4), 0 14px 30px rgba(0,0,0,.6)!important;
+}
 body[data-theme="symbiote"] .hero-card,
 body[data-theme="symbiote"] .event-card,
 body[data-theme="symbiote"] .shop-card,
@@ -1347,7 +1398,8 @@ const THEME_FX = {
     burstWords:['THWIP!','SWING!','ZIP!'],
     ambientInit(layer){
       const sky = fxNode('fx-skyline');
-      for(let i=0;i<16;i++){
+      const buildingCount = Math.max(24, Math.ceil(window.innerWidth/38));
+      for(let i=0;i<buildingCount;i++){
         const b = fxNode('fx-building');
         b.style.height = fxRand(40,110)+'px';
         b.style.width = fxRand(24,54)+'px';
@@ -1405,10 +1457,19 @@ const THEME_FX = {
     burstWords:['DOOM!','BEGONE!'],
     ambientInit(layer){
       const castle = fxNode('fx-castle');
-      for(let i=0;i<11;i++){
-        const blk = fxNode('fx-castle-block');
-        blk.style.height = fxRand(50,90)+'px';
-        blk.style.width = fxRand(50,90)+'px';
+      const blockCount = Math.max(16, Math.ceil(window.innerWidth/64));
+      for(let i=0;i<blockCount;i++){
+        const isTower = i%4===1;
+        const blk = fxNode(isTower ? 'fx-castle-tower' : 'fx-castle-block');
+        if(isTower){
+          blk.style.height = fxRand(110,150)+'px';
+          blk.style.width = fxRand(34,48)+'px';
+          const roof = fxNode('fx-castle-roof');
+          blk.appendChild(roof);
+        } else {
+          blk.style.height = fxRand(46,78)+'px';
+          blk.style.width = fxRand(44,72)+'px';
+        }
         castle.appendChild(blk);
       }
       layer.appendChild(castle);
@@ -1437,10 +1498,20 @@ const THEME_FX = {
     }
   },
   'fantastic-four':{
-    halftone:true,
-    burstWords:["KA-BLAM!","FLAME ON!","CLOBBERIN' TIME!"],
+    halftone:true, tickInterval:9000,
+    burstWords:["KA-BLAM!","FLAME ON!","CLOBBERIN' TIME!","IT'S CLOBBERIN' TIME!"],
     ambientInit(layer){
       layer.appendChild(fxNode('fx-blueprint-grid'));
+      layer.appendChild(fxNode('fx-scanlines'));
+      for(let i=0;i<2;i++){
+        const s = fxNode('fx-starburst');
+        const size = fxRand(320,560);
+        s.style.width = size+'px'; s.style.height = size+'px';
+        s.style.left = fxRand(-15,75)+'%'; s.style.top = fxRand(-15,65)+'%';
+        s.style.setProperty('--dur', fxRand(110,180)+'s');
+        s.style.animationDirection = i%2 ? 'reverse' : 'normal';
+        layer.appendChild(s);
+      }
       for(let i=0;i<3;i++){
         const o = fxNode('fx-orbit');
         const size = fxRand(140,300);
@@ -1449,6 +1520,12 @@ const THEME_FX = {
         o.style.setProperty('--dur', fxRand(40,70)+'s');
         layer.appendChild(o);
       }
+    },
+    ambientTick(layer){
+      const car = fxNode('fx-fantasticar');
+      car.style.top = fxRand(15,55)+'%';
+      layer.appendChild(car);
+      setTimeout(()=>car.remove(),3700);
     },
     cursor(e){
       const kinds = ['fx-cursor-rock','fx-cursor-flame','fx-cursor-mag','fx-cursor-stretch'];
@@ -1460,7 +1537,7 @@ const THEME_FX = {
     }
   },
   hulk:{
-    halftone:true, tickInterval:10000,
+    tickInterval:1400,
     burstWords:['SMASH!','HULK SMASH!','RAAAGH!'],
     ambientInit(layer){
       layer.appendChild(fxNode('fx-concrete'));
@@ -1476,7 +1553,16 @@ const THEME_FX = {
       }
     },
     ambientTick(layer){
-      if(Math.random()<0.5){
+      const r = Math.random();
+      if(r<0.72){
+        const b = fxNode('fx-rorschach');
+        const size = fxRand(100,240);
+        b.style.width = size+'px'; b.style.height = (size*1.25)+'px';
+        b.style.left = fxRand(4,78)+'%'; b.style.top = fxRand(4,72)+'%';
+        b.style.transform = `rotate(${fxRand(-28,28)}deg)`;
+        layer.appendChild(b);
+        setTimeout(()=>b.remove(),900);
+      } else if(r<0.9){
         const f = fxNode('fx-gamma-flash');
         layer.appendChild(f);
         setTimeout(()=>f.remove(),650);
@@ -1495,15 +1581,36 @@ const THEME_FX = {
     }
   },
   asgard:{
-    halftone:true, tickInterval:13000,
+    tickInterval:13000,
     burstWords:['FOR ASGARD!','THUNDER!'],
     ambientInit(layer){
+      const aurora = fxNode('fx-aurora');
+      aurora.style.top = fxRand(2,12)+'%';
+      layer.appendChild(aurora);
+      for(let i=0;i<45;i++){
+        const s = fxNode('fx-star-dim');
+        s.style.left = fxRand(0,100)+'%'; s.style.top = fxRand(0,60)+'%';
+        const size = fxRand(1,2.2);
+        s.style.width = size+'px'; s.style.height = size+'px';
+        s.style.setProperty('--dur', fxRand(2.5,5)+'s');
+        layer.appendChild(s);
+      }
+      const skyline = fxNode('fx-asgard-skyline');
+      const spireCount = Math.max(14, Math.ceil(window.innerWidth/72));
+      for(let i=0;i<spireCount;i++){
+        const sp = fxNode('fx-spire');
+        sp.style.height = fxRand(60,150)+'px';
+        sp.style.width = fxRand(30,54)+'px';
+        sp.appendChild(fxNode('fx-spire-dome'));
+        skyline.appendChild(sp);
+      }
+      layer.appendChild(skyline);
       layer.appendChild(fxNode('fx-kingdom'));
-      for(let i=0;i<4;i++){
+      for(let i=0;i<5;i++){
         const c = fxNode('fx-cloud-gold');
-        const w = fxRand(90,180);
+        const w = fxRand(90,190);
         c.style.width = w+'px'; c.style.height = (w*0.45)+'px';
-        c.style.top = fxRand(55,88)+'%';
+        c.style.top = fxRand(10,42)+'%';
         c.style.setProperty('--dur', fxRand(60,100)+'s');
         c.style.animationDelay = (-fxRand(0,60))+'s';
         layer.appendChild(c);
@@ -1532,8 +1639,8 @@ const THEME_FX = {
     }
   },
   symbiote:{
-    halftone:true, tickInterval:0,
-    burstWords:['WE ARE VENOM!','SNIKT!'],
+    tickInterval:4200,
+    burstWords:['WE ARE VENOM!','CHAOS FEEDS.'],
     ambientInit(layer){
       for(let i=0;i<5;i++){
         const t = fxNode('fx-tendril');
@@ -1545,6 +1652,23 @@ const THEME_FX = {
         t.style.setProperty('--dx', fxRand(-70,70)+'px');
         t.style.setProperty('--dy', fxRand(-50,50)+'px');
         layer.appendChild(t);
+      }
+      layer.appendChild(fxNode('fx-symbiote-vignette'));
+    },
+    ambientTick(layer){
+      if(Math.random()<0.55){
+        const d = fxNode('fx-drip');
+        d.style.left = fxRand(4,96)+'%';
+        d.style.height = fxRand(60,170)+'px';
+        d.style.animationDuration = fxRand(2.4,4.4)+'s';
+        layer.appendChild(d);
+        setTimeout(()=>d.remove(),4600);
+      } else {
+        const eyes = fxNode('fx-symbiote-eyes');
+        eyes.style.left = fxRand(15,80)+'%';
+        eyes.style.top = fxRand(15,70)+'%';
+        layer.appendChild(eyes);
+        setTimeout(()=>eyes.remove(),900);
       }
     },
     cursor(e){
