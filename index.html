@@ -222,10 +222,6 @@ body.read-only .owner-only{display:none !important;}
 
 /* ---------- single profile page ---------- */
 #view-profile{padding-top:26px;}
-#view-teams{padding-top:26px;}
-#view-team-detail{padding-top:26px;}
-.series-read-cover img{width:100%;height:100%;object-fit:cover;display:block;}
-.series-read-cover .cover-fallback{width:100%;height:100%;display:flex;align-items:center;justify-content:center;text-align:center;color:#fff;font-size:13px;padding:6px;font-family:'Bebas Neue',sans-serif;}
 .profile-header{display:flex;align-items:flex-start;gap:22px;padding:0 32px;margin:16px 0 30px;flex-wrap:wrap;}
 .profile-avatar{width:96px;height:96px;border-radius:16px;font-size:32px;font-weight:800;color:#fff;background-size:cover !important;background-position:center;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
 .profile-meta{flex:1;min-width:220px;}
@@ -455,15 +451,6 @@ body.read-only .owner-only{display:none !important;}
 .progress-ring-wrap.pulse{animation:ringPulse .6s ease;}
 @keyframes ringPulse{0%{transform:scale(1);}40%{transform:scale(1.14);}100%{transform:scale(1);}}
 
-/* ---------- small read-progress ring overlaid on profile series cards ---------- */
-.mini-ring-wrap{position:absolute;top:6px;right:6px;width:44px;height:44px;filter:drop-shadow(0 2px 6px rgba(0,0,0,.6));}
-.mini-ring{width:100%;height:100%;transform:rotate(-90deg);display:block;}
-.mini-ring .ring-track{fill:none;stroke:rgba(0,0,0,.45);stroke-width:11;}
-.mini-ring .ring-fill{fill:none;stroke:var(--red);stroke-width:11;stroke-linecap:round;}
-.mini-ring .ring-fill.complete{stroke:var(--green);}
-.mini-ring-pct{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
-  font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;color:#fff;}
-
 /* ---------- star rating hover preview ---------- */
 .star-picker span{display:inline-block;transition:color .12s ease, transform .12s ease;}
 .star-picker span:hover{transform:scale(1.2) rotate(-4deg);}
@@ -616,32 +603,6 @@ footer.indicia{max-width:1280px;margin:0 auto;padding:10px 32px 40px;font-family
 .badge-progress-fill{height:100%;background:var(--cyan);}
 .badge-progress-label{font-size:10.5px;color:var(--dim2);}
 .badge-reward{font-size:11px;color:var(--yellow);}
-
-/* ---------- Team Viewer ---------- */
-.team-tile{cursor:pointer;}
-.mini-avatar{border-radius:10px;color:#fff;font-weight:800;font-family:'Bebas Neue',sans-serif;letter-spacing:.5px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.team-map-wrap{background:var(--card);border:var(--line);border-radius:10px;padding:10px;margin-top:10px;}
-.team-map-svg{width:100%;height:auto;display:block;border-radius:6px;}
-.map-ocean{fill:var(--bg2);}
-.map-grid{stroke:var(--dim2);stroke-width:.5;opacity:.25;}
-.map-region{fill:var(--bg3);stroke:var(--dim2);stroke-width:1;opacity:.85;}
-.map-region-label{fill:var(--dim2);font-size:15px;font-family:'JetBrains Mono',monospace;letter-spacing:.04em;opacity:.8;pointer-events:none;}
-.map-pin{cursor:pointer;}
-.map-pin-drop{fill:var(--red);stroke:var(--bg);stroke-width:1.5;transition:transform .15s ease;transform-origin:0px 10px;}
-.map-pin-dot{fill:var(--bg);}
-.map-pin:hover .map-pin-drop{transform:scale(1.25);}
-.member-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;margin:10px 0 26px;}
-.member-card{background:var(--card);border:var(--line);border-radius:10px;padding:12px;display:flex;gap:10px;cursor:pointer;transition:transform .15s ease, box-shadow .15s ease;}
-.member-card:hover{transform:translateY(-2px);box-shadow:0 10px 22px rgba(0,0,0,.4);}
-.member-portrait{width:56px;height:56px;border-radius:8px;overflow:hidden;flex-shrink:0;background:var(--bg3);}
-.member-portrait img{width:100%;height:100%;object-fit:cover;}
-.member-portrait .cover-fallback{width:100%;height:100%;display:flex;align-items:center;justify-content:center;text-align:center;color:#fff;font-size:11px;padding:2px;font-family:'Bebas Neue',sans-serif;}
-.member-info{flex:1;min-width:0;}
-.member-name{font-weight:700;font-size:13.5px;line-height:1.3;}
-.member-role{font-size:10.5px;color:var(--dim2);margin-top:2px;}
-.member-gallery-strip{display:flex;gap:4px;margin-top:6px;}
-.member-gallery-strip img{width:26px;height:26px;object-fit:cover;border-radius:4px;}
-.member-gallery-more{font-size:10px;color:var(--dim2);align-self:center;font-family:'JetBrains Mono',monospace;}
 
 /* ---------- achievement toast ---------- */
 .achievement-toast{
@@ -949,167 +910,10 @@ body[data-theme="symbiote"] .shop-card:hover::after,
 body[data-theme="symbiote"] .fav-hero-card:hover::after,
 body[data-theme="symbiote"] .poster-card:hover .art::after,
 body[data-theme="symbiote"] .event-row-card:hover .art::after{opacity:.75;transform:scale(1);}
-/* ======================================================================
-   WINDOWS 95 DESKTOP SHELL — boot screen, login dialog, desktop, taskbar,
-   start menu, and floating windows. Deliberately independent of the
-   --bg/--card theme variables above: the OS chrome always looks like
-   Windows 95 no matter which ComicBox theme is equipped.
-   ====================================================================== */
-.win95-screen{position:fixed;inset:0;z-index:500;font-family:Tahoma,Verdana,Geneva,sans-serif;}
-
-/* ---------- shared Win95 chrome primitives ---------- */
-.win95-btn{
-  font-family:Tahoma,Verdana,Geneva,sans-serif;font-size:12px;background:#c0c0c0;color:#000;
-  border:none;padding:5px 12px;cursor:pointer;
-  box-shadow:inset -1px -1px 0 #000, inset 1px 1px 0 #fff, inset -2px -2px 0 #808080, inset 2px 2px 0 #dfdfdf;
-}
-.win95-btn:active{box-shadow:inset 1px 1px 0 #000, inset -1px -1px 0 #fff, inset 2px 2px 0 #808080, inset -2px -2px 0 #dfdfdf;padding:6px 11px 4px 13px;}
-.win95-btn-primary{font-weight:700;}
-.win95-inset{background:#c0c0c0;box-shadow:inset 1px 1px 0 #808080, inset -1px -1px 0 #fff;padding:3px 10px;font-size:12px;font-family:Tahoma,Verdana,sans-serif;}
-.win95-panel{background:#c0c0c0;box-shadow:inset -1px -1px 0 #000, inset 1px 1px 0 #fff, inset -2px -2px 0 #808080, inset 2px 2px 0 #dfdfdf;}
-
-/* ---------- boot screen ---------- */
-#screen-boot{background:#000;color:#e0e0e0;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;z-index:900;}
-.boot-bios{width:min(640px,86vw);font-size:12.5px;line-height:1.7;color:#c9c9c9;white-space:pre-wrap;min-height:280px;}
-.boot-winlogo{display:flex;flex-direction:column;align-items:center;gap:18px;}
-.boot-flag{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:3px;width:64px;height:64px;transform:skewY(-6deg) rotate(-4deg);}
-.boot-flag.small{width:26px;height:26px;gap:2px;}
-.boot-flag span:nth-child(1){background:#ff4d4d;}
-.boot-flag span:nth-child(2){background:#4dff88;}
-.boot-flag span:nth-child(3){background:#4d9bff;}
-.boot-flag span:nth-child(4){background:#ffd23f;}
-.boot-winlogo-text{font-size:26px;color:#fff;font-weight:700;letter-spacing:.02em;}
-.boot-winlogo-text span{color:#4d9bff;}
-.boot-progress{width:220px;height:16px;border:2px solid #808080;border-radius:2px;overflow:hidden;background:#000;}
-.boot-progress-bar{height:100%;width:0%;background:repeating-linear-gradient(90deg,#4d9bff 0 8px,#000 8px 10px);animation:bootBarFill 2.6s ease-in forwards;}
-@keyframes bootBarFill{from{width:0%;}to{width:100%;}}
-.boot-skip-hint{position:absolute;bottom:22px;font-size:10.5px;color:#555;}
-
-/* ---------- app frame (the maximized "window" ComicBox/Achievements/Users/News open into) ---------- */
-#app-frame{position:fixed;inset:0;z-index:600;display:flex;flex-direction:column;background:#000;}
-.win95-titlebar{
-  flex-shrink:0;display:flex;align-items:center;gap:6px;height:28px;padding:0 4px;
-  background:linear-gradient(90deg,#000080,#1084d0);color:#fff;font-family:Tahoma,Verdana,sans-serif;font-size:12.5px;font-weight:700;
-  user-select:none;
-}
-.win95-titlebar-icon{font-size:14px;}
-.win95-titlebar-text{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-.win95-titlebar-btns{display:flex;gap:2px;}
-.win95-tbtn{
-  width:20px;height:19px;background:#c0c0c0;color:#000;border:none;font-size:12px;line-height:1;cursor:pointer;font-weight:700;
-  display:inline-flex;align-items:center;justify-content:center;padding:0;font-family:Tahoma,Verdana,sans-serif;
-  box-shadow:inset -1px -1px 0 #000, inset 1px 1px 0 #fff, inset -2px -2px 0 #808080, inset 2px 2px 0 #dfdfdf;
-}
-.win95-tbtn:active{box-shadow:inset 1px 1px 0 #000, inset -1px -1px 0 #fff;}
-.app-frame-body{flex:1;overflow:auto;background:var(--bg);}
-
-/* ---------- Win95 login dialog ---------- */
-#screen-login{background:#008080;display:flex;align-items:center;justify-content:center;z-index:700;}
-.win95-login-dialog{width:min(420px,92vw);background:#c0c0c0;box-shadow:inset -1px -1px 0 #000, inset 1px 1px 0 #fff, inset -2px -2px 0 #808080, inset 2px 2px 0 #dfdfdf;}
-.win95-login-banner{display:flex;align-items:center;gap:10px;background:linear-gradient(90deg,#000080,#1084d0);color:#fff;padding:6px 10px;font-weight:700;font-size:13px;}
-.win95-login-body{padding:18px 20px 20px;color:#000;}
-.win95-login-body #auth-tagline{font-size:12px;margin:0 0 14px;color:#000;}
-.win95-login-body .field{margin-bottom:10px;}
-.win95-login-body .field label{display:block;font-size:12px;margin-bottom:3px;color:#000;}
-.win95-login-body .field input{
-  width:100%;box-sizing:border-box;font-family:Tahoma,Verdana,sans-serif;font-size:12.5px;padding:4px 6px;
-  border:none;background:#fff;box-shadow:inset 1px 1px 0 #808080, inset -1px -1px 0 #fff, inset 2px 2px 0 #000;
-}
-.win95-login-body .color-swatches{margin-top:2px;}
-.win95-check-row{font-size:12px;margin-bottom:6px;}
-.win95-check-row label{display:flex;align-items:center;gap:6px;cursor:pointer;}
-#auth-error{color:#a00;font-size:11.5px;min-height:14px;margin:6px 0;}
-.win95-login-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:12px;}
-.win95-login-toggle{font-size:11.5px;text-align:center;margin-top:14px;color:#333;}
-.win95-login-toggle a{color:#0000ee;text-decoration:underline;cursor:pointer;}
-
-/* ---------- desktop ---------- */
-#screen-desktop{background:#008080;overflow:hidden;z-index:400;}
-.win95-desktop-icons{position:absolute;top:14px;left:14px;display:flex;flex-direction:column;gap:20px;}
-.win95-icon{width:76px;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;user-select:none;}
-.win95-icon-glyph{font-size:32px;filter:drop-shadow(1px 1px 1px rgba(0,0,0,.5));}
-.win95-icon-label{font-size:11.5px;color:#fff;text-align:center;text-shadow:1px 1px 1px #000;padding:1px 4px;}
-.win95-icon:active .win95-icon-label{background:#000080;}
-.win95-icon-bin{position:absolute;top:14px;right:14px;}
-
-/* ---------- floating windows (Games / Pinball / Recycle Bin) ---------- */
-.win95-window{
-  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
-  background:#c0c0c0;box-shadow:inset -1px -1px 0 #000, inset 1px 1px 0 #fff, inset -2px -2px 0 #808080, inset 2px 2px 0 #dfdfdf, 6px 6px 18px rgba(0,0,0,.4);
-  z-index:450;max-width:94vw;
-}
-.win95-window .win95-titlebar{cursor:move;}
-.win95-window-body{padding:14px;max-height:70vh;overflow:auto;}
-
-/* ---------- taskbar + start menu ---------- */
-#taskbar{
-  position:absolute;left:0;right:0;bottom:0;height:36px;display:flex;align-items:center;gap:6px;padding:3px 4px;
-  background:#c0c0c0;box-shadow:inset 0 1px 0 #fff;z-index:480;
-}
-#start-btn{display:flex;align-items:center;gap:6px;font-weight:700;height:100%;}
-.start-flag{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:1px;width:14px;height:14px;}
-.start-flag span:nth-child(1){background:#ff4d4d;}
-.start-flag span:nth-child(2){background:#4dff88;}
-.start-flag span:nth-child(3){background:#4d9bff;}
-.start-flag span:nth-child(4){background:#ffd23f;}
-#taskbar-buttons{flex:1;display:flex;gap:4px;overflow:hidden;height:100%;align-items:center;}
-.win95-taskbtn{
-  display:flex;align-items:center;gap:6px;height:26px;padding:0 10px;font-size:12px;font-family:Tahoma,Verdana,sans-serif;
-  background:#c0c0c0;border:none;cursor:pointer;max-width:160px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;
-  box-shadow:inset -1px -1px 0 #000, inset 1px 1px 0 #fff, inset -2px -2px 0 #808080, inset 2px 2px 0 #dfdfdf;
-}
-.win95-taskbtn.active{box-shadow:inset 1px 1px 0 #000, inset -1px -1px 0 #fff, inset 2px 2px 0 #808080, inset -2px -2px 0 #dfdfdf;}
-#taskbar-clock{height:100%;display:flex;align-items:center;font-family:Tahoma,Verdana,sans-serif;}
-#start-menu{
-  position:absolute;left:2px;bottom:38px;width:220px;display:flex;background:#c0c0c0;z-index:490;
-  box-shadow:inset -1px -1px 0 #000, inset 1px 1px 0 #fff, inset -2px -2px 0 #808080, inset 2px 2px 0 #dfdfdf, 4px 4px 14px rgba(0,0,0,.4);
-}
-.start-menu-side{
-  writing-mode:vertical-rl;transform:rotate(180deg);background:linear-gradient(180deg,#000080,#1084d0);color:#fff;
-  font-weight:700;font-size:16px;padding:10px 6px;display:flex;align-items:flex-end;justify-content:center;gap:2px;letter-spacing:.02em;
-}
-.start-menu-side span{font-size:12px;}
-.start-menu-items{flex:1;display:flex;flex-direction:column;padding:3px;}
-.start-menu-items button{
-  display:flex;align-items:center;gap:10px;text-align:left;background:none;border:none;padding:7px 10px;font-size:12.5px;
-  font-family:Tahoma,Verdana,sans-serif;cursor:pointer;color:#000;
-}
-.start-menu-items button:hover{background:#000080;color:#fff;}
-.start-menu-divider{height:1px;background:#808080;box-shadow:0 1px 0 #fff;margin:4px 6px;}
-
-/* ---------- shut down screen ---------- */
-.win95-shutdown{
-  position:fixed;inset:0;z-index:900;background:#000;color:#fff;display:flex;flex-direction:column;
-  align-items:center;justify-content:center;font-family:Tahoma,Verdana,sans-serif;font-size:15px;cursor:pointer;text-align:center;padding:20px;
-}
 </style>
 </head>
 <body>
 
-<!-- ===== BOOT SCREEN (BIOS + Windows 95 startup) ===== -->
-<div id="screen-boot" class="win95-screen">
-  <div id="boot-bios" class="boot-bios mono"></div>
-  <div id="boot-winlogo" class="boot-winlogo hidden">
-    <div class="boot-flag">
-      <span></span><span></span><span></span><span></span>
-    </div>
-    <div class="boot-winlogo-text">ComicBox<span>95</span></div>
-    <div class="boot-progress"><div class="boot-progress-bar"></div></div>
-  </div>
-  <div class="boot-skip-hint mono">click anywhere, or press Enter, to skip</div>
-</div>
-
-<!-- ===== APP FRAME (ComicBox.exe / Achievements.exe / Users.exe / News.exe — replaces the whole screen when "open") ===== -->
-<div id="app-frame" class="hidden">
-  <div class="win95-titlebar" id="app-titlebar">
-    <span class="win95-titlebar-icon" id="app-titlebar-icon">📗</span>
-    <span class="win95-titlebar-text" id="app-titlebar-title">ComicBox.exe</span>
-    <div class="win95-titlebar-btns">
-      <button class="win95-tbtn" onclick="win95MinimizeApp()" title="Minimize">_</button>
-      <button class="win95-tbtn" onclick="win95CloseApp()" title="Close">✕</button>
-    </div>
-  </div>
-  <div class="app-frame-body">
 <div id="topbar" class="hidden">
   <div class="logo" onclick="handleLogoClick()" title="COMICBOX">COMICBOX</div>
   <input id="search-input" class="mono" placeholder="Search series…" oninput="handleSearchInput(this.value)"
@@ -1136,6 +940,38 @@ body[data-theme="symbiote"] .event-row-card:hover .art::after{opacity:.75;transf
 
 <main>
 
+<!-- AUTH GATE -->
+<div id="view-auth">
+  <h1>COMICBOX</h1>
+  <p id="auth-tagline">Sign in to track comics with friends anywhere in the world.</p>
+  <div style="max-width:340px;margin:0 auto;text-align:left;" id="auth-form">
+    <div class="field" id="auth-name-field">
+      <label>Display name</label>
+      <input id="auth-name" maxlength="24" placeholder="e.g. Jordan" />
+    </div>
+    <div class="field">
+      <label>Email</label>
+      <input id="auth-email" type="email" placeholder="you@example.com" />
+    </div>
+    <div class="field">
+      <label>Password</label>
+      <input id="auth-password" type="password" placeholder="At least 6 characters" />
+    </div>
+    <div class="field" id="auth-color-field">
+      <label>Color</label>
+      <div class="color-swatches" id="auth-swatches"></div>
+    </div>
+    <div id="auth-error" class="mono" style="color:var(--red);font-size:12px;margin-bottom:10px;"></div>
+    <div class="modal-actions" style="justify-content:center;">
+      <button class="primary" id="auth-submit-btn" onclick="submitAuthForm()">Create account</button>
+    </div>
+    <p class="mono" style="font-size:12.5px;color:var(--dim2);text-align:center;margin-top:18px;">
+      <span id="auth-toggle-text">Already have an account?</span>
+      <a href="#" onclick="toggleAuthMode();return false;" style="color:var(--cyan);text-decoration:underline;" id="auth-toggle-link">Sign in</a>
+    </p>
+  </div>
+</div>
+
 <!-- USERS DIRECTORY -->
 <div id="view-users" class="hidden">
   <h1>Users</h1>
@@ -1147,14 +983,6 @@ body[data-theme="symbiote"] .event-row-card:hover .art::after{opacity:.75;transf
 <!-- SINGLE-PAGE PROFILE (yours or a friend's — reviews, lists, stats, all in one place) -->
 <div id="view-profile" class="hidden">
   <div id="profile-body"></div>
-</div>
-
-<!-- TEAM VIEWER -->
-<div id="view-teams" class="hidden">
-  <div id="teams-body"></div>
-</div>
-<div id="view-team-detail" class="hidden">
-  <div id="team-detail-body"></div>
 </div>
 
 <!-- HOME (netflix-style rows / my list / collection all render into home-body) -->
@@ -1266,7 +1094,6 @@ body[data-theme="symbiote"] .event-row-card:hover .art::after{opacity:.75;transf
           </div>
           <blockquote id="hero-bio" class="hero-quote"></blockquote>
           <div class="power-tags" id="hero-powers"></div>
-          <div id="hero-teams-wrap"></div>
           <div id="hero-gallery-wrap"></div>
           <div class="stat-grid" id="hero-stats"></div>
         </div>
@@ -1308,145 +1135,6 @@ body[data-theme="symbiote"] .event-row-card:hover .art::after{opacity:.75;transf
 
 <footer class="indicia" id="footer">COMICBOX — READ. COLLECT. REVIEW.<span class="reality-glyph" onclick="openRealityCodeChallenge()" title="">✦</span></footer>
 <div id="modal-root"></div>
-  </div>
-</div>
-<!-- ===== /APP FRAME ===== -->
-
-<!-- ===== WIN95 LOGIN SCREEN (wraps the existing auth form, all its functionality unchanged) ===== -->
-<div id="screen-login" class="win95-screen hidden">
-  <div class="win95-login-dialog">
-    <div class="win95-login-banner">
-      <div class="boot-flag small"><span></span><span></span><span></span><span></span></div>
-      <div class="win95-login-banner-text">Welcome to ComicBox</div>
-    </div>
-    <div class="win95-login-body">
-      <div id="view-auth">
-        <p id="auth-tagline">Type a display name, email and password to log on to ComicBox.</p>
-        <div id="auth-form">
-          <div class="field" id="auth-name-field">
-            <label>Display name</label>
-            <input id="auth-name" maxlength="24" placeholder="e.g. Jordan" />
-          </div>
-          <div class="field">
-            <label>Email</label>
-            <input id="auth-email" type="email" placeholder="you@example.com" />
-          </div>
-          <div class="field">
-            <label>Password</label>
-            <input id="auth-password" type="password" placeholder="At least 6 characters" />
-          </div>
-          <div class="field" id="auth-color-field">
-            <label>Color</label>
-            <div class="color-swatches" id="auth-swatches"></div>
-          </div>
-          <div class="win95-check-row"><label><input type="checkbox" id="auth-remember"/> Remember my password</label></div>
-          <div class="win95-check-row"><label><input type="checkbox" id="auth-autologin"/> Log on automatically</label></div>
-          <div id="auth-error" class="mono"></div>
-          <div class="win95-login-actions">
-            <button class="win95-btn win95-btn-primary" id="auth-submit-btn" onclick="submitAuthForm()">Create account</button>
-          </div>
-          <p class="mono win95-login-toggle">
-            <span id="auth-toggle-text">Already have an account?</span>
-            <a href="#" onclick="toggleAuthMode();return false;" id="auth-toggle-link">Sign in</a>
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ===== WIN95 DESKTOP ===== -->
-<div id="screen-desktop" class="win95-screen hidden">
-  <div class="win95-desktop-icons">
-    <div class="win95-icon" ondblclick="openApp('comicbox')"><div class="win95-icon-glyph">📗</div><div class="win95-icon-label">ComicBox.exe</div></div>
-    <div class="win95-icon" ondblclick="openApp('achievements')"><div class="win95-icon-glyph">🏆</div><div class="win95-icon-label">Achievements.exe</div></div>
-    <div class="win95-icon" ondblclick="openApp('users')"><div class="win95-icon-glyph">👥</div><div class="win95-icon-label">Users.exe</div></div>
-    <div class="win95-icon" ondblclick="openApp('news')"><div class="win95-icon-glyph">📰</div><div class="win95-icon-label">News.exe</div></div>
-    <div class="win95-icon" ondblclick="openApp('teams')"><div class="win95-icon-glyph">🛡️</div><div class="win95-icon-label">Teams.exe</div></div>
-    <div class="win95-icon" ondblclick="openGamesFolder()"><div class="win95-icon-glyph">📁</div><div class="win95-icon-label">Games</div></div>
-  </div>
-  <div class="win95-icon win95-icon-bin" ondblclick="openRecycleBin()"><div class="win95-icon-glyph">🗑️</div><div class="win95-icon-label">Recycle Bin</div></div>
-
-  <!-- Games folder window -->
-  <div id="win-games" class="win95-window hidden" style="width:280px;">
-    <div class="win95-titlebar" id="win-games-titlebar">
-      <span class="win95-titlebar-icon">📁</span>
-      <span class="win95-titlebar-text">Games</span>
-      <div class="win95-titlebar-btns">
-        <button class="win95-tbtn" onclick="winMinimize('games')" title="Minimize">_</button>
-        <button class="win95-tbtn" onclick="winMinimize('games')" title="Maximize">□</button>
-        <button class="win95-tbtn" onclick="winClose('games')" title="Close">✕</button>
-      </div>
-    </div>
-    <div class="win95-window-body">
-      <div class="win95-icon" ondblclick="openPinball()"><div class="win95-icon-glyph">🕹️</div><div class="win95-icon-label">Pinball.exe</div></div>
-    </div>
-  </div>
-
-  <!-- Pinball window -->
-  <div id="win-pinball" class="win95-window hidden" style="width:min(760px,92vw);">
-    <div class="win95-titlebar" id="win-pinball-titlebar">
-      <span class="win95-titlebar-icon">🕹️</span>
-      <span class="win95-titlebar-text">3D Pinball for Windows — Space Cadet</span>
-      <div class="win95-titlebar-btns">
-        <button class="win95-tbtn" onclick="winMinimize('pinball')" title="Minimize">_</button>
-        <button class="win95-tbtn" onclick="winMinimize('pinball')" title="Maximize">□</button>
-        <button class="win95-tbtn" onclick="winClose('pinball')" title="Close">✕</button>
-      </div>
-    </div>
-    <div class="win95-window-body" style="padding:0;">
-      <iframe id="pinball-frame" title="3D Pinball" style="width:100%;height:min(70vh,560px);border:0;display:block;background:#000;"></iframe>
-      <div class="mono" style="font-size:10.5px;color:#555;padding:6px 8px;">
-        Game not loading? <a href="https://pinball.alula.me/" target="_blank" rel="noopener">Open it in a new tab</a> instead.
-      </div>
-    </div>
-  </div>
-
-  <!-- Recycle Bin window -->
-  <div id="win-recyclebin" class="win95-window hidden" style="width:300px;">
-    <div class="win95-titlebar" id="win-recyclebin-titlebar">
-      <span class="win95-titlebar-icon">🗑️</span>
-      <span class="win95-titlebar-text">Recycle Bin</span>
-      <div class="win95-titlebar-btns">
-        <button class="win95-tbtn" onclick="winMinimize('recyclebin')" title="Minimize">_</button>
-        <button class="win95-tbtn" onclick="winMinimize('recyclebin')" title="Maximize">□</button>
-        <button class="win95-tbtn" onclick="winClose('recyclebin')" title="Close">✕</button>
-      </div>
-    </div>
-    <div class="win95-window-body">
-      <div class="mono" style="font-size:12px;color:#444;text-align:center;padding:20px 6px;">The Recycle Bin is empty.<br><br>🗑️<br><br>(no deleted comics live here — yet)</div>
-    </div>
-  </div>
-
-  <!-- Taskbar -->
-  <div id="taskbar">
-    <button id="start-btn" class="win95-btn" onclick="toggleStartMenu(event)">
-      <span class="start-flag"><span></span><span></span><span></span><span></span></span> Start
-    </button>
-    <div id="taskbar-buttons"></div>
-    <div id="taskbar-clock" class="win95-inset">12:00 PM</div>
-  </div>
-  <div id="start-menu" class="hidden">
-    <div class="start-menu-side">ComicBox<span>95</span></div>
-    <div class="start-menu-items">
-      <button onclick="startMenuLaunch('comicbox')">📗 ComicBox.exe</button>
-      <button onclick="startMenuLaunch('achievements')">🏆 Achievements.exe</button>
-      <button onclick="startMenuLaunch('users')">👥 Users.exe</button>
-      <button onclick="startMenuLaunch('news')">📰 News.exe</button>
-      <button onclick="startMenuLaunch('games')">📁 Games</button>
-      <button onclick="startMenuLaunch('recyclebin')">🗑️ Recycle Bin</button>
-      <div class="start-menu-divider"></div>
-      <button onclick="startLogOff()">🚪 Log Off…</button>
-      <button onclick="startShutDown()">🔌 Shut Down…</button>
-    </div>
-  </div>
-</div>
-
-<!-- ===== SHUT DOWN SCREEN ===== -->
-<div id="screen-shutdown" class="hidden win95-shutdown" onclick="restartFromShutdown()">
-  It's now safe to turn off your computer.
-  <div class="mono" style="font-size:11px;color:#888;margin-top:18px;">(click anywhere to restart)</div>
-</div>
 
 <script type="module">
 /* ===================== Firebase ===================== */
@@ -1474,15 +1162,6 @@ const fbApp = initializeApp(firebaseConfig);
 const auth = getAuth(fbApp);
 const db = getFirestore(fbApp);
 let currentUser = null; // Firebase Auth user object, set by onAuthStateChanged
-
-/* ===================== Windows 95 desktop shell state ===================== */
-let authReady = false;      // has onAuthStateChanged fired at least once?
-let authUser = null;        // mirrors currentUser, readable before prepareUserSession resolves
-let osBooted = false;       // has the BIOS/startup animation finished?
-let explicitSignOut = false;// true right after Log Off, to suppress an immediate auto-relogin
-let osAutoLoginTried = false;
-let currentApp = null;      // 'comicbox' | 'achievements' | 'users' | 'news' | null
-const winState = {};        // id -> {title, icon, open, minimized}
 
 /* ===================== storage helpers (now backed by Firestore) =====================
    Each key from the original app (e.g. 'series-index', 'issues:s-nightshade',
@@ -1523,11 +1202,7 @@ const state = {
   currentEventId: null,
   eventEditingIssues: false,
   tab: 'home',
-  searchTerm: '',
-  profileViewUid: null,
-  teamsIndex: null,
-  currentTeamId: null,
-  teamsMapMode: false
+  searchTerm: ''
 };
 
 const PALETTE = ['#e0392c','#33a1c9','#f2b705','#3c9169','#9463d9','#d97a2e'];
@@ -1554,13 +1229,12 @@ function initials(name){
    themes have been retired — every theme in the shop is either free/default or one of
    these seven immersive themes. Secret/achievement-locked themes are unchanged. */
 const THEMES = {
-  midnight:{name:'Midnight', free:true, default:true, vars:{bg:'#0a0a0c',bg2:'#161513',bg3:'#211f1c',card:'#1b1a17',text:'#f3f1e9',dim:'#a9a49a',dim2:'#716c62',red:'#e0392c',yellow:'#f2b705',green:'#3c9169',cyan:'#33a1c9',line:'1px solid #34322d'}},
   'brand-new-day':{name:'Brand New Day', free:true, vars:{bg:'#eaf4fb',bg2:'#ffffff',bg3:'#dceefa',card:'#ffffff',text:'#12212e',dim:'#4d6478',dim2:'#7d94a6',red:'#d81e2c',yellow:'#f2a900',green:'#2f9e63',cyan:'#1f6fd1',line:'1px solid #cfe3f0'}},
-  infinity:{name:'Infinity', cost:150, vars:{bg:'#050216',bg2:'#0d0620',bg3:'#160b30',card:'#0a0518',text:'#f0eaff',dim:'#b6a3d9',dim2:'#7c699e',red:'#e0392c',yellow:'#f2d43f',green:'#3ddc84',cyan:'#9463d9',line:'1px solid #2c1a4a'}},
-  'doctor-doom':{name:'Doctor Doom', cost:85, vars:{bg:'#070d0a',bg2:'#0d1712',bg3:'#132019',card:'#0a120e',text:'#e8f3ec',dim:'#93ab9e',dim2:'#5f7568',red:'#a83a2c',yellow:'#c9a13f',green:'#12b76a',cyan:'#12b76a',line:'1px solid #24382c'}},
+  infinity:{name:'Infinity', cost:150, vars:{bg:'#050216',bg2:'#0d0620',bg3:'#160b30',card:'#0a0518',text:'#f0eaff',dim:'#b6a3d9',dim2:'#7c699e',red:'#e0392c',yellow:'#f2d43f',green:'#3ddc84',cyan:'#4f8ff2',line:'1px solid #2c1a4a'}},
+  'doctor-doom':{name:'Doctor Doom', cost:85, vars:{bg:'#070d0a',bg2:'#0d1712',bg3:'#132019',card:'#0a120e',text:'#e8f3ec',dim:'#93ab9e',dim2:'#5f7568',red:'#a83a2c',yellow:'#c9a13f',green:'#12b76a',cyan:'#7c8f93',line:'1px solid #24382c'}},
   'fantastic-four':{name:'Fantastic Four', cost:75, vars:{bg:'#f4f6f9',bg2:'#ffffff',bg3:'#e7ecf2',card:'#ffffff',text:'#0d1b2a',dim:'#4a5b6b',dim2:'#7c8b99',red:'#e0392c',yellow:'#d99a1f',green:'#2f9e63',cyan:'#0a5fd1',line:'1px solid #d7dee6'}},
-  hulk:{name:'Hulk', cost:75, vars:{bg:'#0b0f0a',bg2:'#121712',bg3:'#1a201a',card:'#0e130e',text:'#e9f0e6',dim:'#a3b39c',dim2:'#6d7c66',red:'#7c4fae',yellow:'#d9a441',green:'#3ecf5b',cyan:'#4ee16c',line:'1px solid #26301f'}},
-  asgard:{name:'Asgard', cost:95, vars:{bg:'#0e1330',bg2:'#161c40',bg3:'#1f254f',card:'#121736',text:'#f5efe0',dim:'#c9b98a',dim2:'#8f8460',red:'#e0562c',yellow:'#f2c94c',green:'#3c9169',cyan:'#f2c94c',line:'1px solid #33396b'}},
+  hulk:{name:'Hulk', cost:75, vars:{bg:'#0b0f0a',bg2:'#121712',bg3:'#1a201a',card:'#0e130e',text:'#e9f0e6',dim:'#a3b39c',dim2:'#6d7c66',red:'#7c4fae',yellow:'#d9a441',green:'#3ecf5b',cyan:'#6c7a72',line:'1px solid #26301f'}},
+  asgard:{name:'Asgard', cost:95, vars:{bg:'#0e1330',bg2:'#161c40',bg3:'#1f254f',card:'#121736',text:'#f5efe0',dim:'#c9b98a',dim2:'#8f8460',red:'#e0562c',yellow:'#f2c94c',green:'#3c9169',cyan:'#4f6fd1',line:'1px solid #33396b'}},
   symbiote:{name:'Symbiote', cost:90, vars:{bg:'#050608',bg2:'#0a0d12',bg3:'#10141c',card:'#07090c',text:'#eef2f7',dim:'#8fa3b8',dim2:'#5c6c7d',red:'#8a2f3a',yellow:'#8a7a4a',green:'#3a5a52',cyan:'#2d5fe0',line:'1px solid #1a2028'}},
   // ---- achievement-locked (secret) themes: unchanged, earned not bought ----
   'true-believer':{name:'True Believer', achievementOnly:'true-believer', vars:{bg:'#150a05',bg2:'#231207',bg3:'#301909',card:'#1c0f06',text:'#fff3df',dim:'#e8c78a',dim2:'#b4884b',red:'#e0392c',yellow:'#ffcf3f',green:'#3c9169',cyan:'#f2b705',line:'1px solid #4a2c0c'}},
@@ -1580,7 +1254,7 @@ function getSuperfanHero(pd){
   return hid ? findHero(hid) : null;
 }
 function applyTheme(themeId){
-  const t = THEMES[themeId] || THEMES['midnight'];
+  const t = THEMES[themeId] || THEMES['brand-new-day'];
   const root = document.documentElement.style;
   Object.entries(t.vars).forEach(([k,v])=> root.setProperty('--'+k, v));
   if(t.dynamicHero && currentUser){
@@ -2650,8 +2324,8 @@ window.submitRealityCode = submitRealityCode;
 function emptyProfileData(){
   return {
     toRead:[], read:[], collection:[], reviews:{},
-    currency:0, achievements:{}, theme:'midnight', frame:'none',
-    ownedThemes:['midnight','brand-new-day'],
+    currency:0, achievements:{}, theme:'brand-new-day', frame:'none',
+    ownedThemes:['brand-new-day'],
     ownedFrames:['none'],
     stats:{seriesCreated:0, heroesCreated:0, issuesCreated:0, totalInkEarned:0},
     eggFlags:{},
@@ -2750,429 +2424,6 @@ async function saveHeroes(heroes){
 function findHero(id){ return (state.heroesIndex||[]).find(h=>h.id===id); }
 function heroAffLabel(aff){ return aff==='villain' ? 'Villain' : (aff==='anti' ? 'Anti-Hero' : 'Hero'); }
 function heroAffClass(aff){ return aff==='villain' ? 'aff-villain' : (aff==='anti' ? 'aff-anti' : 'aff-hero'); }
-
-/* ===================== Team Viewer ===================== */
-const TEAM_ROLE_ORDER = ['founder','permanent','honorary'];
-const TEAM_ROLE_LABEL = {founder:'Founder', permanent:'Permanent Member', honorary:'Honorary / Temporary Member'};
-const TEAM_CITY_PRESETS = [
-  {label:'New York', lat:40.7128, lng:-74.0060}, {label:'Los Angeles', lat:34.0522, lng:-118.2437},
-  {label:'Chicago', lat:41.8781, lng:-87.6298}, {label:'Toronto', lat:43.6532, lng:-79.3832},
-  {label:'Mexico City', lat:19.4326, lng:-99.1332}, {label:'São Paulo', lat:-23.5505, lng:-46.6333},
-  {label:'London', lat:51.5074, lng:-0.1278}, {label:'Paris', lat:48.8566, lng:2.3522},
-  {label:'Berlin', lat:52.5200, lng:13.4050}, {label:'Moscow', lat:55.7558, lng:37.6173},
-  {label:'Cairo', lat:30.0444, lng:31.2357}, {label:'Cape Town', lat:-33.9249, lng:18.4241},
-  {label:'Mumbai', lat:19.0760, lng:72.8777}, {label:'Tokyo', lat:35.6762, lng:139.6503},
-  {label:'Seoul', lat:37.5665, lng:126.9780}, {label:'Sydney', lat:-33.8688, lng:151.2093}
-];
-const TEAM_MAP_REGIONS = [
-  {name:'N. America', latMin:15, latMax:72, lngMin:-170, lngMax:-50},
-  {name:'S. America', latMin:-56, latMax:12, lngMin:-82, lngMax:-35},
-  {name:'Europe', latMin:36, latMax:71, lngMin:-10, lngMax:40},
-  {name:'Africa', latMin:-35, latMax:37, lngMin:-18, lngMax:52},
-  {name:'Asia', latMin:5, latMax:77, lngMin:40, lngMax:180},
-  {name:'Oceania', latMin:-47, latMax:-10, lngMin:110, lngMax:180}
-];
-function geoToMapXY(lat, lng){
-  return {x: (lng+180)/360*1000, y: (90-lat)/180*500};
-}
-
-async function getTeams(){
-  if(state.teamsIndex) return state.teamsIndex;
-  const data = await sGet('teams-index') || [];
-  state.teamsIndex = data;
-  return data;
-}
-async function saveTeams(teams){
-  state.teamsIndex = teams;
-  await sSet('teams-index', teams);
-}
-function findTeam(id){ return (state.teamsIndex||[]).find(t=>t.id===id); }
-function teamsForHero(heroId){
-  return (state.teamsIndex||[]).filter(t=>(t.members||[]).some(m=>m.heroId===heroId));
-}
-
-async function goTeams(){
-  showView('teams');
-  await getHeroes();
-  await getTeams();
-  renderTeamsPage();
-}
-window.goTeams = goTeams;
-
-function renderTeamsPage(){
-  const body = document.getElementById('teams-body');
-  const teams = state.teamsIndex||[];
-  body.innerHTML = `
-    <div class="wrap">
-      <div class="section-title" style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:10px;">
-        <span>Team Viewer</span>
-        <div style="display:flex;gap:8px;">
-          <button class="small ${state.teamsMapMode?'':'ghost'}" onclick="toggleTeamsMapMode(false)">List</button>
-          <button class="small ${state.teamsMapMode?'':'ghost'}" onclick="toggleTeamsMapMode(true)">Map</button>
-          <button class="small primary" onclick="openAddTeam()">+ New Team</button>
-        </div>
-      </div>
-      <p style="color:var(--dim);max-width:640px;">Every team on ComicBox — where they're based, who founded them, and who's come and gone. Click a team (or a pin on the map) to see the full roster.</p>
-      <div id="teams-content"></div>
-    </div>`;
-  renderTeamsContent();
-}
-function toggleTeamsMapMode(on){
-  state.teamsMapMode = on;
-  renderTeamsPage();
-}
-window.toggleTeamsMapMode = toggleTeamsMapMode;
-
-function renderTeamsContent(){
-  const wrap = document.getElementById('teams-content');
-  const teams = state.teamsIndex||[];
-  if(!teams.length){
-    wrap.innerHTML = '<div class="empty">No teams yet. Start one with "+ New Team."</div>';
-    return;
-  }
-  if(state.teamsMapMode){
-    wrap.innerHTML = renderTeamsMapHtml(teams);
-  } else {
-    wrap.innerHTML = `<div class="genres-page-grid" id="teams-grid"></div>`;
-    document.getElementById('teams-grid').innerHTML = teams.map(teamCardHtml).join('');
-  }
-}
-function teamCardHtml(t){
-  const memberCount = (t.members||[]).length;
-  const loc = t.basedOutOf && t.basedOutOf.label ? t.basedOutOf.label : 'Location unknown';
-  return `
-    <div class="genre-tile team-tile" onclick="openTeam('${t.id}')" style="text-align:left;">
-      <div style="display:flex;align-items:center;gap:10px;">
-        <div class="mini-avatar" style="width:44px;height:44px;font-size:14px;background:${colorFor(t.id)};">${initials(t.name)}</div>
-        <div>
-          <div class="gt-name" style="font-size:16px;">${escapeHtml(t.name)}</div>
-          <div class="gt-count">${memberCount} member${memberCount===1?'':'s'} · 📍 ${escapeHtml(loc)}</div>
-        </div>
-      </div>
-    </div>`;
-}
-
-/* ---------- stylized world map with dropped pins ---------- */
-function renderTeamsMapHtml(teams){
-  const pins = teams.filter(t=>t.basedOutOf && typeof t.basedOutOf.lat==='number' && typeof t.basedOutOf.lng==='number');
-  const unpinned = teams.filter(t=>!(t.basedOutOf && typeof t.basedOutOf.lat==='number' && typeof t.basedOutOf.lng==='number'));
-  const regions = TEAM_MAP_REGIONS.map(r=>{
-    const p1 = geoToMapXY(r.latMax, r.lngMin), p2 = geoToMapXY(r.latMin, r.lngMax);
-    return `<rect x="${p1.x}" y="${p1.y}" width="${p2.x-p1.x}" height="${p2.y-p1.y}" rx="18" class="map-region"></rect>
-      <text x="${(p1.x+p2.x)/2}" y="${(p1.y+p2.y)/2}" class="map-region-label" text-anchor="middle">${r.name}</text>`;
-  }).join('');
-  const graticule = [];
-  for(let lng=-180; lng<=180; lng+=30){ const p = geoToMapXY(90,lng); graticule.push(`<line x1="${p.x}" y1="0" x2="${p.x}" y2="500" class="map-grid"></line>`); }
-  for(let lat=-60; lat<=60; lat+=30){ const p = geoToMapXY(lat,0); graticule.push(`<line x1="0" y1="${p.y}" x2="1000" y2="${p.y}" class="map-grid"></line>`); }
-  const pinsSvg = pins.map(t=>{
-    const p = geoToMapXY(t.basedOutOf.lat, t.basedOutOf.lng);
-    return `
-      <g class="map-pin" transform="translate(${p.x},${p.y})" onclick="openTeam('${t.id}')">
-        <title>${escapeHtml(t.name)} — ${escapeHtml(t.basedOutOf.label||'')}</title>
-        <path d="M0,-2 C7,-2 12,3 12,10 C12,18 0,30 0,30 C0,30 -12,18 -12,10 C-12,3 -7,-2 0,-2 Z" class="map-pin-drop"></path>
-        <circle cx="0" cy="9" r="4" class="map-pin-dot"></circle>
-      </g>`;
-  }).join('');
-  return `
-    <div class="team-map-wrap">
-      <svg viewBox="0 0 1000 500" class="team-map-svg">
-        <rect x="0" y="0" width="1000" height="500" class="map-ocean"></rect>
-        ${graticule.join('')}
-        ${regions}
-        ${pinsSvg}
-      </svg>
-    </div>
-    ${unpinned.length ? `<div class="empty" style="margin-top:10px;">${unpinned.length} team${unpinned.length===1?'':'s'} without a mapped location: ${unpinned.map(t=>`<a onclick="openTeam('${t.id}')" style="cursor:pointer;color:var(--cyan);">${escapeHtml(t.name)}</a>`).join(', ')}</div>` : ''}
-  `;
-}
-
-/* ---------- create / edit team ---------- */
-function teamCityPresetButtons(){
-  return TEAM_CITY_PRESETS.map(c=>`<button type="button" class="small ghost" style="margin:2px;" onclick="pickTeamCityPreset('${escapeAttr(c.label)}',${c.lat},${c.lng})">${escapeHtml(c.label)}</button>`).join('');
-}
-function pickTeamCityPreset(label, lat, lng){
-  document.getElementById('tf-location').value = label;
-  document.getElementById('tf-lat').value = lat;
-  document.getElementById('tf-lng').value = lng;
-}
-window.pickTeamCityPreset = pickTeamCityPreset;
-
-async function openAddTeam(){
-  const heroesHtml = await heroPickerHtml([]);
-  showModal(`
-    <h3>New team</h3>
-    <div class="field"><label>Team name</label><input id="tf-name" maxlength="40" placeholder="e.g. The Ironfeather Guild"/></div>
-    <div class="field"><label>Description</label><textarea id="tf-desc" placeholder="What are they about?"></textarea></div>
-    <div class="field">
-      <label>Based out of</label>
-      <input id="tf-location" placeholder="City / region name"/>
-      <div style="display:flex;gap:8px;margin-top:6px;">
-        <input id="tf-lat" type="number" step="any" placeholder="Latitude (optional)" style="flex:1;"/>
-        <input id="tf-lng" type="number" step="any" placeholder="Longitude (optional)" style="flex:1;"/>
-      </div>
-      <div class="import-note" style="margin-top:6px;">Set coordinates to drop a pin on the team map. Quick picks:</div>
-      <div style="margin-top:2px;">${teamCityPresetButtons()}</div>
-    </div>
-    <div class="field">
-      <label>Founding members (optional — you can add more, including honorary/temporary members, after creating the team)</label>
-      <div class="hero-picker" id="tf-hero-picker">${heroesHtml}</div>
-    </div>
-    <div class="modal-actions">
-      <button class="ghost" onclick="closeModal()">Cancel</button>
-      <button class="primary" onclick="saveNewTeam()">Create team</button>
-    </div>
-  `);
-  document.getElementById('tf-name').focus();
-}
-window.openAddTeam = openAddTeam;
-
-async function saveNewTeam(){
-  const name = document.getElementById('tf-name').value.trim();
-  if(!name){ alert('Give the team a name.'); return; }
-  const desc = document.getElementById('tf-desc').value.trim();
-  const locLabel = document.getElementById('tf-location').value.trim();
-  const latVal = document.getElementById('tf-lat').value;
-  const lngVal = document.getElementById('tf-lng').value;
-  const picker = document.getElementById('tf-hero-picker');
-  const founderIds = [...picker.querySelectorAll('input:checked')].map(x=>x.value);
-  const teams = await getTeams();
-  const t = {
-    id: 't-'+Math.random().toString(36).slice(2,10),
-    name, description: desc,
-    basedOutOf: {
-      label: locLabel,
-      lat: latVal!=='' ? parseFloat(latVal) : null,
-      lng: lngVal!=='' ? parseFloat(lngVal) : null
-    },
-    members: founderIds.map(heroId=>({heroId, role:'founder', joinedAt:Date.now(), gallery:[]})),
-    createdBy: currentUser ? currentUser.uid : null,
-    createdAt: Date.now()
-  };
-  teams.push(t);
-  await saveTeams(teams);
-  closeModal();
-  await openTeam(t.id);
-}
-window.saveNewTeam = saveNewTeam;
-
-function openEditTeam(id){
-  const t = findTeam(id);
-  if(!t) return;
-  showModal(`
-    <h3>Edit team</h3>
-    <div class="field"><label>Team name</label><input id="tf-name" maxlength="40" value="${escapeAttr(t.name)}"/></div>
-    <div class="field"><label>Description</label><textarea id="tf-desc">${escapeHtml(t.description||'')}</textarea></div>
-    <div class="field">
-      <label>Based out of</label>
-      <input id="tf-location" value="${escapeAttr((t.basedOutOf&&t.basedOutOf.label)||'')}" placeholder="City / region name"/>
-      <div style="display:flex;gap:8px;margin-top:6px;">
-        <input id="tf-lat" type="number" step="any" value="${t.basedOutOf&&t.basedOutOf.lat!=null?t.basedOutOf.lat:''}" placeholder="Latitude (optional)" style="flex:1;"/>
-        <input id="tf-lng" type="number" step="any" value="${t.basedOutOf&&t.basedOutOf.lng!=null?t.basedOutOf.lng:''}" placeholder="Longitude (optional)" style="flex:1;"/>
-      </div>
-      <div class="import-note" style="margin-top:6px;">Quick picks:</div>
-      <div style="margin-top:2px;">${teamCityPresetButtons()}</div>
-    </div>
-    <div class="modal-actions">
-      <button class="ghost" onclick="closeModal()">Cancel</button>
-      <button class="primary" onclick="saveEditTeam('${id}')">Save</button>
-    </div>
-  `);
-}
-window.openEditTeam = openEditTeam;
-
-async function saveEditTeam(id){
-  const teams = await getTeams();
-  const t = teams.find(x=>x.id===id);
-  if(!t) return;
-  const name = document.getElementById('tf-name').value.trim();
-  if(!name){ alert('Give the team a name.'); return; }
-  t.name = name;
-  t.description = document.getElementById('tf-desc').value.trim();
-  const latVal = document.getElementById('tf-lat').value;
-  const lngVal = document.getElementById('tf-lng').value;
-  t.basedOutOf = {
-    label: document.getElementById('tf-location').value.trim(),
-    lat: latVal!=='' ? parseFloat(latVal) : null,
-    lng: lngVal!=='' ? parseFloat(lngVal) : null
-  };
-  await saveTeams(teams);
-  closeModal();
-  await openTeam(id);
-}
-window.saveEditTeam = saveEditTeam;
-
-async function deleteTeam(id){
-  if(!confirm('Delete this team? This cannot be undone.')) return;
-  const teams = (await getTeams()).filter(t=>t.id!==id);
-  await saveTeams(teams);
-  await goTeams();
-}
-window.deleteTeam = deleteTeam;
-
-/* ---------- team detail / roster ---------- */
-async function openTeam(id){
-  state.currentTeamId = id;
-  showView('team-detail');
-  await getHeroes();
-  await renderTeamDetail(id);
-}
-window.openTeam = openTeam;
-
-function memberCardHtml(teamId, m){
-  const h = findHero(m.heroId);
-  if(!h) return '';
-  const gallery = m.gallery||[];
-  return `
-    <div class="member-card" onclick="openTeamMember('${teamId}','${m.heroId}')">
-      <div class="member-portrait">${coverOrFallback(h.imageUrl, initials(h.name), h.id)}</div>
-      <div class="member-info">
-        <div class="member-name">${escapeHtml(h.name)}${h.alias?` <span class="fh-alias">"${escapeHtml(h.alias)}"</span>`:''}</div>
-        <div class="member-role mono">${TEAM_ROLE_LABEL[m.role]||'Member'}</div>
-        ${gallery.length ? `<div class="member-gallery-strip">${gallery.slice(0,4).map(url=>`<img src="${escapeAttr(url)}" onerror="this.remove()"/>`).join('')}${gallery.length>4?`<span class="member-gallery-more">+${gallery.length-4}</span>`:''}</div>` : ''}
-      </div>
-    </div>`;
-}
-
-async function renderTeamDetail(id){
-  const t = findTeam(id);
-  const body = document.getElementById('team-detail-body');
-  if(!t){ body.innerHTML = '<div class="wrap"><div class="empty">Team not found.</div></div>'; return; }
-  const members = t.members||[];
-  const byRole = {founder:[], permanent:[], honorary:[]};
-  members.forEach(m=>{ (byRole[m.role]||byRole.honorary).push(m); });
-  const loc = t.basedOutOf && t.basedOutOf.label ? t.basedOutOf.label : '';
-  const hasPin = t.basedOutOf && typeof t.basedOutOf.lat==='number' && typeof t.basedOutOf.lng==='number';
-
-  body.innerHTML = `
-    <div class="wrap">
-      <button class="backbtn ghost small" onclick="goTeams()">&larr; Back to Team Viewer</button>
-      <div class="profile-header">
-        <div class="mini-avatar" style="width:76px;height:76px;font-size:24px;background:${colorFor(t.id)};">${initials(t.name)}</div>
-        <div class="profile-meta">
-          <h1>${escapeHtml(t.name)}</h1>
-          ${t.description ? `<p class="profile-bio">${escapeHtml(t.description)}</p>` : ''}
-          <div class="mono" style="color:var(--dim2);font-size:12.5px;">${loc?`📍 ${escapeHtml(loc)}${hasPin?'':' (no pin set)'}`:'No location on file'} · ${members.length} member${members.length===1?'':'s'}</div>
-        </div>
-        <div style="display:flex;gap:8px;flex-shrink:0;">
-          <button class="ghost small" onclick="openAddTeamMember('${t.id}')">+ Add member</button>
-          <button class="ghost small" onclick="openEditTeam('${t.id}')">Edit</button>
-          <button class="ghost small danger-btn" onclick="deleteTeam('${t.id}')">Delete</button>
-        </div>
-      </div>
-      ${TEAM_ROLE_ORDER.map(role=>{
-        const list = byRole[role];
-        if(!list.length) return '';
-        return `<div class="section-title" style="font-size:15px;">${TEAM_ROLE_LABEL[role]}s</div>
-          <div class="member-grid">${list.map(m=>memberCardHtml(t.id,m)).join('')}</div>`;
-      }).join('')}
-      ${!members.length ? '<div class="empty">No members yet — add the founders to get this team started.</div>' : ''}
-    </div>`;
-}
-
-async function openAddTeamMember(teamId){
-  const t = findTeam(teamId);
-  if(!t) return;
-  const heroes = await getHeroes();
-  const existingIds = new Set((t.members||[]).map(m=>m.heroId));
-  const available = heroes.filter(h=>!existingIds.has(h.id));
-  if(!available.length){ alert('Every hero is already on this team.'); return; }
-  showModal(`
-    <h3>Add member to ${escapeHtml(t.name)}</h3>
-    <div class="field"><label>Hero</label>
-      <select id="tm-hero">${available.map(h=>`<option value="${h.id}">${escapeHtml(h.name)}${h.alias?' — '+escapeHtml(h.alias):''}</option>`).join('')}</select>
-    </div>
-    <div class="field"><label>Role on this team</label>
-      <select id="tm-role">
-        <option value="founder">Founder</option>
-        <option value="permanent" selected>Permanent Member</option>
-        <option value="honorary">Honorary / Temporary Member</option>
-      </select>
-    </div>
-    <div class="modal-actions">
-      <button class="ghost" onclick="closeModal()">Cancel</button>
-      <button class="primary" onclick="saveAddTeamMember('${teamId}')">Add to team</button>
-    </div>
-  `);
-}
-window.openAddTeamMember = openAddTeamMember;
-
-async function saveAddTeamMember(teamId){
-  const teams = await getTeams();
-  const t = teams.find(x=>x.id===teamId);
-  if(!t) return;
-  const heroId = document.getElementById('tm-hero').value;
-  const role = document.getElementById('tm-role').value;
-  t.members = t.members || [];
-  t.members.push({heroId, role, joinedAt:Date.now(), gallery:[]});
-  await saveTeams(teams);
-  closeModal();
-  await renderTeamDetail(teamId);
-}
-window.saveAddTeamMember = saveAddTeamMember;
-
-async function removeTeamMember(teamId, heroId){
-  if(!confirm('Remove this member from the team?')) return;
-  const teams = await getTeams();
-  const t = teams.find(x=>x.id===teamId);
-  if(!t) return;
-  t.members = (t.members||[]).filter(m=>m.heroId!==heroId);
-  await saveTeams(teams);
-  closeModal();
-  await renderTeamDetail(teamId);
-}
-window.removeTeamMember = removeTeamMember;
-
-/* ---------- per-member "in this team" gallery (e.g. She-Hulk specifically as an F4 member) ---------- */
-function openTeamMember(teamId, heroId){
-  const t = findTeam(teamId);
-  const m = t && (t.members||[]).find(x=>x.heroId===heroId);
-  const h = findHero(heroId);
-  if(!t || !m || !h) return;
-  const gallery = m.gallery||[];
-  showModal(`
-    <h3>${escapeHtml(h.name)} — ${escapeHtml(t.name)}</h3>
-    <div class="mono" style="color:var(--dim2);font-size:12px;margin-bottom:10px;">${TEAM_ROLE_LABEL[m.role]||'Member'}</div>
-    <div class="import-note">Photos of ${escapeHtml(h.name)} specifically during their time with ${escapeHtml(t.name)} — separate from their general hero gallery.</div>
-    <div class="hero-gallery" id="tm-gallery-view" style="margin:12px 0;">${gallery.length ? gallery.map((url,i)=>`<img src="${escapeAttr(url)}" onclick="openTeamMemberGalleryLightbox('${teamId}','${heroId}',${i})" onerror="this.remove()"/>`).join('') : '<span class="empty">No photos yet.</span>'}</div>
-    <div class="field"><label>Add image URLs (one per line)</label><textarea id="tm-gallery-add" placeholder="https://..."></textarea></div>
-    <div class="modal-actions" style="justify-content:space-between;">
-      <button class="ghost danger-btn" onclick="removeTeamMember('${teamId}','${heroId}')">Remove from team</button>
-      <div style="display:flex;gap:8px;">
-        <button class="ghost" onclick="closeModal();openApp('comicbox');openHero('${heroId}');" title="View full hero profile">View hero profile</button>
-        <button class="primary" onclick="saveTeamMemberGallery('${teamId}','${heroId}')">Save photos</button>
-      </div>
-    </div>
-  `);
-}
-window.openTeamMember = openTeamMember;
-
-async function saveTeamMemberGallery(teamId, heroId){
-  const urls = document.getElementById('tm-gallery-add').value.split('\n').map(s=>s.trim()).filter(Boolean);
-  if(!urls.length) return;
-  const teams = await getTeams();
-  const t = teams.find(x=>x.id===teamId);
-  const m = t && (t.members||[]).find(x=>x.heroId===heroId);
-  if(!m) return;
-  m.gallery = [...(m.gallery||[]), ...urls];
-  await saveTeams(teams);
-  closeModal();
-  openTeamMember(teamId, heroId);
-  await renderTeamDetail(teamId);
-}
-window.saveTeamMemberGallery = saveTeamMemberGallery;
-
-function openTeamMemberGalleryLightbox(teamId, heroId, idx){
-  const t = findTeam(teamId);
-  const m = t && (t.members||[]).find(x=>x.heroId===heroId);
-  if(!m || !m.gallery || !m.gallery[idx]) return;
-  const root = document.getElementById('modal-root');
-  root.innerHTML = `<div class="lightbox-overlay" onclick="closeModal()">
-      <div class="lightbox-close" onclick="closeModal()">&times;</div>
-      <img src="${escapeAttr(m.gallery[idx])}"/>
-    </div>`;
-}
-window.openTeamMemberGalleryLightbox = openTeamMemberGalleryLightbox;
-
 /* every issue across every series that tags this hero, newest series data pulled from cache/storage */
 async function getHeroAppearances(heroId){
   const out = [];
@@ -3205,10 +2456,10 @@ async function getProfileData(pid){
   d.toRead = d.toRead||[]; d.read = d.read||[]; d.collection = d.collection||[]; d.reviews = d.reviews||{};
   d.currency = d.currency||0;
   d.achievements = d.achievements||{};
-  d.theme = d.theme||'midnight';
-  if(!THEMES[d.theme]) d.theme = 'midnight'; // retired theme id — fall back to the new default
+  d.theme = d.theme||'brand-new-day';
+  if(!THEMES[d.theme]) d.theme = 'brand-new-day'; // retired theme id — fall back to the new default
   d.frame = d.frame||'none';
-  d.ownedThemes = Array.from(new Set([...(d.ownedThemes||[]), 'midnight', 'brand-new-day']));
+  d.ownedThemes = Array.from(new Set([...(d.ownedThemes||[]), 'brand-new-day']));
   d.ownedFrames = (d.ownedFrames && d.ownedFrames.length) ? d.ownedFrames : ['none'];
   d.stats = d.stats || {seriesCreated:0, heroesCreated:0, issuesCreated:0};
   d.stats.totalInkEarned = d.stats.totalInkEarned||0;
@@ -3276,51 +2527,33 @@ async function submitAuthForm(){
     } else {
       await signInWithEmailAndPassword(auth, email, password);
     }
-    persistRememberChoice(email, password);
   }catch(e){
     errEl.textContent = (e && e.message) ? e.message.replace(/^Firebase:\s*/,'') : 'Something went wrong.';
   }
 }
-/* ---------- Win95-style "remember password" / "log on automatically" ---------- */
-function getRememberedLogin(){
-  try{ const raw = localStorage.getItem('cb95_remember'); return raw ? JSON.parse(raw) : null; }catch(e){ return null; }
-}
-function setRememberedLogin(data){ try{ localStorage.setItem('cb95_remember', JSON.stringify(data)); }catch(e){} }
-function clearRememberedLogin(){ try{ localStorage.removeItem('cb95_remember'); }catch(e){} }
-function persistRememberChoice(email, password){
-  const rc = document.getElementById('auth-remember');
-  const ac = document.getElementById('auth-autologin');
-  if(rc && rc.checked){
-    setRememberedLogin({email, password, autoLogin: !!(ac && ac.checked)});
-  } else {
-    clearRememberedLogin();
-  }
-}
 async function doSignOut(){
-  explicitSignOut = true;
-  win95CloseAllWindows();
-  applyTheme('midnight');
+  applyTheme('brand-new-day');
   await signOut(auth);
 }
 
 /* ===================== init ===================== */
 onAuthStateChanged(auth, async (user)=>{
   currentUser = user;
-  authUser = user;
-  authReady = true;
   if(user){
     document.getElementById('auth-error').textContent = '';
     await seedIfEmpty();
-    await prepareUserSession();
+    await enterApp();
   } else {
     state.currentProfileId = null;
+    document.getElementById('topbar').classList.add('hidden');
+    document.getElementById('tabs').classList.add('hidden');
+    showView('auth');
   }
-  if(osBooted) routeAfterAuthChange();
 });
 renderAuthSwatches();
 toggleAuthMode(); toggleAuthMode(); // ensure signup UI state on first paint
 
-async function prepareUserSession(){
+async function enterApp(){
   state.currentProfileId = currentUser.uid; // you always act as yourself while browsing
   const pd = await getProfileData(currentUser.uid);
   state.profiles = await fetchAllUsers();
@@ -3332,282 +2565,13 @@ async function prepareUserSession(){
   applyTheme(pd.theme);
   applyAvatarFrame();
   updateCurrencyBadge();
+  document.getElementById('topbar').classList.remove('hidden');
+  document.getElementById('tabs').classList.remove('hidden');
   await checkAchievements(currentUser.uid);
+  setTab('home');
 }
 
 function goMyProfile(){ if(currentUser) openProfile(currentUser.uid); }
-
-/* ===================== Windows 95 desktop shell ===================== */
-const OS_APPS = {
-  comicbox:{title:'ComicBox', icon:'📗', tabs:['home','mylist','collection','heroes','events'], landing:()=>setTab('home')},
-  achievements:{title:'Achievements & Shop', icon:'🏆', tabs:['achievements'], landing:()=>handleAchievementsTabClick()},
-  users:{title:'Users', icon:'👥', tabs:['users'], landing:()=>setTab('users')},
-  news:{title:'News', icon:'📰', tabs:['news'], landing:()=>setTab('news')},
-  teams:{title:'Team Viewer', icon:'🛡️', tabs:['teams'], landing:()=>goTeams()}
-};
-
-/* ---------- boot sequence (BIOS + Windows 95 startup) ---------- */
-function runBootSequence(){
-  const biosLines = [
-    'ComicBox BIOS v4.51PG — (C) 1996 Award-Ink Software',
-    'CPU : Ink Engine 486DX2 66MHz   Cache : 512KB',
-    'Memory Testing : 65536K OK',
-    '',
-    'Detecting IDE drives ...',
-    '  Primary Master   : COMICBOX READER',
-    '  Primary Slave    : PINBALL CD-ROM',
-    '  Secondary Master : None',
-    '  Secondary Slave  : None',
-    '',
-    'Press DEL to enter SETUP, ESC to skip memory test'
-  ];
-  const biosEl = document.getElementById('boot-bios');
-  const logoEl = document.getElementById('boot-winlogo');
-  biosEl.innerHTML = '';
-  logoEl.classList.add('hidden');
-  biosEl.classList.remove('hidden');
-  let i = 0;
-  function typeNext(){
-    if(i < biosLines.length){
-      const line = document.createElement('div');
-      line.textContent = biosLines[i] || '\u00a0';
-      biosEl.appendChild(line);
-      i++;
-      bootTimeout = setTimeout(typeNext, 85);
-    } else {
-      bootTimeout = setTimeout(showWinLogo, 550);
-    }
-  }
-  function showWinLogo(){
-    biosEl.classList.add('hidden');
-    logoEl.classList.remove('hidden');
-    bootTimeout = setTimeout(finishBoot, 2800);
-  }
-  typeNext();
-}
-let bootTimeout = null;
-function skipBoot(){
-  if(osBooted) return;
-  if(bootTimeout) clearTimeout(bootTimeout);
-  finishBoot();
-}
-function finishBoot(){
-  if(osBooted) return;
-  osBooted = true;
-  document.getElementById('screen-boot').classList.add('hidden');
-  routeAfterAuthChange();
-}
-
-/* ---------- routing between login and desktop ---------- */
-function routeAfterAuthChange(){
-  if(!osBooted) return;
-  if(authUser){
-    showDesktop();
-  } else {
-    attemptAutoLoginOrShowLogin();
-  }
-}
-function showDesktop(){
-  document.getElementById('screen-login').classList.add('hidden');
-  document.getElementById('screen-shutdown').classList.add('hidden');
-  document.getElementById('screen-desktop').classList.remove('hidden');
-  updateClock();
-  renderTaskbarButtons();
-}
-async function attemptAutoLoginOrShowLogin(){
-  document.getElementById('screen-desktop').classList.add('hidden');
-  document.getElementById('screen-shutdown').classList.add('hidden');
-  document.getElementById('screen-login').classList.remove('hidden');
-  showView('auth');
-  const remembered = getRememberedLogin();
-  if(remembered){
-    const emailEl = document.getElementById('auth-email');
-    const passEl = document.getElementById('auth-password');
-    if(emailEl) emailEl.value = remembered.email || '';
-    if(passEl) passEl.value = remembered.password || '';
-    const rc = document.getElementById('auth-remember'); if(rc) rc.checked = true;
-    const ac = document.getElementById('auth-autologin'); if(ac) ac.checked = !!remembered.autoLogin;
-  }
-  if(remembered && remembered.autoLogin && !osAutoLoginTried && !explicitSignOut){
-    osAutoLoginTried = true;
-    document.getElementById('auth-error').textContent = 'Logging on automatically…';
-    try{
-      await signInWithEmailAndPassword(auth, remembered.email, remembered.password);
-    }catch(e){
-      document.getElementById('auth-error').textContent = 'Automatic logon failed — please sign in.';
-    }
-  }
-  explicitSignOut = false;
-}
-
-/* ---------- generic window manager (the app screen + floating windows) ---------- */
-function winSetVisible(id, visible){
-  if(id==='app'){
-    document.getElementById('app-frame').classList.toggle('hidden', !visible);
-    if(visible) document.getElementById('screen-desktop').classList.add('hidden');
-  } else {
-    const el = document.getElementById('win-'+id);
-    if(el) el.classList.toggle('hidden', !visible);
-  }
-}
-function winOpen(id, title, icon){
-  winState[id] = {title, icon, open:true, minimized:false};
-  winSetVisible(id, true);
-  renderTaskbarButtons();
-}
-function winMinimize(id){
-  if(!winState[id]) return;
-  winState[id].minimized = true;
-  winSetVisible(id, false);
-  if(id==='app') document.getElementById('screen-desktop').classList.remove('hidden');
-  renderTaskbarButtons();
-}
-function winRestore(id){
-  if(!winState[id]) return;
-  winState[id].minimized = false;
-  winSetVisible(id, true);
-  renderTaskbarButtons();
-}
-function winClose(id){
-  if(!winState[id]) return;
-  winState[id].open = false;
-  winSetVisible(id, false);
-  if(id==='app'){ document.getElementById('screen-desktop').classList.remove('hidden'); currentApp = null; }
-  if(id==='pinball'){
-    // The pinball game runs in a cross-origin iframe, so we can't reach in and pause its
-    // audio directly — tearing the iframe out of the document is the only reliable way to
-    // silence it. openPinball() will give it a fresh src next time it's launched.
-    const frame = document.getElementById('pinball-frame');
-    if(frame) frame.src = 'about:blank';
-  }
-  renderTaskbarButtons();
-}
-function winToggle(id){
-  const w = winState[id]; if(!w || !w.open) return;
-  if(w.minimized) winRestore(id); else winMinimize(id);
-}
-function win95CloseAllWindows(){
-  Object.keys(winState).forEach(id=>{ winState[id].open = false; winSetVisible(id, false); });
-  document.getElementById('app-frame').classList.add('hidden');
-  currentApp = null;
-  renderTaskbarButtons();
-}
-
-/* ---------- launching apps from the desktop / start menu ---------- */
-function openApp(appId){
-  const cfg = OS_APPS[appId];
-  if(!cfg) return;
-  currentApp = appId;
-  document.getElementById('app-titlebar-icon').textContent = cfg.icon;
-  document.getElementById('app-titlebar-title').textContent = cfg.title + '.exe';
-  document.getElementById('topbar').classList.remove('hidden');
-  document.getElementById('search-input').classList.toggle('hidden', appId!=='comicbox');
-  const tabsEl = document.getElementById('tabs');
-  tabsEl.classList.toggle('hidden', cfg.tabs.length<=1);
-  [...tabsEl.querySelectorAll('button')].forEach(b=>{
-    b.classList.toggle('hidden', !cfg.tabs.includes(b.dataset.tab));
-  });
-  winOpen('app', cfg.title, cfg.icon);
-  cfg.landing();
-}
-function win95MinimizeApp(){ winMinimize('app'); }
-function win95CloseApp(){ winClose('app'); }
-
-function openGamesFolder(){ winOpen('games', 'Games', '📁'); }
-function openRecycleBin(){ winOpen('recyclebin', 'Recycle Bin', '🗑️'); }
-function openPinball(){
-  const frame = document.getElementById('pinball-frame');
-  if(frame && (!frame.src || frame.src==='about:blank')){ frame.src = 'https://pinball.alula.me/'; }
-  winOpen('pinball', 'Pinball', '🕹️');
-}
-
-/* ---------- taskbar + clock + start menu ---------- */
-function renderTaskbarButtons(){
-  const wrap = document.getElementById('taskbar-buttons');
-  if(!wrap) return;
-  wrap.innerHTML = '';
-  Object.keys(winState).forEach(id=>{
-    const w = winState[id];
-    if(!w.open) return;
-    const btn = document.createElement('button');
-    btn.className = 'win95-taskbtn' + (!w.minimized ? ' active' : '');
-    btn.innerHTML = `<span>${w.icon}</span><span>${escapeHtml(w.title)}</span>`;
-    btn.onclick = ()=> winToggle(id);
-    wrap.appendChild(btn);
-  });
-}
-function updateClock(){
-  const el = document.getElementById('taskbar-clock');
-  if(!el) return;
-  const d = new Date();
-  let h = d.getHours(); const m = d.getMinutes();
-  const ampm = h>=12 ? 'PM' : 'AM'; h = h%12; if(h===0) h=12;
-  el.textContent = `${h}:${String(m).padStart(2,'0')} ${ampm}`;
-}
-setInterval(updateClock, 10000);
-function toggleStartMenu(e){
-  if(e) e.stopPropagation();
-  document.getElementById('start-menu').classList.toggle('hidden');
-}
-document.addEventListener('click', (e)=>{
-  const menu = document.getElementById('start-menu');
-  if(menu && !menu.classList.contains('hidden')){
-    if(!menu.contains(e.target) && !e.target.closest('#start-btn')) menu.classList.add('hidden');
-  }
-});
-function startMenuLaunch(appId){
-  document.getElementById('start-menu').classList.add('hidden');
-  if(OS_APPS[appId]) openApp(appId);
-  else if(appId==='games') openGamesFolder();
-  else if(appId==='recyclebin') openRecycleBin();
-}
-function startLogOff(){
-  document.getElementById('start-menu').classList.add('hidden');
-  doSignOut();
-}
-function startShutDown(){
-  document.getElementById('start-menu').classList.add('hidden');
-  document.getElementById('screen-desktop').classList.add('hidden');
-  document.getElementById('app-frame').classList.add('hidden');
-  document.getElementById('screen-shutdown').classList.remove('hidden');
-}
-function restartFromShutdown(){
-  location.reload();
-}
-
-/* ---------- tiny drag helper for floating windows ---------- */
-function makeWinDraggable(winEl, handleEl){
-  let dragging = false, sx=0, sy=0, ox=0, oy=0;
-  handleEl.addEventListener('mousedown', (e)=>{
-    if(e.target.closest('.win95-tbtn')) return;
-    dragging = true;
-    sx = e.clientX; sy = e.clientY;
-    const rect = winEl.getBoundingClientRect();
-    ox = rect.left; oy = rect.top;
-    winEl.style.left = ox+'px'; winEl.style.top = oy+'px';
-    winEl.style.right = 'auto'; winEl.style.bottom = 'auto'; winEl.style.margin = '0';
-    document.body.style.userSelect = 'none';
-  });
-  document.addEventListener('mousemove', (e)=>{
-    if(!dragging) return;
-    winEl.style.left = (ox + (e.clientX - sx)) + 'px';
-    winEl.style.top = (oy + (e.clientY - sy)) + 'px';
-  });
-  document.addEventListener('mouseup', ()=>{ dragging = false; document.body.style.userSelect = ''; });
-}
-
-/* boot on load */
-runBootSequence();
-document.getElementById('screen-boot').addEventListener('click', skipBoot);
-document.addEventListener('keydown', (e)=>{ if(!osBooted && (e.key==='Enter' || e.key===' ')) skipBoot(); });
-window.addEventListener('load', ()=>{
-  const gamesWin = document.getElementById('win-games');
-  const pinballWin = document.getElementById('win-pinball');
-  const binWin = document.getElementById('win-recyclebin');
-  if(gamesWin) makeWinDraggable(gamesWin, document.getElementById('win-games-titlebar'));
-  if(pinballWin) makeWinDraggable(pinballWin, document.getElementById('win-pinball-titlebar'));
-  if(binWin) makeWinDraggable(binWin, document.getElementById('win-recyclebin-titlebar'));
-});
 
 /* ===================== users directory ===================== */
 async function renderUsersGrid(){
@@ -3727,10 +2691,9 @@ async function renderProfilePage(uid){
 
   const shelves = document.getElementById('profile-shelves');
   shelves.innerHTML = '';
-  state.profileViewUid = uid;
-  if(pd.read.length) shelves.appendChild(await buildReadSeriesRow(uid, pd));
-  if(pd.toRead.length) shelves.appendChild(await buildIssueRow('To Read', pd.toRead, pd, {cap:6, uid, viewAllKey:'toRead'}));
-  if(pd.collection.length) shelves.appendChild(await buildIssueRow('Physical Collection', pd.collection, pd, {cap:6, uid, viewAllKey:'collection'}));
+  if(pd.read.length) shelves.appendChild(await buildIssueRow('Read', pd.read, pd));
+  if(pd.toRead.length) shelves.appendChild(await buildIssueRow('To Read', pd.toRead, pd));
+  if(pd.collection.length) shelves.appendChild(await buildIssueRow('Physical Collection', pd.collection, pd));
   if(!pd.read.length && !pd.toRead.length && !pd.collection.length){
     shelves.innerHTML = '<div class="empty" style="padding:0 32px;">No lists yet.</div>';
   }
@@ -3788,7 +2751,7 @@ async function saveEditProfile(){
 
 /* ===================== view switching ===================== */
 function showView(name){
-  ['auth','users','profile','home','series','issue','hero-detail','event','teams','team-detail'].forEach(v=>{
+  ['auth','users','profile','home','series','issue','hero-detail','event'].forEach(v=>{
     document.getElementById('view-'+v).classList.toggle('hidden', v!==name);
   });
   document.getElementById('topbar').classList.toggle('solid', name!=='home');
@@ -4110,14 +3073,11 @@ function openGenreFiltered(genre){
 }
 window.openGenreFiltered = openGenreFiltered;
 
-async function buildIssueRow(title, items, pd, opts){
-  opts = opts || {};
+async function buildIssueRow(title, items, pd){
   const row = document.createElement('div');
   row.className='row';
-  const sorted = items.slice().sort((a,b)=>(b.addedAt||0)-(a.addedAt||0));
-  const showItems = opts.cap ? sorted.slice(0, opts.cap) : sorted;
   const cardsArr = [];
-  for(const item of showItems){
+  for(const item of items.slice().sort((a,b)=>(b.addedAt||0)-(a.addedAt||0))){
     const series = findSeries(item.seriesId);
     if(!series) continue;
     const issues = await getIssues(item.seriesId);
@@ -4136,152 +3096,9 @@ async function buildIssueRow(title, items, pd, opts){
       </div>
     `);
   }
-  const viewAllBtn = (opts.cap && sorted.length>opts.cap && opts.viewAllKey)
-    ? `<button class="small ghost" onclick="renderProfileListPage('${opts.uid}','${opts.viewAllKey}','${escapeAttr(title)}')">View All (${sorted.length})</button>` : '';
-  row.innerHTML = `<div class="row-head"><h2>${escapeHtml(title)}</h2>${viewAllBtn}</div><div class="row-track">${cardsArr.join('')}</div>`;
+  row.innerHTML = `<div class="row-head"><h2>${escapeHtml(title)}</h2></div><div class="row-track">${cardsArr.join('')}</div>`;
   return row;
 }
-
-/* ---------- Read shelf: grouped by series with a radial % ring, not one card per issue ---------- */
-function circleRingSvg(read, total, size){
-  size = size || 44;
-  const r = 42;
-  const circumference = 2*Math.PI*r;
-  const pct = total ? read/total : 0;
-  const complete = total>0 && read===total;
-  return `
-    <div class="mini-ring-wrap" title="${read}/${total} read" style="width:${size}px;height:${size}px;">
-      <svg viewBox="0 0 100 100" class="mini-ring">
-        <circle class="ring-track" cx="50" cy="50" r="${r}"></circle>
-        <circle class="ring-fill ${complete?'complete':''}" cx="50" cy="50" r="${r}"
-          style="stroke-dasharray:${circumference};stroke-dashoffset:${circumference*(1-pct)};"></circle>
-      </svg>
-      <div class="mini-ring-pct">${Math.round(pct*100)}%</div>
-    </div>`;
-}
-async function seriesReadSummaries(pd){
-  const bySeries = {};
-  for(const item of pd.read){
-    if(!bySeries[item.seriesId]) bySeries[item.seriesId] = {seriesId:item.seriesId, readIssueIds:new Set(), lastAddedAt:0};
-    bySeries[item.seriesId].readIssueIds.add(item.issueId);
-    bySeries[item.seriesId].lastAddedAt = Math.max(bySeries[item.seriesId].lastAddedAt, item.addedAt||0);
-  }
-  const out = [];
-  for(const seriesId of Object.keys(bySeries)){
-    const series = findSeries(seriesId);
-    if(!series) continue;
-    const issues = await getIssues(seriesId);
-    out.push({series, issues, readCount:bySeries[seriesId].readIssueIds.size, total:issues.length, lastAddedAt:bySeries[seriesId].lastAddedAt});
-  }
-  out.sort((a,b)=>b.lastAddedAt-a.lastAddedAt);
-  return out;
-}
-function seriesReadCardHtml(s){
-  return `
-    <div class="poster-card" onclick="openProfileSeriesRead('${state.profileViewUid}','${s.series.id}')">
-      <div class="art">
-        ${coverOrFallback(s.series.coverUrl, s.series.title, s.series.id)}
-        ${circleRingSvg(s.readCount, s.total)}
-      </div>
-      <div class="t">${escapeHtml(s.series.title)}</div>
-      <div class="s">${s.readCount}/${s.total} issues read</div>
-    </div>`;
-}
-async function buildReadSeriesRow(uid, pd){
-  const summaries = await seriesReadSummaries(pd);
-  const row = document.createElement('div');
-  row.className = 'row';
-  const CAP = 6;
-  const shown = summaries.slice(0, CAP);
-  const viewAllBtn = summaries.length>CAP
-    ? `<button class="small ghost" onclick="renderProfileListPage('${uid}','read','Read')">View All (${summaries.length})</button>` : '';
-  row.innerHTML = `<div class="row-head"><h2>Read</h2>${viewAllBtn}</div><div class="row-track">${shown.map(seriesReadCardHtml).join('') || '<div class="empty">Nothing marked as read yet.</div>'}</div>`;
-  return row;
-}
-
-/* series-scoped read detail: which issues of one series has this profile read */
-async function openProfileSeriesRead(uid, seriesId){
-  state.profileViewUid = uid;
-  const pd = await getProfileData(uid);
-  const series = findSeries(seriesId);
-  const body = document.getElementById('profile-body');
-  if(!series){ body.innerHTML = '<div class="empty">Series not found.</div>'; return; }
-  const issues = (await getIssues(seriesId)).slice().sort((a,b)=>a.number-b.number);
-  const readIds = new Set(pd.read.filter(x=>x.seriesId===seriesId).map(x=>x.issueId));
-  const p = state.profiles.find(x=>x.id===uid);
-  body.innerHTML = `
-    <div class="wrap">
-      <button class="backbtn ghost small" onclick="renderProfilePage('${uid}')">&larr; Back to ${escapeHtml(p?p.name:'profile')}</button>
-      <div class="profile-header" style="align-items:center;">
-        <div class="series-read-cover" style="width:100px;height:140px;border-radius:6px;flex-shrink:0;overflow:hidden;">${coverOrFallback(series.coverUrl, series.title, series.id)}</div>
-        <div class="profile-meta">
-          <h1>${escapeHtml(series.title)}</h1>
-          <div style="color:var(--dim2);" class="mono">${readIds.size}/${issues.length} issues read</div>
-        </div>
-        <button class="ghost small" onclick="openSeries('${series.id}')">View series &rarr;</button>
-      </div>
-      <div class="section-title">Issues</div>
-      <div style="display:flex;flex-wrap:wrap;gap:16px;" id="profile-series-read-grid"></div>
-    </div>`;
-  const grid = document.getElementById('profile-series-read-grid');
-  grid.innerHTML = issues.map(iss=>{
-    const isRead = readIds.has(iss.id);
-    return `
-      <div class="poster-card" onclick="jumpToIssue('${series.id}','${iss.id}')">
-        <div class="art">
-          ${coverOrFallback(iss.coverUrl || series.coverUrl, series.title+' #'+iss.number, iss.id)}
-          ${isRead? '<span class="badge read">READ</span>' : ''}
-        </div>
-        <div class="t">#${iss.number}</div>
-        <div class="s">${escapeHtml(iss.title||'')}</div>
-      </div>`;
-  }).join('');
-}
-window.openProfileSeriesRead = openProfileSeriesRead;
-
-/* Full "View All" page for a profile shelf (Read / To Read / Physical Collection), same
-   layout language as the Genres browse page — a plain grid, everything, no cap. */
-async function renderProfileListPage(uid, key, title){
-  state.profileViewUid = uid;
-  const pd = await getProfileData(uid);
-  const p = state.profiles.find(x=>x.id===uid);
-  const body = document.getElementById('profile-body');
-  body.innerHTML = `
-    <div class="wrap">
-      <button class="backbtn ghost small" onclick="renderProfilePage('${uid}')">&larr; Back to ${escapeHtml(p?p.name:'profile')}</button>
-      <div class="section-title">${escapeHtml(title)}</div>
-      <div style="display:flex;flex-wrap:wrap;gap:16px;" id="profile-viewall-grid"></div>
-    </div>`;
-  const grid = document.getElementById('profile-viewall-grid');
-  if(key==='read'){
-    const summaries = await seriesReadSummaries(pd);
-    grid.innerHTML = summaries.length ? summaries.map(seriesReadCardHtml).join('') : '<div class="empty">Nothing marked as read yet.</div>';
-    return;
-  }
-  const items = (pd[key]||[]).slice().sort((a,b)=>(b.addedAt||0)-(a.addedAt||0));
-  if(!items.length){ grid.innerHTML = '<div class="empty">Nothing here yet.</div>'; return; }
-  const cardsArr = [];
-  for(const item of items){
-    const series = findSeries(item.seriesId);
-    if(!series) continue;
-    const issues = await getIssues(item.seriesId);
-    const iss = issues.find(x=>x.id===item.issueId);
-    if(!iss) continue;
-    const isRead = pd.read.some(x=>x.issueId===iss.id);
-    const isOwned = pd.collection.some(x=>x.issueId===iss.id);
-    cardsArr.push(`
-      <div class="poster-card" onclick="jumpToIssue('${series.id}','${iss.id}')">
-        <div class="art">
-          ${coverOrFallback(iss.coverUrl || series.coverUrl, series.title+' #'+iss.number, iss.id)}
-          ${isRead? '<span class="badge read">READ</span>' : (isOwned? '<span class="badge owned">OWNED</span>' : '')}
-        </div>
-        <div class="t">${escapeHtml(series.title)} #${iss.number}</div>
-        <div class="s">${escapeHtml(iss.title||'')}</div>
-      </div>`);
-  }
-  grid.innerHTML = cardsArr.join('') || '<div class="empty">Nothing here yet.</div>';
-}
-window.renderProfileListPage = renderProfileListPage;
 
 async function jumpToIssue(seriesId, issueId){
   state.currentSeriesId = seriesId;
@@ -4493,18 +3310,6 @@ async function openHero(id){
   affPill.className = 'hero-affiliation-pill '+affClass;
 
   document.getElementById('hero-powers').innerHTML = (h.powers||[]).map(p=>`<span class="tag2">${escapeHtml(p)}</span>`).join('') || '';
-
-  await getTeams();
-  const heroTeams = teamsForHero(h.id);
-  const teamsWrap = document.getElementById('hero-teams-wrap');
-  teamsWrap.innerHTML = heroTeams.length ? `
-    <div class="section-title" style="font-size:13px;margin:16px 0 8px;">Teams</div>
-    <div class="genre-pills">${heroTeams.map(t=>{
-      const m = (t.members||[]).find(x=>x.heroId===h.id);
-      const roleLabel = m ? (TEAM_ROLE_LABEL[m.role]||'Member') : 'Member';
-      return `<span class="pill" style="cursor:pointer;" onclick="openApp('teams');openTeam('${t.id}')" title="${escapeAttr(roleLabel)}">${escapeHtml(t.name)}</span>`;
-    }).join('')}</div>
-  ` : '';
 
   const galWrap = document.getElementById('hero-gallery-wrap');
   const gallery = h.gallery||[];
@@ -5807,7 +4612,7 @@ function formatDate(d){
 }
 
 /* expose globals used by inline handlers */
-window.goMyProfile=goMyProfile; window.openProfile=openProfile; window.renderProfilePage=renderProfilePage; window.openEditProfile=openEditProfile; window.saveEditProfile=saveEditProfile;
+window.goMyProfile=goMyProfile; window.openProfile=openProfile; window.openEditProfile=openEditProfile; window.saveEditProfile=saveEditProfile;
 window.toggleAuthMode=toggleAuthMode; window.submitAuthForm=submitAuthForm; window.doSignOut=doSignOut;
 window.setTab=setTab; window.openSeries=openSeries; window.openAddSeries=openAddSeries; window.createSeries=createSeries;
 window.openAddIssue=openAddIssue; window.createIssue=createIssue; window.backToSeries=backToSeries;
@@ -5818,13 +4623,6 @@ window.openIssue=openIssue; window.jumpToIssue=jumpToIssue; window.toggleRead=to
 window.openAddVariant=openAddVariant; window.saveVariant=saveVariant; window.openReview=openReview; window.saveReview=saveReview;
 window.closeModal=closeModal;
 window.focusVariant=focusVariant; window.resetToMainCover=resetToMainCover; window.openCoverLightbox=openCoverLightbox;
-
-/* Win95 desktop shell */
-window.skipBoot=skipBoot; window.openApp=openApp; window.win95MinimizeApp=win95MinimizeApp; window.win95CloseApp=win95CloseApp;
-window.openGamesFolder=openGamesFolder; window.openRecycleBin=openRecycleBin; window.openPinball=openPinball;
-window.winMinimize=winMinimize; window.winRestore=winRestore; window.winClose=winClose; window.winToggle=winToggle;
-window.toggleStartMenu=toggleStartMenu; window.startMenuLaunch=startMenuLaunch; window.startLogOff=startLogOff;
-window.startShutDown=startShutDown; window.restartFromShutdown=restartFromShutdown;
 
 </script>
 </body>
