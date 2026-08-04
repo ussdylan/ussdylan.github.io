@@ -636,8 +636,8 @@ footer.indicia{max-width:1280px;margin:0 auto;padding:10px 32px 40px;font-family
 
 /* ======================================================================
    THEME FX ENGINE — ambient backgrounds, cursor trails, hover states
-   for the 7 bespoke shop themes (Infinity, Brand New Day, Doctor Doom,
-   Fantastic Four, Hulk, Asgard, Symbiote). See mountThemeEffects() in JS.
+   for the 8 bespoke shop themes (Infinity, Brand New Day, Doctor Doom,
+   Fantastic Four, Hulk, Asgard, Symbiote, Spider-Verse). See mountThemeEffects() in JS.
    ====================================================================== */
 #theme-fx-layer{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none;}
 #theme-fx-layer.fx-halftone::before{
@@ -645,7 +645,6 @@ footer.indicia{max-width:1280px;margin:0 auto;padding:10px 32px 40px;font-family
   background-image:radial-gradient(rgba(255,255,255,.06) 1px, transparent 1.3px);
   background-size:5px 5px;mix-blend-mode:overlay;opacity:.55;
 }
-body[data-theme="brand-new-day"] #theme-fx-layer.fx-halftone::before,
 body[data-theme="fantastic-four"] #theme-fx-layer.fx-halftone::before{
   background-image:radial-gradient(rgba(0,0,0,.045) 1px, transparent 1.3px);mix-blend-mode:multiply;
 }
@@ -682,20 +681,24 @@ body[data-theme="infinity"] .event-row-card:hover .art{
 }
 
 /* ---------- Brand New Day ---------- */
-body[data-theme="brand-new-day"] #theme-fx-layer{background:linear-gradient(180deg,#bfe0f7 0%,#dcedfa 45%,#eaf4fb 100%);}
-.fx-cloud{position:absolute;background:radial-gradient(ellipse at 32% 30%, #ffffff 0%, #d7e9f5 78%, #c3ddef 100%);border-radius:50%;filter:blur(3px);opacity:.95;box-shadow:0 10px 22px rgba(18,33,46,.14);animation:fxCloudDrift var(--dur,60s) linear infinite;}
+body[data-theme="brand-new-day"] #theme-fx-layer{background:radial-gradient(ellipse at 50% 100%, rgba(229,9,20,.16) 0%, transparent 55%), linear-gradient(180deg,#050505 0%,#0e0e0e 45%,#161616 100%);}
+.fx-cloud{position:absolute;background:radial-gradient(ellipse at 32% 30%, #3c3c3c 0%, #202020 78%, #131313 100%);border-radius:50%;filter:blur(3px);opacity:.5;box-shadow:0 10px 26px rgba(0,0,0,.5);animation:fxCloudDrift var(--dur,60s) linear infinite;}
 @keyframes fxCloudDrift{from{transform:translateX(-14vw);}to{transform:translateX(114vw);}}
-.fx-bird{position:absolute;width:18px;height:11px;opacity:.75;animation:fxBirdDrift var(--dur,16s) linear forwards;}
-.fx-bird::before,.fx-bird::after{content:'';position:absolute;top:50%;width:9px;height:2.5px;background:#0d1a24;border-radius:2px;}
+.fx-bird{position:absolute;width:18px;height:11px;opacity:.6;animation:fxBirdDrift var(--dur,16s) linear forwards;}
+.fx-bird::before,.fx-bird::after{content:'';position:absolute;top:50%;width:9px;height:2.5px;background:#5a5f68;border-radius:2px;}
 .fx-bird::before{left:0;transform-origin:100% 50%;animation:fxBirdFlapL .42s ease-in-out infinite;}
 .fx-bird::after{right:0;transform-origin:0% 50%;animation:fxBirdFlapR .42s ease-in-out infinite;}
 @keyframes fxBirdFlapL{0%,100%{transform:rotate(8deg);}50%{transform:rotate(58deg);}}
 @keyframes fxBirdFlapR{0%,100%{transform:rotate(-8deg);}50%{transform:rotate(-58deg);}}
 @keyframes fxBirdDrift{from{transform:translate(-8vw,0);}to{transform:translate(112vw,-60px);}}
-.fx-skyline{position:absolute;left:0;right:0;bottom:0;height:120px;display:flex;align-items:flex-end;justify-content:space-between;gap:3px;opacity:.92;}
-.fx-building{background:linear-gradient(180deg,#1f3a52,#12212e);position:relative;border-radius:2px 2px 0 0;flex-shrink:0;}
-.fx-building::after{content:'';position:absolute;inset:6px;background-image:repeating-linear-gradient(rgba(242,169,0,.35) 0 3px, transparent 3px 9px),repeating-linear-gradient(90deg,rgba(242,169,0,.35) 0 3px, transparent 3px 9px);opacity:.4;}
-.fx-spiderman{position:absolute;width:10px;height:10px;border-radius:50%;background:#d81e2c;box-shadow:0 0 0 2px #1f6fd1;animation:fxSpideySwing 3.2s cubic-bezier(.4,0,.2,1) forwards;}
+.fx-skyline{position:absolute;left:0;right:0;bottom:0;height:250px;display:flex;align-items:flex-end;justify-content:space-between;gap:3px;opacity:.95;}
+.fx-building{background:linear-gradient(180deg,#3c414c,#15171c);position:relative;border-radius:2px 2px 0 0;flex-shrink:0;}
+.fx-building::after{content:'';position:absolute;inset:6px;background-image:repeating-linear-gradient(rgba(229,9,20,.4) 0 3px, transparent 3px 9px),repeating-linear-gradient(90deg,rgba(229,9,20,.4) 0 3px, transparent 3px 9px);opacity:.4;}
+.fx-building-stepped::before{content:'';position:absolute;bottom:100%;left:50%;transform:translateX(-50%);width:var(--step-w,50%);height:var(--step-h,30px);background:inherit;border-radius:2px 2px 0 0;}
+.fx-antenna{position:absolute;bottom:100%;left:50%;width:2px;height:30px;background:#565b64;}
+.fx-antenna::after{content:'';position:absolute;top:-3px;left:50%;transform:translateX(-50%);width:5px;height:5px;border-radius:50%;background:#e50914;box-shadow:0 0 7px 2px rgba(229,9,20,.85);animation:fxAntennaBlink 1.6s ease-in-out infinite;}
+@keyframes fxAntennaBlink{0%,100%{opacity:1;}50%{opacity:.2;}}
+.fx-spiderman{position:absolute;width:10px;height:10px;border-radius:50%;background:#e50914;box-shadow:0 0 0 2px #4f8ff2;animation:fxSpideySwing 3.2s cubic-bezier(.4,0,.2,1) forwards;}
 .fx-spiderman::before{content:'';position:absolute;left:50%;bottom:100%;width:1px;height:260px;background:rgba(255,255,255,.5);transform-origin:bottom;}
 @keyframes fxSpideySwing{0%{transform:translate(-10vw,10vh) rotate(-35deg);}50%{transform:translate(55vw,-4vh) rotate(20deg);}100%{transform:translate(118vw,14vh) rotate(-35deg);}}
 .fx-web-strand{position:fixed;height:1px;background:rgba(255,255,255,.9);transform-origin:0 0;pointer-events:none;z-index:300;animation:fxWebFade .6s ease forwards;}
@@ -705,11 +708,11 @@ body[data-theme="brand-new-day"] .shop-card:hover,
 body[data-theme="brand-new-day"] .fav-hero-card:hover,
 body[data-theme="brand-new-day"] .poster-card:hover .art,
 body[data-theme="brand-new-day"] .event-row-card:hover .art{
-  box-shadow:0 0 0 1.5px #d81e2c, 0 0 0 4px #1f6fd1, 0 14px 26px rgba(18,33,46,.2)!important;
+  box-shadow:0 0 0 1.5px #e50914, 0 0 24px 4px rgba(229,9,20,.45), 0 14px 30px rgba(0,0,0,.6)!important;
 }
 
 /* ---------- Doctor Doom ---------- */
-.fx-castle{position:absolute;left:0;right:0;bottom:0;height:170px;display:flex;align-items:flex-end;justify-content:space-between;gap:2px;opacity:.95;}
+.fx-castle{position:absolute;left:0;right:0;bottom:0;height:260px;display:flex;align-items:flex-end;justify-content:space-between;gap:2px;opacity:.95;}
 .fx-castle-block{position:relative;flex-shrink:0;background:linear-gradient(180deg,#18271e,#070d0a);box-shadow:inset -2px 0 0 rgba(0,0,0,.35);}
 .fx-castle-block::before{content:'';position:absolute;top:-9px;left:0;right:0;height:9px;background-image:repeating-linear-gradient(90deg,#18271e 0 9px,transparent 9px 16px);}
 .fx-castle-block::after{content:'';position:absolute;inset:12px 5px 6px;background-image:repeating-linear-gradient(rgba(60,145,105,.4) 0 3px,transparent 3px 12px),repeating-linear-gradient(90deg,rgba(60,145,105,.4) 0 3px,transparent 3px 15px);opacity:.5;}
@@ -880,6 +883,26 @@ body[data-theme="symbiote"] #theme-fx-layer{background:radial-gradient(ellipse a
 .fx-symbiote-eyes::before,.fx-symbiote-eyes::after{content:'';width:17px;height:9px;background:#f4f7fb;clip-path:polygon(0 55%,32% 0,68% 0,100% 55%,68% 100%,32% 100%);}
 @keyframes fxEyesFlash{0%{opacity:0;transform:scale(.6);}18%{opacity:1;transform:scale(1.08);}35%{opacity:1;transform:scale(1);}72%{opacity:.9;}100%{opacity:0;}}
 .fx-vein-strand{position:fixed;height:1.5px;background:linear-gradient(90deg,rgba(138,47,58,.85),rgba(45,95,224,.6),transparent);transform-origin:0 0;pointer-events:none;z-index:300;animation:fxWebFade .5s ease forwards;}
+/* ---------- Spider-Verse (original theme) ---------- */
+body[data-theme="spider-verse"] #theme-fx-layer{background:radial-gradient(ellipse at 50% 20%, #2a1050 0%, #12061f 55%, #050110 100%);}
+.fx-verse-shard{position:absolute;background:conic-gradient(from 0deg, hsl(var(--hue,300),90%,65%), #00e5ff, hsl(var(--hue,300),90%,65%));clip-path:polygon(50% 0%,100% 38%,82% 100%,18% 100%,0% 38%);opacity:.55;animation:fxVerseSpin var(--dur,18s) linear infinite, fxVerseFloat calc(var(--dur,18s)*1.4) ease-in-out infinite;filter:drop-shadow(0 0 6px rgba(255,46,107,.5));}
+@keyframes fxVerseSpin{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+@keyframes fxVerseFloat{0%,100%{margin-top:0;}50%{margin-top:-18px;}}
+.fx-verse-vignette{position:absolute;inset:0;background:radial-gradient(ellipse at center, transparent 55%, rgba(5,1,16,.75) 100%);}
+.fx-glitch-slice{position:absolute;left:0;right:0;background:linear-gradient(90deg, rgba(255,46,107,.2), rgba(0,229,255,.2));mix-blend-mode:screen;opacity:.85;animation:fxGlitchShift .26s steps(2) forwards;}
+@keyframes fxGlitchShift{0%{transform:translateX(-8px);}50%{transform:translateX(10px);}100%{transform:translateX(0);opacity:0;}}
+.fx-cursor-ghost-pink,.fx-cursor-ghost-cyan{position:fixed;width:5px;height:5px;border-radius:50%;pointer-events:none;z-index:300;animation:fxCursorFade .38s ease forwards;}
+.fx-cursor-ghost-pink{background:#ff2e6b;box-shadow:0 0 6px 1px #ff2e6b;}
+.fx-cursor-ghost-cyan{background:#00e5ff;box-shadow:0 0 6px 1px #00e5ff;}
+body[data-theme="spider-verse"] .hero-card:hover,
+body[data-theme="spider-verse"] .event-card:hover,
+body[data-theme="spider-verse"] .shop-card:hover,
+body[data-theme="spider-verse"] .fav-hero-card:hover,
+body[data-theme="spider-verse"] .poster-card:hover .art,
+body[data-theme="spider-verse"] .event-row-card:hover .art{
+  box-shadow:0 0 0 1.5px #ff2e6b, 0 0 0 4px #00e5ff, 0 16px 30px rgba(0,0,0,.55)!important;
+}
+
 body[data-theme="symbiote"] .hero-card:hover,
 body[data-theme="symbiote"] .event-card:hover,
 body[data-theme="symbiote"] .shop-card:hover,
@@ -1229,13 +1252,18 @@ function initials(name){
    themes have been retired — every theme in the shop is either free/default or one of
    these seven immersive themes. Secret/achievement-locked themes are unchanged. */
 const THEMES = {
-  'brand-new-day':{name:'Brand New Day', free:true, vars:{bg:'#eaf4fb',bg2:'#ffffff',bg3:'#dceefa',card:'#ffffff',text:'#12212e',dim:'#4d6478',dim2:'#7d94a6',red:'#d81e2c',yellow:'#f2a900',green:'#2f9e63',cyan:'#1f6fd1',line:'1px solid #cfe3f0'}},
-  infinity:{name:'Infinity', cost:150, vars:{bg:'#050216',bg2:'#0d0620',bg3:'#160b30',card:'#0a0518',text:'#f0eaff',dim:'#b6a3d9',dim2:'#7c699e',red:'#e0392c',yellow:'#f2d43f',green:'#3ddc84',cyan:'#4f8ff2',line:'1px solid #2c1a4a'}},
-  'doctor-doom':{name:'Doctor Doom', cost:85, vars:{bg:'#070d0a',bg2:'#0d1712',bg3:'#132019',card:'#0a120e',text:'#e8f3ec',dim:'#93ab9e',dim2:'#5f7568',red:'#a83a2c',yellow:'#c9a13f',green:'#12b76a',cyan:'#7c8f93',line:'1px solid #24382c'}},
-  'fantastic-four':{name:'Fantastic Four', cost:75, vars:{bg:'#f4f6f9',bg2:'#ffffff',bg3:'#e7ecf2',card:'#ffffff',text:'#0d1b2a',dim:'#4a5b6b',dim2:'#7c8b99',red:'#e0392c',yellow:'#d99a1f',green:'#2f9e63',cyan:'#0a5fd1',line:'1px solid #d7dee6'}},
+  /* "Brand New Day" is the default/free theme — restyled to a dark, cinematic
+     Netflix-style palette (near-black chrome, Netflix red accent) while keeping
+     its night-city skyline + Spider-Man ambient effects. */
+  'brand-new-day':{name:'Brand New Day', free:true, vars:{bg:'#141414',bg2:'#1f1f1f',bg3:'#2a2a2a',card:'#181818',text:'#f5f5f1',dim:'#b3b3b3',dim2:'#737373',red:'#e50914',yellow:'#f2a900',green:'#2f9e63',cyan:'#4f8ff2',line:'1px solid #303030'}},
+  infinity:{name:'Infinity', cost:150, vars:{bg:'#050216',bg2:'#0d0620',bg3:'#160b30',card:'#0a0518',text:'#f0eaff',dim:'#b6a3d9',dim2:'#7c699e',red:'#9463d9',yellow:'#f2d43f',green:'#3ddc84',cyan:'#4f8ff2',line:'1px solid #2c1a4a'}},
+  'doctor-doom':{name:'Doctor Doom', cost:85, vars:{bg:'#070d0a',bg2:'#0d1712',bg3:'#132019',card:'#0a120e',text:'#e8f3ec',dim:'#93ab9e',dim2:'#5f7568',red:'#2ee6a0',yellow:'#c9a13f',green:'#12b76a',cyan:'#7c8f93',line:'1px solid #24382c'}},
+  'fantastic-four':{name:'Fantastic Four', cost:75, vars:{bg:'#f4f6f9',bg2:'#ffffff',bg3:'#e7ecf2',card:'#ffffff',text:'#0d1b2a',dim:'#4a5b6b',dim2:'#7c8b99',red:'#0a5fd1',yellow:'#d99a1f',green:'#2f9e63',cyan:'#0a5fd1',line:'1px solid #d7dee6'}},
   hulk:{name:'Hulk', cost:75, vars:{bg:'#0b0f0a',bg2:'#121712',bg3:'#1a201a',card:'#0e130e',text:'#e9f0e6',dim:'#a3b39c',dim2:'#6d7c66',red:'#7c4fae',yellow:'#d9a441',green:'#3ecf5b',cyan:'#6c7a72',line:'1px solid #26301f'}},
-  asgard:{name:'Asgard', cost:95, vars:{bg:'#0e1330',bg2:'#161c40',bg3:'#1f254f',card:'#121736',text:'#f5efe0',dim:'#c9b98a',dim2:'#8f8460',red:'#e0562c',yellow:'#f2c94c',green:'#3c9169',cyan:'#4f6fd1',line:'1px solid #33396b'}},
-  symbiote:{name:'Symbiote', cost:90, vars:{bg:'#050608',bg2:'#0a0d12',bg3:'#10141c',card:'#07090c',text:'#eef2f7',dim:'#8fa3b8',dim2:'#5c6c7d',red:'#8a2f3a',yellow:'#8a7a4a',green:'#3a5a52',cyan:'#2d5fe0',line:'1px solid #1a2028'}},
+  asgard:{name:'Asgard', cost:95, vars:{bg:'#0e1330',bg2:'#161c40',bg3:'#1f254f',card:'#121736',text:'#f5efe0',dim:'#c9b98a',dim2:'#8f8460',red:'#c9a227',yellow:'#f2c94c',green:'#3c9169',cyan:'#4f6fd1',line:'1px solid #33396b'}},
+  symbiote:{name:'Symbiote', cost:90, vars:{bg:'#050608',bg2:'#0a0d12',bg3:'#10141c',card:'#07090c',text:'#eef2f7',dim:'#8fa3b8',dim2:'#5c6c7d',red:'#cfe0ff',yellow:'#8a7a4a',green:'#3a5a52',cyan:'#2d5fe0',line:'1px solid #1a2028'}},
+  /* ---- new original theme: a glitchy, neon multiverse-portal aesthetic ---- */
+  'spider-verse':{name:'Spider-Verse', cost:110, vars:{bg:'#0a0118',bg2:'#150a28',bg3:'#1f0f38',card:'#0f0620',text:'#f5eaff',dim:'#c39ee0',dim2:'#8a63a8',red:'#ff2e6b',yellow:'#ffe14d',green:'#3ddcc7',cyan:'#00e5ff',line:'1px solid #3a1f5c'}},
   // ---- achievement-locked (secret) themes: unchanged, earned not bought ----
   'true-believer':{name:'True Believer', achievementOnly:'true-believer', vars:{bg:'#150a05',bg2:'#231207',bg3:'#301909',card:'#1c0f06',text:'#fff3df',dim:'#e8c78a',dim2:'#b4884b',red:'#e0392c',yellow:'#ffcf3f',green:'#3c9169',cyan:'#f2b705',line:'1px solid #4a2c0c'}},
   'genesis-gold':{name:'Genesis', achievementOnly:'genesis', vars:{bg:'#161006',bg2:'#241b0a',bg3:'#33270f',card:'#1c1508',text:'#fff6e0',dim:'#e6c98a',dim2:'#a8905e',red:'#e0392c',yellow:'#ffd23f',green:'#6f9d4f',cyan:'#f2b705',line:'1px solid #4a3a14'}},
@@ -1398,11 +1426,19 @@ const THEME_FX = {
     burstWords:['THWIP!','SWING!','ZIP!'],
     ambientInit(layer){
       const sky = fxNode('fx-skyline');
-      const buildingCount = Math.max(24, Math.ceil(window.innerWidth/38));
+      const buildingCount = Math.max(18, Math.ceil(window.innerWidth/48));
       for(let i=0;i<buildingCount;i++){
         const b = fxNode('fx-building');
-        b.style.height = fxRand(40,110)+'px';
-        b.style.width = fxRand(24,54)+'px';
+        const h = fxRand(90,235);
+        const w = fxRand(32,66);
+        b.style.height = h+'px';
+        b.style.width = w+'px';
+        if(Math.random()<0.4){
+          b.classList.add('fx-building-stepped');
+          b.style.setProperty('--step-w', fxRand(w*0.35,w*0.65)+'px');
+          b.style.setProperty('--step-h', fxRand(24,58)+'px');
+        }
+        if(h>160 && Math.random()<0.5) b.appendChild(fxNode('fx-antenna'));
         sky.appendChild(b);
       }
       layer.appendChild(sky);
@@ -1457,18 +1493,22 @@ const THEME_FX = {
     burstWords:['DOOM!','BEGONE!'],
     ambientInit(layer){
       const castle = fxNode('fx-castle');
-      const blockCount = Math.max(16, Math.ceil(window.innerWidth/64));
+      const blockCount = Math.max(14, Math.ceil(window.innerWidth/76));
       for(let i=0;i<blockCount;i++){
         const isTower = i%4===1;
         const blk = fxNode(isTower ? 'fx-castle-tower' : 'fx-castle-block');
         if(isTower){
-          blk.style.height = fxRand(110,150)+'px';
-          blk.style.width = fxRand(34,48)+'px';
+          const tw = fxRand(46,64);
+          blk.style.height = fxRand(160,225)+'px';
+          blk.style.width = tw+'px';
           const roof = fxNode('fx-castle-roof');
+          roof.style.borderLeftWidth = (tw/2)+'px';
+          roof.style.borderRightWidth = (tw/2)+'px';
+          roof.style.borderBottomWidth = (tw*0.72)+'px';
           blk.appendChild(roof);
         } else {
-          blk.style.height = fxRand(46,78)+'px';
-          blk.style.width = fxRand(44,72)+'px';
+          blk.style.height = fxRand(66,112)+'px';
+          blk.style.width = fxRand(58,96)+'px';
         }
         castle.appendChild(blk);
       }
@@ -1685,6 +1725,45 @@ const THEME_FX = {
         }
       }
       themeFxLastTrailPoint = {x:e.clientX,y:e.clientY};
+    }
+  },
+  'spider-verse':{
+    halftone:true, tickInterval:8000,
+    burstWords:['MULTIVERSE!','ANOMALY!',"WHAT'S UP, DANGER?"],
+    ambientInit(layer){
+      for(let i=0;i<26;i++){
+        const s = fxNode('fx-verse-shard');
+        const size = fxRand(14,34);
+        s.style.width = size+'px'; s.style.height = size+'px';
+        s.style.left = fxRand(0,100)+'%'; s.style.top = fxRand(0,100)+'%';
+        s.style.setProperty('--dur', fxRand(10,26)+'s');
+        s.style.setProperty('--hue', Math.floor(fxRand(280,340)));
+        layer.appendChild(s);
+      }
+      layer.appendChild(fxNode('fx-verse-vignette'));
+    },
+    ambientTick(layer){
+      const g = fxNode('fx-glitch-slice');
+      g.style.top = fxRand(5,90)+'%';
+      g.style.height = fxRand(6,26)+'px';
+      layer.appendChild(g);
+      setTimeout(()=>g.remove(), 280);
+    },
+    cursor(e){
+      const p = fxNode('fx-cursor-ghost-pink');
+      p.style.left = e.clientX+'px'; p.style.top = e.clientY+'px';
+      document.body.appendChild(p);
+      const c = fxNode('fx-cursor-ghost-cyan');
+      c.style.left = (e.clientX+4)+'px'; c.style.top = (e.clientY+3)+'px';
+      document.body.appendChild(c);
+      setTimeout(()=>{ p.remove(); c.remove(); }, 380);
+    },
+    click(e){
+      const w = fxNode('fx-shockwave');
+      w.style.left = e.clientX+'px'; w.style.top = e.clientY+'px';
+      w.style.borderColor = Math.random()<0.5 ? '#ff2e6b' : '#00e5ff';
+      document.body.appendChild(w);
+      setTimeout(()=>w.remove(),700);
     }
   }
 };
@@ -2066,6 +2145,11 @@ window.renderAchievementsTab = renderAchievementsTab;
 const KONAMI = ['arrowup','arrowup','arrowdown','arrowdown','arrowleft','arrowright','arrowleft','arrowright','b','a'];
 let konamiIdx = 0;
 let typedBuffer = '';
+/* dev/testing cheat code — Up Down Left Right Up Down Up Down — grants a
+   stack of Ink Points so you can test shop unlocks etc. Repeatable, no
+   achievement flag, doesn't show up for other users. */
+const INK_CHEAT = ['arrowup','arrowdown','arrowleft','arrowright','arrowup','arrowdown','arrowup','arrowdown'];
+let inkCheatIdx = 0;
 document.addEventListener('keydown', (e)=>{
   const key = e.key.length===1 ? e.key.toLowerCase() : e.key.toLowerCase();
   if(key === KONAMI[konamiIdx]){
@@ -2073,6 +2157,12 @@ document.addEventListener('keydown', (e)=>{
     if(konamiIdx===KONAMI.length){ konamiIdx=0; triggerKonami(); }
   } else {
     konamiIdx = (key===KONAMI[0]) ? 1 : 0;
+  }
+  if(key === INK_CHEAT[inkCheatIdx]){
+    inkCheatIdx++;
+    if(inkCheatIdx===INK_CHEAT.length){ inkCheatIdx=0; triggerInkCheat(); }
+  } else {
+    inkCheatIdx = (key===INK_CHEAT[0]) ? 1 : 0;
   }
   // rolling text buffer for typed-word easter eggs (ignores which element has focus)
   if(e.key.length===1) typedBuffer += e.key.toLowerCase();
@@ -2082,6 +2172,17 @@ document.addEventListener('keydown', (e)=>{
   if(typedBuffer.endsWith('flame on')) triggerFlameOn();
   STONES.forEach(s=>{ if(s.trigger && typedBuffer.endsWith(s.trigger)) triggerStoneCollect(s.id); });
 });
+const INK_CHEAT_AMOUNT = 500;
+async function triggerInkCheat(){
+  if(!currentUser) return;
+  const pd = await getProfileData(currentUser.uid);
+  pd.currency = (pd.currency||0) + INK_CHEAT_AMOUNT;
+  await saveProfileData(currentUser.uid);
+  updateCurrencyBadge();
+  comicBurst(document.querySelector('#topbar .logo') || document.body, `+${INK_CHEAT_AMOUNT} 🖋️ CHEAT!`);
+  fireConfetti(60);
+  if(document.getElementById('shop-themes')) await renderAchievementsTab();
+}
 async function triggerKonami(){
   if(!currentUser) return;
   const pd = await getProfileData(currentUser.uid);
