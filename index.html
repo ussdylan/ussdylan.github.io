@@ -604,6 +604,97 @@ footer.indicia{max-width:1280px;margin:0 auto;padding:10px 32px 40px;font-family
 .badge-progress-label{font-size:10.5px;color:var(--dim2);}
 .badge-reward{font-size:11px;color:var(--yellow);}
 
+/* ---------- teams ---------- */
+.teams-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:18px;margin:14px 0 30px;}
+.team-card{background:var(--card);border:var(--line);border-radius:10px;overflow:hidden;cursor:pointer;transition:transform .15s ease, box-shadow .15s ease;}
+.team-card:hover{transform:translateY(-4px);box-shadow:0 14px 30px rgba(0,0,0,.45);}
+.team-card .tc-banner{width:100%;height:110px;background-size:cover;background-position:center;display:flex;align-items:center;justify-content:center;position:relative;}
+.team-card .tc-logo{width:64px;height:64px;border-radius:12px;overflow:hidden;background:#000;box-shadow:0 6px 18px rgba(0,0,0,.5);}
+.team-card .tc-logo img{width:100%;height:100%;object-fit:cover;display:block;}
+.team-card .tc-body{padding:12px 14px;}
+.team-card .tc-name{font-weight:800;font-size:15px;}
+.team-card .tc-sub{font-size:11px;color:var(--dim2);margin-top:2px;}
+
+.team-banner-hero{position:relative;min-height:26vh;overflow:hidden;margin-bottom:0;border-radius:10px 10px 0 0;display:flex;align-items:flex-end;}
+.team-banner-hero .tbh-bg{position:absolute;inset:0;background-size:cover;background-position:center;}
+.team-banner-hero .tbh-scrim{position:absolute;inset:0;background:linear-gradient(180deg, rgba(10,10,12,.08) 0%, rgba(10,10,12,.82) 100%);}
+.team-banner-hero .tbh-content{position:relative;z-index:2;padding:26px 30px;width:100%;box-sizing:border-box;display:flex;align-items:flex-end;gap:20px;}
+.team-logo-frame{width:96px;height:96px;border-radius:16px;overflow:hidden;background:#000;flex-shrink:0;box-shadow:0 10px 26px rgba(0,0,0,.55);}
+.team-logo-frame img{width:100%;height:100%;object-fit:cover;display:block;}
+.team-logo-frame .cover-fallback{width:100%;height:100%;font-size:26px;}
+.team-panel{background:var(--card);border:var(--line);border-top:none;border-radius:0 0 8px 8px;padding:22px 30px 26px;margin:0 0 22px;}
+.team-meta-row{display:flex;flex-wrap:wrap;gap:22px;margin:14px 0 4px;}
+.team-meta-item{font-size:12px;}
+.team-meta-item .tmi-label{color:var(--dim2);text-transform:uppercase;letter-spacing:.06em;font-size:10px;font-weight:700;margin-bottom:2px;}
+.team-meta-item .tmi-val{font-weight:700;font-size:13.5px;}
+.team-meta-item .tmi-val.clickable{cursor:pointer;color:var(--cyan);}
+.team-meta-item .tmi-val.clickable:hover{text-decoration:underline;}
+
+.subtab-row{display:flex;gap:6px;flex-wrap:wrap;border-bottom:var(--line);margin:22px 0 18px;padding-bottom:0;}
+.subtab-row button{background:transparent;border:none;border-radius:6px 6px 0 0;padding:9px 16px;font-size:12.5px;font-weight:700;color:var(--dim);}
+.subtab-row button:hover{background:#211f1c;color:var(--text);}
+.subtab-row button.active{color:var(--text);background:#211f1c;box-shadow:inset 0 -2px 0 var(--red);}
+
+.roster-mini-row{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 4px;}
+.member-card{background:var(--card);border:var(--line);border-radius:10px;padding:14px 12px;text-align:center;cursor:pointer;position:relative;transition:transform .12s ease;}
+.member-card:hover{transform:translateY(-3px);border-color:#4a4740;}
+.member-card .mc-portrait{width:66px;height:66px;border-radius:50%;margin:0 auto 8px;overflow:hidden;background:#000;}
+.member-card .mc-portrait img{width:100%;height:100%;object-fit:cover;display:block;}
+.member-card .mc-name{font-weight:700;font-size:12.5px;}
+.member-card .mc-role{font-size:10px;color:var(--dim2);margin-top:1px;}
+.member-card .mc-dates{font-family:'JetBrains Mono',monospace;font-size:9.5px;color:var(--dim2);margin-top:4px;}
+.member-card .mc-former{position:absolute;top:6px;right:8px;font-size:9px;background:rgba(0,0,0,.6);color:var(--dim);padding:2px 6px;border-radius:8px;text-transform:uppercase;letter-spacing:.04em;}
+.member-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:12px;margin:6px 0 8px;}
+.member-role-group{margin-bottom:22px;}
+.member-role-group h4{font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:var(--dim);margin:0 0 10px;}
+
+.team-timeline{position:relative;padding-left:22px;margin:8px 0 10px;}
+.team-timeline::before{content:'';position:absolute;left:5px;top:4px;bottom:4px;width:2px;background:#3a372f;}
+.timeline-item{position:relative;padding-bottom:18px;cursor:pointer;}
+.timeline-item:last-child{padding-bottom:0;}
+.timeline-item::before{content:'';position:absolute;left:-22px;top:3px;width:10px;height:10px;border-radius:50%;background:var(--cyan);border:2px solid var(--bg);}
+.timeline-item .ti-year{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--dim2);}
+.timeline-item .ti-label{font-size:13.5px;font-weight:600;}
+.timeline-item:hover .ti-label{text-decoration:underline;color:var(--cyan);}
+
+.simple-gallery{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0;}
+.simple-gallery img{width:130px;height:130px;object-fit:cover;border-radius:8px;cursor:pointer;transition:transform .12s ease;}
+.simple-gallery img:hover{transform:scale(1.04);}
+
+.asset-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;margin:14px 0 20px;}
+.asset-card{background:var(--card);border:var(--line);border-radius:10px;overflow:hidden;cursor:pointer;transition:transform .12s ease, box-shadow .12s ease;}
+.asset-card:hover{transform:translateY(-3px);box-shadow:0 12px 26px rgba(0,0,0,.4);}
+.asset-card .ac-img{width:100%;height:130px;background-size:cover;background-position:center;position:relative;}
+.asset-card .ac-body{padding:11px 13px;}
+.asset-card .ac-name{font-weight:800;font-size:14px;}
+.asset-card .ac-desc{font-size:11px;color:var(--dim2);margin-top:2px;max-height:32px;overflow:hidden;}
+
+.enemy-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:14px;margin:14px 0 20px;}
+.enemy-card{background:var(--card);border:var(--line);border-radius:10px;padding:14px 10px;text-align:center;cursor:pointer;position:relative;transition:transform .12s ease;}
+.enemy-card:hover{transform:translateY(-3px);border-color:#4a4740;}
+.enemy-card .en-portrait{width:60px;height:60px;border-radius:50%;margin:0 auto 8px;overflow:hidden;background:#000;}
+.enemy-card .en-portrait img{width:100%;height:100%;object-fit:cover;display:block;}
+.enemy-card .en-name{font-weight:700;font-size:12px;}
+.enemy-card .en-type{font-size:9.5px;color:var(--dim2);text-transform:uppercase;letter-spacing:.04em;margin-top:2px;}
+.enemy-card .en-remove{position:absolute;top:5px;right:6px;font-size:11px;background:rgba(0,0,0,.6);border-radius:50%;width:18px;height:18px;line-height:18px;color:var(--dim);}
+.enemy-card .en-remove:hover{color:var(--red);}
+
+.picker-tabs{display:flex;gap:6px;margin-bottom:8px;}
+.picker-tabs button{padding:5px 12px;font-size:11px;}
+.picker-tabs button.active{background:var(--red);color:#fff;}
+
+/* ---------- costumes ---------- */
+.costume-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:14px;margin:14px 0 8px;}
+.costume-card{background:var(--card);border:var(--line);border-radius:10px;overflow:hidden;cursor:pointer;transition:transform .12s ease, box-shadow .12s ease;}
+.costume-card:hover{transform:translateY(-3px);box-shadow:0 12px 26px rgba(0,0,0,.4);}
+.costume-card .cc-img{width:100%;height:150px;background-size:cover;background-position:center;background-color:#000;}
+.costume-card .cc-body{padding:10px 12px;}
+.costume-card .cc-name{font-weight:800;font-size:13.5px;}
+.costume-card .cc-first{font-size:10.5px;color:var(--dim2);margin-top:2px;font-family:'JetBrains Mono',monospace;}
+.costume-detail-gallery{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0;}
+.costume-detail-gallery img{width:110px;height:110px;object-fit:cover;border-radius:8px;cursor:pointer;}
+.costume-detail-gallery img:hover{transform:scale(1.04);}
+
 /* ---------- achievement toast ---------- */
 .achievement-toast{
   position:fixed;right:20px;bottom:20px;z-index:400;
@@ -955,6 +1046,7 @@ body[data-theme="symbiote"] .event-row-card:hover .art::after{opacity:.75;transf
   <button data-tab="mylist" onclick="setTab('mylist')">Reading List</button>
   <button data-tab="collection" onclick="setTab('collection')">Physical Collection</button>
   <button data-tab="heroes" onclick="setTab('heroes')">Heroes</button>
+  <button data-tab="teams" onclick="setTab('teams')">Teams</button>
   <button data-tab="events" onclick="setTab('events')">Events</button>
   <button data-tab="achievements" onclick="handleAchievementsTabClick()">Achievements</button>
   <button data-tab="news" onclick="setTab('news')">News</button>
@@ -1126,6 +1218,45 @@ body[data-theme="symbiote"] .event-row-card:hover .art::after{opacity:.75;transf
     <div class="panel" id="hero-appearances"></div>
     <div class="section-title" id="hero-teamups-title">Frequent Team-Ups</div>
     <div class="panel" id="hero-teamups"></div>
+    <div class="section-title">Costumes &amp; Suits <button class="small" onclick="openAddCostume()">+ Add Costume</button></div>
+    <div id="hero-costumes"></div>
+  </div>
+</div>
+
+<!-- TEAM DETAIL PAGE -->
+<div id="view-team-detail" class="hidden">
+  <div class="wrap">
+    <button class="backbtn ghost small" onclick="backToTeams()">&larr; Back to Teams</button>
+    <div class="team-banner-hero" id="team-banner-wrap">
+      <div class="tbh-bg" id="team-banner-bg"></div>
+      <div class="tbh-scrim"></div>
+      <div class="tbh-content">
+        <div class="team-logo-frame" id="team-logo-wrap"></div>
+        <div style="flex:1;min-width:200px;">
+          <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap;">
+            <h2 id="team-name" style="font-size:32px;margin:0;color:#fff;"></h2>
+            <div style="display:flex;gap:8px;">
+              <button class="small ghost" onclick="openEditTeam()">Edit team</button>
+              <button class="small ghost danger-btn" onclick="deleteTeam()">Delete</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="team-panel">
+      <p id="team-desc" style="color:var(--dim);margin:6px 0 0;"></p>
+      <div class="team-meta-row" id="team-meta-row"></div>
+    </div>
+
+    <div class="subtab-row" id="team-subtabs">
+      <button data-sub="overview" onclick="setTeamSubtab('overview')">Overview</button>
+      <button data-sub="members" onclick="setTeamSubtab('members')">Members</button>
+      <button data-sub="gallery" onclick="setTeamSubtab('gallery')">Gallery</button>
+      <button data-sub="bases" onclick="setTeamSubtab('bases')">Bases</button>
+      <button data-sub="vehicles" onclick="setTeamSubtab('vehicles')">Vehicles</button>
+      <button data-sub="enemies" onclick="setTeamSubtab('enemies')">Enemies</button>
+    </div>
+    <div id="team-subtab-body"></div>
   </div>
 </div>
 
@@ -1224,6 +1355,10 @@ const state = {
   eventsIndex: [],
   currentEventId: null,
   eventEditingIssues: false,
+  teamsIndex: [],
+  currentTeamId: null,
+  teamSubtab: 'overview',
+  currentCostumeHeroId: null,
   tab: 'home',
   searchTerm: ''
 };
@@ -2852,7 +2987,7 @@ async function saveEditProfile(){
 
 /* ===================== view switching ===================== */
 function showView(name){
-  ['auth','users','profile','home','series','issue','hero-detail','event'].forEach(v=>{
+  ['auth','users','profile','home','series','issue','hero-detail','event','team-detail'].forEach(v=>{
     document.getElementById('view-'+v).classList.toggle('hidden', v!==name);
   });
   document.getElementById('topbar').classList.toggle('solid', name!=='home');
@@ -2866,6 +3001,7 @@ function setTab(tab){
   else if(tab==='mylist') renderReadingListGrid();
   else if(tab==='collection') renderSimpleList('collection','Physical Collection','No issues marked as owned yet. Open an issue and hit "Add to Physical Collection."');
   else if(tab==='heroes') renderHeroesTab();
+  else if(tab==='teams') renderTeamsTab();
   else if(tab==='events') renderEventsTab();
   else if(tab==='achievements') renderAchievementsTab();
   else if(tab==='news') renderNewsTab();
@@ -3470,6 +3606,7 @@ async function openHero(id){
     </span>
   `).join('');
 
+  renderHeroCostumes(h);
   await updateFavoriteHeroButton();
 }
 function backToHeroes(){
@@ -3614,6 +3751,15 @@ async function deleteHero(){
     });
     if(changed) await saveIssues(series.id, issues);
   }
+  // clean up any team references (roster spots, leader, enemies list) to this hero
+  const teams = await getTeams();
+  let teamsChanged = false;
+  teams.forEach(t=>{
+    if(t.roster && t.roster.some(m=>m.heroId===h.id)){ t.roster = t.roster.filter(m=>m.heroId!==h.id); teamsChanged = true; }
+    if(t.leaderId === h.id){ t.leaderId = ''; teamsChanged = true; }
+    if(t.enemies && t.enemies.some(e=>e.type==='hero' && e.id===h.id)){ t.enemies = t.enemies.filter(e=>!(e.type==='hero' && e.id===h.id)); teamsChanged = true; }
+  });
+  if(teamsChanged) await saveTeams(teams);
   const heroes = (await getHeroes()).filter(x=>x.id!==h.id);
   await saveHeroes(heroes);
   backToHeroes();
@@ -3684,6 +3830,843 @@ async function quickAddHero(prefix){
   }
 }
 window.quickAddHero = quickAddHero;
+
+/* ===================== HERO COSTUMES =====================
+   Alternate suits/costumes for a hero (e.g. Spider-Man's Symbiote Suit). Stored as an
+   array right on the hero object (h.costumes), so it saves/loads with saveHeroes(). */
+function renderHeroCostumes(h){
+  const wrap = document.getElementById('hero-costumes');
+  if(!wrap || !h) return;
+  const costumes = h.costumes || [];
+  wrap.innerHTML = costumes.length ? `<div class="costume-grid">${costumes.map(c=>`
+    <div class="costume-card" onclick="openCostumeDetail('${c.id}')">
+      <div class="cc-img" style="${(c.images&&c.images[0]) ? `background-image:url('${escapeAttr(c.images[0])}')` : `background:linear-gradient(135deg, ${colorFor(c.id)}, #0a0a0c)`}"></div>
+      <div class="cc-body">
+        <div class="cc-name">${escapeHtml(c.name)}</div>
+        <div class="cc-first">${escapeHtml(c.issueLabel||'First appearance not set')}${c.date? ' · '+escapeHtml(c.date):''}</div>
+      </div>
+    </div>
+  `).join('')}</div>` : '<div class="empty">No alternate costumes on file yet.</div>';
+}
+function costumeFormFields(c){
+  c = c || {name:'',issueLabel:'',date:'',description:'',images:[]};
+  return `
+    <div class="field"><label>Costume / Suit name</label><input id="cf-name" value="${escapeAttr(c.name||'')}" placeholder="e.g. Symbiote Suit"/></div>
+    <div class="field"><label>First Appearance — Issue</label><input id="cf-issue" value="${escapeAttr(c.issueLabel||'')}" placeholder="e.g. Amazing Spider-Man #252"/></div>
+    <div class="field"><label>First Appearance — Date</label><input id="cf-date" value="${escapeAttr(c.date||'')}" placeholder="e.g. May 1984"/></div>
+    <div class="field"><label>Description / Origin</label><textarea id="cf-desc" placeholder="Where it came from, what it does…">${escapeHtml(c.description||'')}</textarea></div>
+    <div class="field"><label>Gallery image URLs (one per line)</label><textarea id="cf-gallery" placeholder="https://...\nhttps://...">${escapeHtml((c.images||[]).join('\n'))}</textarea></div>
+  `;
+}
+function openAddCostume(){
+  if(!state.currentHeroId) return;
+  showModal(`
+    <h3>Add a costume</h3>
+    ${costumeFormFields()}
+    <div class="modal-actions">
+      <button class="ghost" onclick="closeModal()">Cancel</button>
+      <button class="primary" onclick="createCostume()">Add costume</button>
+    </div>
+  `);
+  document.getElementById('cf-name').focus();
+}
+window.openAddCostume = openAddCostume;
+async function createCostume(){
+  const name = document.getElementById('cf-name').value.trim();
+  if(!name){ alert('Give this costume a name.'); return; }
+  const heroes = await getHeroes();
+  const h = heroes.find(x=>x.id===state.currentHeroId);
+  if(!h) return;
+  h.costumes = h.costumes || [];
+  h.costumes.push({
+    id: 'cos-'+Math.random().toString(36).slice(2,10),
+    name,
+    issueLabel: document.getElementById('cf-issue').value.trim(),
+    date: document.getElementById('cf-date').value.trim(),
+    description: document.getElementById('cf-desc').value.trim(),
+    images: document.getElementById('cf-gallery').value.split('\n').map(s=>s.trim()).filter(Boolean)
+  });
+  await saveHeroes(heroes);
+  closeModal();
+  renderHeroCostumes(h);
+}
+window.createCostume = createCostume;
+function openCostumeDetail(id){
+  const h = findHero(state.currentHeroId);
+  const c = h && (h.costumes||[]).find(x=>x.id===id);
+  if(!c) return;
+  showModal(`
+    <h3>${escapeHtml(c.name)}</h3>
+    <div class="mono" style="font-size:12px;color:var(--dim2);margin-bottom:10px;">${escapeHtml(c.issueLabel||'First appearance not set')}${c.date? ' · '+escapeHtml(c.date):''}</div>
+    ${(c.images&&c.images[0]) ? `<img src="${escapeAttr(c.images[0])}" style="width:100%;border-radius:8px;margin-bottom:12px;cursor:pointer;" onclick="openImageLightbox('${escapeAttr(c.images[0])}')" onerror="this.remove()"/>` : ''}
+    <p style="color:var(--dim);white-space:pre-wrap;">${escapeHtml(c.description||'No description yet.')}</p>
+    ${(c.images||[]).length>1 ? `<div class="costume-detail-gallery">${c.images.slice(1).map(url=>`<img src="${escapeAttr(url)}" onclick="openImageLightbox('${escapeAttr(url)}')" onerror="this.remove()"/>`).join('')}</div>` : ''}
+    <div class="modal-actions">
+      <button class="ghost danger-btn" onclick="deleteCostume('${id}')">Delete</button>
+      <button class="ghost" onclick="openEditCostume('${id}')">Edit</button>
+      <button class="primary" onclick="closeModal()">Close</button>
+    </div>
+  `);
+}
+window.openCostumeDetail = openCostumeDetail;
+function openEditCostume(id){
+  const h = findHero(state.currentHeroId);
+  const c = h && (h.costumes||[]).find(x=>x.id===id);
+  if(!c) return;
+  showModal(`
+    <h3>Edit costume</h3>
+    ${costumeFormFields(c)}
+    <div class="modal-actions">
+      <button class="ghost" onclick="closeModal()">Cancel</button>
+      <button class="primary" onclick="saveEditCostume('${id}')">Save changes</button>
+    </div>
+  `);
+}
+window.openEditCostume = openEditCostume;
+async function saveEditCostume(id){
+  const name = document.getElementById('cf-name').value.trim();
+  if(!name){ alert('Give this costume a name.'); return; }
+  const heroes = await getHeroes();
+  const h = heroes.find(x=>x.id===state.currentHeroId);
+  const c = h && (h.costumes||[]).find(x=>x.id===id);
+  if(!c) return;
+  c.name = name;
+  c.issueLabel = document.getElementById('cf-issue').value.trim();
+  c.date = document.getElementById('cf-date').value.trim();
+  c.description = document.getElementById('cf-desc').value.trim();
+  c.images = document.getElementById('cf-gallery').value.split('\n').map(s=>s.trim()).filter(Boolean);
+  await saveHeroes(heroes);
+  closeModal();
+  renderHeroCostumes(h);
+}
+window.saveEditCostume = saveEditCostume;
+async function deleteCostume(id){
+  const heroes = await getHeroes();
+  const h = heroes.find(x=>x.id===state.currentHeroId);
+  if(!h) return;
+  if(!confirm('Delete this costume entry?')) return;
+  h.costumes = (h.costumes||[]).filter(x=>x.id!==id);
+  await saveHeroes(heroes);
+  closeModal();
+  renderHeroCostumes(h);
+}
+window.deleteCostume = deleteCostume;
+
+/* ===================== shared: generic image lightbox ===================== */
+function openImageLightbox(url){
+  const root = document.getElementById('modal-root');
+  root.innerHTML = `<div class="lightbox-overlay" onclick="closeModal()">
+      <div class="lightbox-close" onclick="closeModal()">&times;</div>
+      <img src="${escapeAttr(url)}"/>
+    </div>`;
+}
+window.openImageLightbox = openImageLightbox;
+
+/* ===================== shared: single-issue picker ("First Appearance" fields) =====================
+   Used inside both the team form and the (future) costume form wherever a "link this to
+   an existing comic on the site" field is needed. Only one of these forms is ever open
+   at once (modal is a singleton), so a single module-level window._fap is safe. */
+window._fap = null;
+let _fapSearchDebounce = null;
+let _fapMatches = [];
+function firstAppearancePickerHtml(prefix, initialRef){
+  window._fap = null; // resolved to full display data by renderFapSelected() once issues are hydrated
+  window._fapPrefix = prefix;
+  window._fapInitialRef = initialRef || null;
+  return `
+    <div class="field">
+      <label>First Appearance <span class="mono" style="color:var(--dim2);font-weight:400;text-transform:none;letter-spacing:0;">(link to a comic already on the site)</span></label>
+      <div id="${prefix}-fap-selected" style="margin-bottom:6px;"></div>
+      <input id="${prefix}-fap-search" placeholder="Search issues by series or issue title…" oninput="handleFapSearch('${prefix}', this.value)"/>
+      <div class="ev-picker-results hidden" id="${prefix}-fap-results"></div>
+    </div>
+  `;
+}
+/* call right after showModal() for any form using firstAppearancePickerHtml */
+async function renderFapSelected(prefix){
+  if(window._fapInitialRef && !window._fap){
+    const series = findSeries(window._fapInitialRef.seriesId);
+    if(series){
+      const issues = await getIssues(series.id);
+      const iss = issues.find(x=>x.id===window._fapInitialRef.issueId);
+      if(iss) window._fap = {seriesId:series.id, issueId:iss.id, seriesTitle:series.title, number:iss.number, title:iss.title||'', coverUrl:iss.coverUrl, seriesCoverUrl:series.coverUrl};
+    }
+  }
+  const wrap = document.getElementById(prefix+'-fap-selected');
+  if(!wrap) return;
+  wrap.innerHTML = window._fap
+    ? `<span class="mono" style="font-size:12px;">${escapeHtml(window._fap.seriesTitle)} #${window._fap.number}${window._fap.title? ' — '+escapeHtml(window._fap.title):''}</span> <button type="button" class="small ghost" style="margin-left:8px;padding:2px 8px;" onclick="clearFap('${prefix}')">Clear</button>`
+    : '<span class="mono" style="font-size:12px;color:var(--dim2);">Not set</span>';
+}
+function clearFap(prefix){ window._fap = null; window._fapInitialRef = null; renderFapSelected(prefix); }
+window.clearFap = clearFap;
+function handleFapSearch(prefix, val){
+  clearTimeout(_fapSearchDebounce);
+  _fapSearchDebounce = setTimeout(async ()=>{
+    const results = document.getElementById(prefix+'-fap-results');
+    if(!results) return;
+    const term = val.trim().toLowerCase();
+    if(!term){ results.classList.add('hidden'); results.innerHTML=''; return; }
+    const idx = await buildIssueSearchIndex();
+    const matches = idx.filter(x=> x.seriesTitle.toLowerCase().includes(term) || (x.title||'').toLowerCase().includes(term) || String(x.number).includes(term)).slice(0,20);
+    _fapMatches = matches;
+    results.classList.remove('hidden');
+    results.innerHTML = matches.length ? matches.map((m,i)=>`
+      <div class="ev-picker-result" onclick="pickFap('${prefix}',${i})">
+        <div class="epr-cover">${coverOrFallback(m.coverUrl||m.seriesCoverUrl, m.seriesTitle+' #'+m.number, m.issueId)}</div>
+        <div class="entry-info"><div class="t">${escapeHtml(m.seriesTitle)} #${m.number}</div><div class="s">${escapeHtml(m.title||'')}</div></div>
+      </div>
+    `).join('') : '<div class="empty" style="padding:8px 12px;">No matching issues.</div>';
+  }, 150);
+}
+window.handleFapSearch = handleFapSearch;
+function pickFap(prefix, i){
+  const m = _fapMatches[i];
+  if(!m) return;
+  window._fap = m;
+  window._fapInitialRef = null;
+  renderFapSelected(prefix);
+  const input = document.getElementById(prefix+'-fap-search');
+  if(input) input.value='';
+  const results = document.getElementById(prefix+'-fap-results');
+  if(results){ results.classList.add('hidden'); results.innerHTML=''; }
+}
+window.pickFap = pickFap;
+
+/* ===================== TEAMS =====================
+   A team (e.g. the Avengers) groups heroes together with a landing page, a members
+   roster (with role + join date), a gallery, bases, vehicles, and enemies. Stored the
+   same way as heroes/events: one 'teams-index' doc holding the whole array. */
+async function getTeams(){
+  if(state.teamsIndex && state.teamsIndex.length) return state.teamsIndex;
+  const data = await sGet('teams-index') || [];
+  state.teamsIndex = data;
+  return data;
+}
+async function saveTeams(teams){
+  state.teamsIndex = teams;
+  await sSet('teams-index', teams);
+}
+function findTeam(id){ return (state.teamsIndex||[]).find(t=>t.id===id); }
+
+const TEAM_ROLES = {founding:'Founding Members', longterm:'Long-Term Members', reserve:'Reserve Members', temporary:'Temporary Members'};
+const ASSET_LABELS = {bases:{singular:'Base', plural:'Bases'}, vehicles:{singular:'Vehicle', plural:'Vehicles'}};
+
+/* ---------- teams: tab grid ---------- */
+async function renderTeamsTab(){
+  const body = document.getElementById('home-body');
+  const teams = await getTeams();
+  body.innerHTML = `<div class="wrap" style="padding-top:34px;">
+    <div class="section-title">Teams <button class="small" onclick="openAddTeam()">+ Add Team</button></div>
+    <div id="teams-grid" class="teams-grid"></div>
+  </div>`;
+  const grid = document.getElementById('teams-grid');
+  if(!teams.length){
+    grid.innerHTML = '<div class="empty">No teams yet. Group your heroes together with "+ Add Team."</div>';
+    return;
+  }
+  const sorted = teams.slice().sort((a,b)=>a.name.localeCompare(b.name));
+  grid.innerHTML = sorted.map(t=>{
+    const bg = `background:linear-gradient(135deg, ${t.themeColor||colorFor(t.id)}, #0a0a0c)`;
+    const rosterCount = (t.roster||[]).filter(m=>m.active!==false).length;
+    return `
+      <div class="team-card" onclick="openTeam('${t.id}')">
+        <div class="tc-banner" style="${bg}">
+          <div class="tc-logo">${coverOrFallback(t.logoUrl, initials(t.name), t.id)}</div>
+        </div>
+        <div class="tc-body">
+          <div class="tc-name">${escapeHtml(t.name)}</div>
+          <div class="tc-sub">${rosterCount} member${rosterCount===1?'':'s'}${t.founded? ' · Est. '+escapeHtml(t.founded):''}</div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+function backToTeams(){ showView('home'); renderTeamsTab(); }
+window.backToTeams = backToTeams;
+
+/* ---------- teams: landing page ---------- */
+async function openTeam(id){
+  state.currentTeamId = id;
+  state.teamSubtab = 'overview';
+  const t = findTeam(id);
+  if(!t) return;
+  document.getElementById('team-name').textContent = t.name;
+  document.getElementById('team-desc').textContent = t.description || '';
+  document.getElementById('team-banner-bg').style.cssText = t.bannerUrl
+    ? `background-image:url('${escapeAttr(t.bannerUrl)}');background-size:cover;background-position:center;`
+    : `background:linear-gradient(135deg, ${t.themeColor||colorFor(t.id)}, #0a0a0c);`;
+  document.getElementById('team-logo-wrap').innerHTML = coverOrFallback(t.logoUrl, initials(t.name), t.id);
+  await renderTeamMetaRow(t);
+  showView('team-detail');
+  setTeamSubtab('overview');
+}
+window.openTeam = openTeam;
+
+async function renderTeamMetaRow(t){
+  const wrap = document.getElementById('team-meta-row');
+  if(!wrap) return;
+  const leader = t.leaderId ? findHero(t.leaderId) : null;
+  const activeCount = (t.roster||[]).filter(m=>m.active!==false).length;
+  const items = [];
+  if(t.founded) items.push(`<div class="team-meta-item"><div class="tmi-label">Founded</div><div class="tmi-val">${escapeHtml(t.founded)}</div></div>`);
+  if(t.headquarters) items.push(`<div class="team-meta-item"><div class="tmi-label">Headquarters</div><div class="tmi-val">${escapeHtml(t.headquarters)}</div></div>`);
+  items.push(`<div class="team-meta-item"><div class="tmi-label">Current Leader</div><div class="tmi-val${leader?' clickable':''}" ${leader?`onclick="openHero('${leader.id}')"`:''}>${leader?escapeHtml(leader.name):'Unassigned'}</div></div>`);
+  items.push(`<div class="team-meta-item"><div class="tmi-label">Current Roster</div><div class="tmi-val clickable" onclick="setTeamSubtab('members')">${activeCount} member${activeCount===1?'':'s'}</div></div>`);
+  if(t.firstAppearance){
+    const series = findSeries(t.firstAppearance.seriesId);
+    if(series){
+      const issues = await getIssues(series.id);
+      const iss = issues.find(x=>x.id===t.firstAppearance.issueId);
+      if(iss) items.push(`<div class="team-meta-item"><div class="tmi-label">First Appearance</div><div class="tmi-val clickable" onclick="jumpToIssue('${series.id}','${iss.id}')">${escapeHtml(series.title)} #${iss.number}</div></div>`);
+    }
+  }
+  wrap.innerHTML = items.join('');
+}
+
+/* ---------- teams: subtabs ---------- */
+function setTeamSubtab(sub){
+  state.teamSubtab = sub;
+  [...document.querySelectorAll('#team-subtabs button')].forEach(b=>b.classList.toggle('active', b.dataset.sub===sub));
+  renderTeamSubtabBody();
+}
+window.setTeamSubtab = setTeamSubtab;
+async function renderTeamSubtabBody(){
+  const t = findTeam(state.currentTeamId);
+  const body = document.getElementById('team-subtab-body');
+  if(!t || !body) return;
+  if(state.teamSubtab==='overview') body.innerHTML = renderTeamOverviewHtml(t);
+  else if(state.teamSubtab==='members') await renderTeamMembersBody(t, body);
+  else if(state.teamSubtab==='gallery') renderTeamGalleryBody(t, body);
+  else if(state.teamSubtab==='bases') renderTeamAssetsBody(t, body, 'bases');
+  else if(state.teamSubtab==='vehicles') renderTeamAssetsBody(t, body, 'vehicles');
+  else if(state.teamSubtab==='enemies') await renderTeamEnemiesBody(t, body);
+}
+
+/* ---------- teams: overview subtab (quick current-roster recap) ---------- */
+function renderTeamOverviewHtml(t){
+  const roster = (t.roster||[]).filter(m=>m.active!==false);
+  const chips = roster.map(m=>{
+    const h = findHero(m.heroId);
+    if(!h) return '';
+    return `<span class="teamup-chip" onclick="openHero('${h.id}')">
+      <span class="tc-dot">${coverOrFallback(h.imageUrl, initials(h.name), h.id)}</span>
+      <span class="tc-n">${escapeHtml(h.name)}</span>
+    </span>`;
+  }).join('');
+  return `<div class="panel">
+    <div class="section-title" style="margin-top:0;">Current Roster</div>
+    ${roster.length ? `<div class="roster-mini-row">${chips}</div>` : '<div class="empty">No current roster set. Add members from the Members tab.</div>'}
+  </div>`;
+}
+
+/* ---------- teams: members subtab ---------- */
+function normalizeDateSort(d){
+  d = String(d||'').trim();
+  if(/^\d{4}$/.test(d)) return d+'-00-00';
+  return d;
+}
+function memberCardHtml(m){
+  const h = findHero(m.heroId);
+  if(!h) return '';
+  return `
+    <div class="member-card" onclick="openHero('${h.id}')">
+      ${m.active===false ? '<div class="mc-former">Former</div>' : ''}
+      <div class="mc-portrait">${coverOrFallback(h.imageUrl, initials(h.name), h.id)}</div>
+      <div class="mc-name">${escapeHtml(h.name)}</div>
+      <div class="mc-role">${escapeHtml(TEAM_ROLES[m.role||'longterm']||'Member')}</div>
+      ${m.joinedDate ? `<div class="mc-dates">Joined ${escapeHtml(m.joinedDate)}</div>` : ''}
+      <button class="small ghost" style="margin-top:8px;padding:3px 8px;font-size:10px;" onclick="event.stopPropagation();openEditTeamMember('${h.id}')">Edit</button>
+    </div>
+  `;
+}
+async function renderTeamMembersBody(t, body){
+  const roster = t.roster || [];
+  let html = `<div class="section-title" style="margin-top:0;">Members <button class="small" onclick="openAddTeamMember()">+ Add Member</button></div>`;
+  if(!roster.length){
+    html += '<div class="empty">No members added yet.</div>';
+  } else {
+    const active = roster.filter(m=>m.active!==false);
+    const former = roster.filter(m=>m.active===false);
+    for(const roleKey of Object.keys(TEAM_ROLES)){
+      const group = active.filter(m=>(m.role||'longterm')===roleKey);
+      if(!group.length) continue;
+      html += `<div class="member-role-group"><h4>${TEAM_ROLES[roleKey]}</h4><div class="member-grid">${group.map(memberCardHtml).join('')}</div></div>`;
+    }
+    if(former.length){
+      html += `<div class="member-role-group"><h4>Former Members</h4><div class="member-grid">${former.map(memberCardHtml).join('')}</div></div>`;
+    }
+  }
+  const events = [];
+  if(t.founded) events.push({date:t.founded, label:`${t.name} formed`, sortKey:normalizeDateSort(t.founded)});
+  for(const m of roster){
+    const h = findHero(m.heroId);
+    if(!h) continue;
+    if(m.joinedDate) events.push({date:m.joinedDate, label:`${h.name} joins`, heroId:h.id, sortKey:normalizeDateSort(m.joinedDate)});
+    if(m.active===false && m.leftDate) events.push({date:m.leftDate, label:`${h.name} leaves`, heroId:h.id, sortKey:normalizeDateSort(m.leftDate)});
+  }
+  events.sort((a,b)=>a.sortKey.localeCompare(b.sortKey));
+  html += `<div class="section-title">Timeline</div>`;
+  html += events.length ? `<div class="panel"><div class="team-timeline">${events.map(e=>`
+    <div class="timeline-item" ${e.heroId?`onclick="openHero('${e.heroId}')"`:''}>
+      <div class="ti-year">${escapeHtml(e.date)}</div>
+      <div class="ti-label">${escapeHtml(e.label)}</div>
+    </div>
+  `).join('')}</div></div>` : '<div class="empty">Add founding/join dates to build a timeline.</div>';
+  body.innerHTML = html;
+}
+function openAddTeamMember(){
+  const t = findTeam(state.currentTeamId);
+  if(!t) return;
+  const already = new Set((t.roster||[]).map(m=>m.heroId));
+  const options = (state.heroesIndex||[]).filter(h=>!already.has(h.id));
+  showModal(`
+    <h3>Add a member</h3>
+    <div class="field"><label>Hero</label>
+      <select id="tm-hero">${options.length ? options.map(h=>`<option value="${h.id}">${escapeHtml(h.name)}</option>`).join('') : '<option value="">No available heroes</option>'}</select>
+    </div>
+    <div class="field"><label>Role</label>
+      <select id="tm-role">${Object.entries(TEAM_ROLES).map(([k,v])=>`<option value="${k}" ${k==='longterm'?'selected':''}>${v}</option>`).join('')}</select>
+    </div>
+    <div class="field"><label>Joined date</label><input id="tm-joined" placeholder="e.g. 1965 or 1965-03-01"/></div>
+    <div class="modal-actions">
+      <button class="ghost" onclick="closeModal()">Cancel</button>
+      <button class="primary" onclick="createTeamMember()">Add</button>
+    </div>
+  `);
+}
+window.openAddTeamMember = openAddTeamMember;
+async function createTeamMember(){
+  const t = findTeam(state.currentTeamId);
+  if(!t) return;
+  const heroId = document.getElementById('tm-hero').value;
+  if(!heroId){ alert('Add a hero first from the Heroes tab.'); return; }
+  t.roster = t.roster || [];
+  if(t.roster.some(m=>m.heroId===heroId)){ alert('That hero is already on the roster.'); return; }
+  t.roster.push({heroId, role: document.getElementById('tm-role').value, joinedDate: document.getElementById('tm-joined').value.trim(), active:true});
+  await saveTeams(state.teamsIndex);
+  closeModal();
+  await renderTeamSubtabBody();
+}
+window.createTeamMember = createTeamMember;
+function openEditTeamMember(heroId){
+  const t = findTeam(state.currentTeamId);
+  const m = t && (t.roster||[]).find(x=>x.heroId===heroId);
+  if(!m) return;
+  const h = findHero(heroId);
+  showModal(`
+    <h3>Edit ${escapeHtml(h?h.name:'member')}</h3>
+    <div class="field"><label>Role</label>
+      <select id="tm-role">${Object.entries(TEAM_ROLES).map(([k,v])=>`<option value="${k}" ${(m.role||'longterm')===k?'selected':''}>${v}</option>`).join('')}</select>
+    </div>
+    <div class="field"><label>Joined date</label><input id="tm-joined" value="${escapeAttr(m.joinedDate||'')}" placeholder="e.g. 1965"/></div>
+    <div class="field"><label>Status</label>
+      <select id="tm-active" onchange="document.getElementById('tm-left-field').style.display=this.value==='false'?'':'none';">
+        <option value="true" ${m.active!==false?'selected':''}>Current member</option>
+        <option value="false" ${m.active===false?'selected':''}>Former member</option>
+      </select>
+    </div>
+    <div class="field" id="tm-left-field" style="${m.active===false?'':'display:none;'}"><label>Left date (optional)</label><input id="tm-left" value="${escapeAttr(m.leftDate||'')}" placeholder="e.g. 1975"/></div>
+    <div class="modal-actions">
+      <button class="ghost danger-btn" onclick="removeTeamMember('${heroId}')">Remove</button>
+      <button class="primary" onclick="saveEditTeamMember('${heroId}')">Save</button>
+    </div>
+  `);
+}
+window.openEditTeamMember = openEditTeamMember;
+async function saveEditTeamMember(heroId){
+  const t = findTeam(state.currentTeamId);
+  const m = t && (t.roster||[]).find(x=>x.heroId===heroId);
+  if(!m) return;
+  m.role = document.getElementById('tm-role').value;
+  m.joinedDate = document.getElementById('tm-joined').value.trim();
+  m.active = document.getElementById('tm-active').value === 'true';
+  m.leftDate = m.active ? '' : document.getElementById('tm-left').value.trim();
+  await saveTeams(state.teamsIndex);
+  closeModal();
+  await renderTeamSubtabBody();
+}
+window.saveEditTeamMember = saveEditTeamMember;
+async function removeTeamMember(heroId){
+  const t = findTeam(state.currentTeamId);
+  if(!t) return;
+  if(!confirm('Remove this member from the team roster entirely?')) return;
+  t.roster = (t.roster||[]).filter(m=>m.heroId!==heroId);
+  await saveTeams(state.teamsIndex);
+  closeModal();
+  await renderTeamSubtabBody();
+}
+window.removeTeamMember = removeTeamMember;
+
+/* ---------- teams: gallery subtab ---------- */
+function renderTeamGalleryBody(t, body){
+  const gallery = t.gallery || [];
+  body.innerHTML = `
+    <div class="section-title" style="margin-top:0;">Team Gallery</div>
+    <div class="field" style="max-width:520px;">
+      <label>Add image URL</label>
+      <div style="display:flex;gap:8px;">
+        <input id="team-gallery-add-input" placeholder="https://..." style="flex:1;"/>
+        <button class="small" onclick="addTeamGalleryImage()">Add</button>
+      </div>
+    </div>
+    ${gallery.length ? `<div class="simple-gallery">${gallery.map((url,i)=>`
+      <div style="position:relative;">
+        <img src="${escapeAttr(url)}" onclick="openImageLightbox('${escapeAttr(url)}')" onerror="this.closest('div').remove()"/>
+        <button class="small ghost" style="position:absolute;top:4px;right:4px;padding:2px 6px;font-size:10px;" onclick="event.stopPropagation();removeTeamGalleryImage(${i})">✕</button>
+      </div>
+    `).join('')}</div>` : '<div class="empty">No gallery images yet.</div>'}
+  `;
+}
+async function addTeamGalleryImage(){
+  const input = document.getElementById('team-gallery-add-input');
+  const url = input.value.trim();
+  if(!url) return;
+  const t = findTeam(state.currentTeamId);
+  t.gallery = t.gallery || [];
+  t.gallery.push(url);
+  await saveTeams(state.teamsIndex);
+  await renderTeamSubtabBody();
+}
+window.addTeamGalleryImage = addTeamGalleryImage;
+async function removeTeamGalleryImage(i){
+  const t = findTeam(state.currentTeamId);
+  t.gallery.splice(i,1);
+  await saveTeams(state.teamsIndex);
+  await renderTeamSubtabBody();
+}
+window.removeTeamGalleryImage = removeTeamGalleryImage;
+
+/* ---------- teams: bases & vehicles (shared renderer, kind = 'bases'|'vehicles') ---------- */
+function renderTeamAssetsBody(t, body, kind){
+  const list = t[kind] || [];
+  const lbl = ASSET_LABELS[kind];
+  body.innerHTML = `
+    <div class="section-title" style="margin-top:0;">${lbl.plural} <button class="small" onclick="openAddAsset('${kind}')">+ Add ${lbl.singular}</button></div>
+    ${list.length ? `<div class="asset-grid">${list.map(a=>`
+      <div class="asset-card" onclick="openAssetDetail('${kind}','${a.id}')">
+        <div class="ac-img" style="${a.imageUrl ? `background-image:url('${escapeAttr(a.imageUrl)}')` : `background:linear-gradient(135deg, ${colorFor(a.id)}, #0a0a0c)`}"></div>
+        <div class="ac-body"><div class="ac-name">${escapeHtml(a.name)}</div><div class="ac-desc">${escapeHtml((a.description||'').slice(0,80))}</div></div>
+      </div>
+    `).join('')}</div>` : `<div class="empty">No ${lbl.plural.toLowerCase()} added yet.</div>`}
+  `;
+}
+function assetFormFields(a){
+  a = a || {name:'',description:'',imageUrl:'',gallery:[]};
+  return `
+    <div class="field"><label>Name</label><input id="af-name" value="${escapeAttr(a.name||'')}"/></div>
+    <div class="field"><label>Main image URL</label><input id="af-image" value="${escapeAttr(a.imageUrl||'')}" placeholder="https://..."/></div>
+    <div class="field"><label>Description</label><textarea id="af-desc" placeholder="History, layout, notable features…">${escapeHtml(a.description||'')}</textarea></div>
+    <div class="field"><label>Gallery image URLs (one per line)</label><textarea id="af-gallery" placeholder="https://...\nhttps://...">${escapeHtml((a.gallery||[]).join('\n'))}</textarea></div>
+  `;
+}
+function openAddAsset(kind){
+  const lbl = ASSET_LABELS[kind];
+  showModal(`
+    <h3>Add ${lbl.singular.toLowerCase()}</h3>
+    ${assetFormFields()}
+    <div class="modal-actions">
+      <button class="ghost" onclick="closeModal()">Cancel</button>
+      <button class="primary" onclick="createAsset('${kind}')">Add</button>
+    </div>
+  `);
+  document.getElementById('af-name').focus();
+}
+window.openAddAsset = openAddAsset;
+async function createAsset(kind){
+  const name = document.getElementById('af-name').value.trim();
+  if(!name){ alert('Give it a name.'); return; }
+  const t = findTeam(state.currentTeamId);
+  t[kind] = t[kind] || [];
+  t[kind].push({
+    id: 'a-'+Math.random().toString(36).slice(2,10),
+    name,
+    imageUrl: document.getElementById('af-image').value.trim(),
+    description: document.getElementById('af-desc').value.trim(),
+    gallery: document.getElementById('af-gallery').value.split('\n').map(s=>s.trim()).filter(Boolean)
+  });
+  await saveTeams(state.teamsIndex);
+  closeModal();
+  await renderTeamSubtabBody();
+}
+window.createAsset = createAsset;
+function openAssetDetail(kind, id){
+  const t = findTeam(state.currentTeamId);
+  const a = t && (t[kind]||[]).find(x=>x.id===id);
+  if(!a) return;
+  showModal(`
+    <h3>${escapeHtml(a.name)}</h3>
+    ${a.imageUrl ? `<img src="${escapeAttr(a.imageUrl)}" style="width:100%;border-radius:8px;margin-bottom:12px;cursor:pointer;" onclick="openImageLightbox('${escapeAttr(a.imageUrl)}')" onerror="this.remove()"/>` : ''}
+    <p style="color:var(--dim);white-space:pre-wrap;">${escapeHtml(a.description||'No description yet.')}</p>
+    ${(a.gallery||[]).length ? `<div class="costume-detail-gallery">${a.gallery.map(url=>`<img src="${escapeAttr(url)}" onclick="openImageLightbox('${escapeAttr(url)}')" onerror="this.remove()"/>`).join('')}</div>` : ''}
+    <div class="modal-actions">
+      <button class="ghost danger-btn" onclick="deleteAsset('${kind}','${id}')">Delete</button>
+      <button class="ghost" onclick="openEditAsset('${kind}','${id}')">Edit</button>
+      <button class="primary" onclick="closeModal()">Close</button>
+    </div>
+  `);
+}
+window.openAssetDetail = openAssetDetail;
+function openEditAsset(kind, id){
+  const t = findTeam(state.currentTeamId);
+  const a = t && (t[kind]||[]).find(x=>x.id===id);
+  if(!a) return;
+  showModal(`
+    <h3>Edit ${escapeHtml(a.name)}</h3>
+    ${assetFormFields(a)}
+    <div class="modal-actions">
+      <button class="ghost" onclick="closeModal()">Cancel</button>
+      <button class="primary" onclick="saveEditAsset('${kind}','${id}')">Save</button>
+    </div>
+  `);
+}
+window.openEditAsset = openEditAsset;
+async function saveEditAsset(kind, id){
+  const t = findTeam(state.currentTeamId);
+  const a = t && (t[kind]||[]).find(x=>x.id===id);
+  if(!a) return;
+  a.name = document.getElementById('af-name').value.trim() || a.name;
+  a.imageUrl = document.getElementById('af-image').value.trim();
+  a.description = document.getElementById('af-desc').value.trim();
+  a.gallery = document.getElementById('af-gallery').value.split('\n').map(s=>s.trim()).filter(Boolean);
+  await saveTeams(state.teamsIndex);
+  closeModal();
+  await renderTeamSubtabBody();
+}
+window.saveEditAsset = saveEditAsset;
+async function deleteAsset(kind, id){
+  const t = findTeam(state.currentTeamId);
+  if(!t) return;
+  if(!confirm('Delete this?')) return;
+  t[kind] = (t[kind]||[]).filter(x=>x.id!==id);
+  await saveTeams(state.teamsIndex);
+  closeModal();
+  await renderTeamSubtabBody();
+}
+window.deleteAsset = deleteAsset;
+
+/* ---------- teams: enemies subtab ---------- */
+async function renderTeamEnemiesBody(t, body){
+  const enemies = t.enemies || [];
+  let html = `<div class="section-title" style="margin-top:0;">Enemies <button class="small" onclick="openAddEnemy()">+ Add Enemy</button></div>`;
+  if(!enemies.length){
+    html += '<div class="empty">No enemies added yet.</div>';
+  } else {
+    const cards = [];
+    for(const e of enemies){
+      if(e.type==='team'){
+        const other = findTeam(e.id);
+        if(!other) continue;
+        cards.push(`<div class="enemy-card" onclick="openTeam('${other.id}')">
+          <button class="en-remove" onclick="event.stopPropagation();removeEnemy('team','${other.id}')">✕</button>
+          <div class="en-portrait">${coverOrFallback(other.logoUrl, initials(other.name), other.id)}</div>
+          <div class="en-name">${escapeHtml(other.name)}</div>
+          <div class="en-type">Team</div>
+        </div>`);
+      } else {
+        const h = findHero(e.id);
+        if(!h) continue;
+        cards.push(`<div class="enemy-card" onclick="openHero('${h.id}')">
+          <button class="en-remove" onclick="event.stopPropagation();removeEnemy('hero','${h.id}')">✕</button>
+          <div class="en-portrait">${coverOrFallback(h.imageUrl, initials(h.name), h.id)}</div>
+          <div class="en-name">${escapeHtml(h.name)}</div>
+          <div class="en-type">${heroAffLabel(h.affiliation)}</div>
+        </div>`);
+      }
+    }
+    html += `<div class="enemy-grid">${cards.join('')}</div>`;
+  }
+  body.innerHTML = html;
+}
+let _enemyPickerKind = 'hero';
+async function openAddEnemy(){
+  _enemyPickerKind = 'hero';
+  showModal(`
+    <h3>Add an enemy</h3>
+    <div class="picker-tabs">
+      <button id="ep-tab-hero" class="small active" onclick="setEnemyPickerKind('hero')">Heroes / Villains</button>
+      <button id="ep-tab-team" class="small" onclick="setEnemyPickerKind('team')">Teams</button>
+    </div>
+    <input id="enemy-search" placeholder="Search…" oninput="handleEnemySearch(this.value)"/>
+    <div class="ev-picker-results" id="enemy-search-results" style="margin-top:8px;"></div>
+    <div class="modal-actions">
+      <button class="ghost" onclick="closeModal()">Close</button>
+    </div>
+  `);
+  document.getElementById('enemy-search').focus();
+  await handleEnemySearch('');
+}
+window.openAddEnemy = openAddEnemy;
+function setEnemyPickerKind(kind){
+  _enemyPickerKind = kind;
+  document.getElementById('ep-tab-hero').classList.toggle('active', kind==='hero');
+  document.getElementById('ep-tab-team').classList.toggle('active', kind==='team');
+  handleEnemySearch(document.getElementById('enemy-search').value);
+}
+window.setEnemyPickerKind = setEnemyPickerKind;
+async function handleEnemySearch(val){
+  const results = document.getElementById('enemy-search-results');
+  if(!results) return;
+  const term = val.trim().toLowerCase();
+  const t = findTeam(state.currentTeamId);
+  const already = new Set((t.enemies||[]).map(e=>e.type+':'+e.id));
+  let html = '';
+  if(_enemyPickerKind==='hero'){
+    const list = (state.heroesIndex||[]).filter(h=>!already.has('hero:'+h.id) && (!term || h.name.toLowerCase().includes(term) || (h.alias||'').toLowerCase().includes(term)));
+    html = list.length ? list.map(h=>`
+      <div class="ev-picker-result" onclick="addEnemy('hero','${h.id}')">
+        <div class="epr-cover" style="border-radius:50%;">${coverOrFallback(h.imageUrl, initials(h.name), h.id)}</div>
+        <div class="entry-info"><div class="t">${escapeHtml(h.name)}</div><div class="s">${escapeHtml(h.alias||heroAffLabel(h.affiliation))}</div></div>
+      </div>
+    `).join('') : '<div class="empty" style="padding:8px 12px;">No matches.</div>';
+  } else {
+    const list = (state.teamsIndex||[]).filter(o=>o.id!==t.id && !already.has('team:'+o.id) && (!term || o.name.toLowerCase().includes(term)));
+    html = list.length ? list.map(o=>`
+      <div class="ev-picker-result" onclick="addEnemy('team','${o.id}')">
+        <div class="epr-cover">${coverOrFallback(o.logoUrl, initials(o.name), o.id)}</div>
+        <div class="entry-info"><div class="t">${escapeHtml(o.name)}</div></div>
+      </div>
+    `).join('') : '<div class="empty" style="padding:8px 12px;">No matches.</div>';
+  }
+  results.innerHTML = html;
+}
+window.handleEnemySearch = handleEnemySearch;
+async function addEnemy(type, id){
+  const t = findTeam(state.currentTeamId);
+  t.enemies = t.enemies || [];
+  if(t.enemies.some(e=>e.type===type && e.id===id)) return;
+  t.enemies.push({type, id});
+  await saveTeams(state.teamsIndex);
+  const searchInput = document.getElementById('enemy-search');
+  await handleEnemySearch(searchInput ? searchInput.value : '');
+  await renderTeamSubtabBody();
+}
+window.addEnemy = addEnemy;
+async function removeEnemy(type, id){
+  const t = findTeam(state.currentTeamId);
+  if(!t) return;
+  t.enemies = (t.enemies||[]).filter(e=>!(e.type===type && e.id===id));
+  await saveTeams(state.teamsIndex);
+  await renderTeamSubtabBody();
+}
+window.removeEnemy = removeEnemy;
+
+/* ---------- teams: add / edit / delete team ---------- */
+function teamFormFields(t){
+  t = t || {name:'',logoUrl:'',bannerUrl:'',description:'',themeColor:'',founded:'',headquarters:'',leaderId:'',firstAppearance:null};
+  const heroes = state.heroesIndex || [];
+  return `
+    <div class="field"><label>Team name</label><input id="tf-name" value="${escapeAttr(t.name||'')}" placeholder="e.g. The Avengers"/></div>
+    <div class="field"><label>Logo image URL</label><input id="tf-logo" value="${escapeAttr(t.logoUrl||'')}" placeholder="https://..."/></div>
+    <div class="field"><label>Banner image URL (optional)</label><input id="tf-banner" value="${escapeAttr(t.bannerUrl||'')}" placeholder="https://..."/></div>
+    <div class="field"><label>Short description</label><textarea id="tf-desc" placeholder="Who they are and what they do…">${escapeHtml(t.description||'')}</textarea></div>
+    <div class="field"><label>Founded (year or date)</label><input id="tf-founded" value="${escapeAttr(t.founded||'')}" placeholder="e.g. 1963"/></div>
+    <div class="field"><label>Headquarters</label><input id="tf-hq" value="${escapeAttr(t.headquarters||'')}" placeholder="e.g. Avengers Mansion, New York"/></div>
+    <div class="field"><label>Current Leader</label>
+      <select id="tf-leader">
+        <option value="">Unassigned</option>
+        ${heroes.map(h=>`<option value="${h.id}" ${t.leaderId===h.id?'selected':''}>${escapeHtml(h.name)}</option>`).join('')}
+      </select>
+    </div>
+    <div class="field"><label>Theme Color</label><div class="color-swatches" id="tf-color-swatches"></div></div>
+    ${firstAppearancePickerHtml('tf', t.firstAppearance)}
+  `;
+}
+function renderTeamColorSwatches(t){
+  const sw = document.getElementById('tf-color-swatches');
+  if(!sw) return;
+  let chosen = (t && t.themeColor) || QUOTE_PALETTE[0];
+  sw.innerHTML = '';
+  QUOTE_PALETTE.forEach(c=>{
+    const d = document.createElement('div');
+    d.className = 'swatch'+(c===chosen?' sel':'');
+    d.style.background = c;
+    d.onclick = ()=>{ chosen=c; [...sw.children].forEach(x=>x.classList.remove('sel')); d.classList.add('sel'); };
+    sw.appendChild(d);
+  });
+  window._chosenTeamColor = ()=>chosen;
+}
+function readTeamForm(){
+  return {
+    name: document.getElementById('tf-name').value.trim(),
+    logoUrl: document.getElementById('tf-logo').value.trim(),
+    bannerUrl: document.getElementById('tf-banner').value.trim(),
+    description: document.getElementById('tf-desc').value.trim(),
+    founded: document.getElementById('tf-founded').value.trim(),
+    headquarters: document.getElementById('tf-hq').value.trim(),
+    leaderId: document.getElementById('tf-leader').value,
+    themeColor: window._chosenTeamColor ? window._chosenTeamColor() : QUOTE_PALETTE[0],
+    firstAppearance: window._fap ? {seriesId: window._fap.seriesId, issueId: window._fap.issueId} : null
+  };
+}
+function openAddTeam(){
+  showModal(`
+    <h3>Add a team</h3>
+    ${teamFormFields()}
+    <div class="modal-actions">
+      <button class="ghost" onclick="closeModal()">Cancel</button>
+      <button class="primary" onclick="createTeam()">Add team</button>
+    </div>
+  `);
+  renderTeamColorSwatches();
+  renderFapSelected('tf');
+  document.getElementById('tf-name').focus();
+}
+window.openAddTeam = openAddTeam;
+async function createTeam(){
+  const data = readTeamForm();
+  if(!data.name){ alert('Give this team a name.'); return; }
+  const teams = await getTeams();
+  const t = Object.assign({id:'team-'+Math.random().toString(36).slice(2,10), roster:[], gallery:[], bases:[], vehicles:[], enemies:[], addedAt:Date.now()}, data);
+  teams.push(t);
+  await saveTeams(teams);
+  closeModal();
+  if(state.tab==='teams') await renderTeamsTab();
+  await openTeam(t.id);
+}
+window.createTeam = createTeam;
+function openEditTeam(){
+  const t = findTeam(state.currentTeamId);
+  if(!t) return;
+  showModal(`
+    <h3>Edit team</h3>
+    ${teamFormFields(t)}
+    <div class="modal-actions">
+      <button class="ghost" onclick="closeModal()">Cancel</button>
+      <button class="primary" onclick="saveEditTeam()">Save changes</button>
+    </div>
+  `);
+  renderTeamColorSwatches(t);
+  renderFapSelected('tf');
+}
+window.openEditTeam = openEditTeam;
+async function saveEditTeam(){
+  const data = readTeamForm();
+  if(!data.name){ alert('Give this team a name.'); return; }
+  const teams = await getTeams();
+  const t = teams.find(x=>x.id===state.currentTeamId);
+  if(!t) return;
+  Object.assign(t, data);
+  await saveTeams(teams);
+  closeModal();
+  await openTeam(t.id);
+}
+window.saveEditTeam = saveEditTeam;
+async function deleteTeam(){
+  const t = findTeam(state.currentTeamId);
+  if(!t) return;
+  if(!confirm(`Delete ${t.name}? This cannot be undone.`)) return;
+  let teams = (await getTeams()).filter(x=>x.id!==t.id);
+  // clean up dangling references from any other team that listed this one as an enemy
+  teams.forEach(other=>{
+    if(other.enemies && other.enemies.length){
+      other.enemies = other.enemies.filter(e=>!(e.type==='team' && e.id===t.id));
+    }
+  });
+  await saveTeams(teams);
+  backToTeams();
+}
+window.deleteTeam = deleteTeam;
 
 /* ===================== EVENT CATALOGUES =====================
    An "Event" (e.g. Civil War, Infinity Gauntlet) is a hand-picked, ordered list of
